@@ -5,15 +5,15 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-import "./App.css";
-import LandingLayout from "./layout/LandingLayout";
-import DashBoardLayout from "./layout/DashboardLayout";
 //layout
-import RootLayout from "./layout/DashboardLayout";
+import DashBoardLayout from "./layout/DashboardLayout";
+import LandingLayout from "./layout/LandingLayout";
 
 //pages
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
+import How from "./pages/How";
+import About from "./pages/About";
 
 function App() {
   const router = createBrowserRouter(
@@ -21,6 +21,8 @@ function App() {
       <>
         <Route element={<LandingLayout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/howitworks" element = {<How />} />
+          <Route path="/about" element = { <About />} />
         </Route>
 
         <Route element={<DashBoardLayout />}>
@@ -30,7 +32,10 @@ function App() {
     )
   );
 
-  return <RouterProvider router={router} />;
+  return (
+  
+  <RouterProvider router={router} />
+  );
 }
 
 export default App;
