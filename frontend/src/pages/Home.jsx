@@ -1,12 +1,10 @@
+import { Container } from "@chakra-ui/react";
 import React from "react";
-
+import Cta from "../components/Cta"
 export default function Home() {
   return (
-    <div className="home-wrapper">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas aliquid
-      repudiandae laudantium? Aliquam culpa nesciunt suscipit optio eum vitae
-      facilis quibusdam, deleniti sapiente saepe, vel laborum temporibus!
-      Voluptates, rerum exercitationem.
-    </div>
+      <Container marginTop={"20px"}  maxWidth={"6xl"}>
+        <Cta />
+      </Container>
   );
 }
