@@ -12,7 +12,7 @@ export default function Cta() {
   return (
     <Box>
       <Flex wrap={"wrap"} justifyContent={"center"} gap={"5em"}>
-        <Image
+        <Image flex={"1 1 auto"}
           boxShadow={"lg"}
           maxWidth={"520px"}
           minWidth={"320px"}
@@ -30,7 +30,7 @@ export default function Cta() {
             productivity and stay on top of your game!
           </Text>
           <Center marginTop={"20px"}>
-            <Button colorScheme={"green"} size={"lg"} borderRadius="12px">
+            <Button colorScheme={"blue"} size={"lg"} borderRadius="12px">
               Sign Up
             </Button>
           </Center>

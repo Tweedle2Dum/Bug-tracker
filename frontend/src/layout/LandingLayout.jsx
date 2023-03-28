@@ -7,9 +7,8 @@ export default function LandingLayout() {
     <div className="root-layout">
       <Box
         
-        minHeight="100vh"
         minWidth="100vw"
-        
+        padding={"20px"}
       >
         <Header />
       <Spacer height={["24px","24px","24px","24px"]} />  
