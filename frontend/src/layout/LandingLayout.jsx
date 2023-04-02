@@ -7,7 +7,6 @@ export default function LandingLayout() {
     <div className="root-layout">
       <Box
         
-        minWidth="100vw"
         padding={"20px"}
       >
         <Header />
