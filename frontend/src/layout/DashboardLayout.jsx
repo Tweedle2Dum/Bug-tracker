@@ -1,13 +1,17 @@
 import React from 'react'
+import Sidebar from '../components/Sidebar'
 import { Outlet } from 'react-router-dom'
-
+import {Grid} from "@chakra-ui/react"
 export default function RootLayout() {
   return (
     <div className="Root-layout">
-        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore, numquam.</div>
-        <div>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus, dolor?</div>
+      <Grid gridTemplateColumns={"200px 1fr"} gridAutoRows={"90vh"} padding={"12px"} gap={"24px"} letterSpacing="1px">
+      <Sidebar />
 
-        <Outlet />
+
+      <Outlet />
+      </Grid>
+        
     </div>
   )
 }

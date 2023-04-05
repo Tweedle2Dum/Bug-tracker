@@ -35,7 +35,7 @@ export default function Header() {
           alignItems="center"
           gap="16"
           fontSize={24}
-          boxShadow={"lg"}
+          boxShadow={"2xl"}
           px="12px"
           borderRadius={"12px"}
         >

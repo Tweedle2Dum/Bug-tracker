@@ -10,7 +10,7 @@ export default function LandingLayout() {
         padding={"20px"}
       >
         <Header />
-      <Spacer height={["24px","24px","24px","24px"]} />  
+      <Spacer height={{base:"24px"}} />  
         <Outlet />
       </Box>
     </div>

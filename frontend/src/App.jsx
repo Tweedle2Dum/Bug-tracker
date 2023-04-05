@@ -13,7 +13,7 @@ import LandingLayout from "./layout/LandingLayout";
 
 //pages
 import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/DashboardHome";
 import How from "./pages/How";
 import About from "./pages/About";
 
@@ -28,7 +28,7 @@ function App() {
         </Route>
 
         <Route element={<DashBoardLayout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/home" element={<Dashboard />} />
         </Route>
       </>
     )

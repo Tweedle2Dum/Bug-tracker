@@ -13,7 +13,7 @@ export default function Cta() {
     <Box>
       <Flex wrap={"wrap"} justifyContent={"center"} gap={"5em"}>
         <Image flex={"1 1 auto"}
-          boxShadow={"lg"}
+          boxShadow={"2xl"}
           maxWidth={"520px"}
           minWidth={"320px"}
           objectFit={"fill"}
