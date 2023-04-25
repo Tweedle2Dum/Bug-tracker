@@ -79,8 +79,8 @@ export default function Header() {
                 About
               </Link>
             </Box>
-            <Button colorScheme="blue" size={"lg"}>
-              Log In
+            <Button  colorScheme="blue" size={"lg"}>
+              <Link as={NavLink} to="/login" textDecoration={"none"} size={"lg"}>Log In</Link>
             </Button>
           </Box>
 

@@ -5,6 +5,7 @@ const theme = extendTheme({
     heading: `'Comfortaa', sans-serif`,
     body: `'Comfortaa', sans-serif`,
   },
+  
 })
 
 export default theme

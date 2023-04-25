@@ -10,12 +10,14 @@ import {
 //layout
 import DashBoardLayout from "./layout/DashboardLayout";
 import LandingLayout from "./layout/LandingLayout";
+import SignUpLayout from "./layout/SignUpLayout";
 
 //pages
 import Home from "./pages/Home";
 import Dashboard from "./pages/DashboardHome";
 import How from "./pages/How";
 import About from "./pages/About";
+import Login from "./pages/Login";
 
 function App() {
   const router = createBrowserRouter(
@@ -29,6 +31,10 @@ function App() {
 
         <Route element={<DashBoardLayout />}>
           <Route path="/dashboard/home" element={<Dashboard />} />
+        </Route>
+
+        <Route element={<SignUpLayout />}>
+          <Route path="/login" element={<Login/>} />
         </Route>
       </>
     )
