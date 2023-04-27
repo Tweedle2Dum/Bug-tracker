@@ -6,6 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+import {  AuthProvider } from "./context/AuthContext";
 
 //layout
 import DashBoardLayout from "./layout/DashboardLayout";
@@ -18,15 +19,15 @@ import Dashboard from "./pages/DashboardHome";
 import How from "./pages/How";
 import About from "./pages/About";
 import Login from "./pages/Login";
-
+import Signup from "./pages/Signup";
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
         <Route element={<LandingLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/howitworks" element = {<How />} />
-          <Route path="/about" element = { <About />} />
+          <Route path="/howitworks" element={<How />} />
+          <Route path="/about" element={<About />} />
         </Route>
 
         <Route element={<DashBoardLayout />}>
@@ -34,15 +35,17 @@ function App() {
         </Route>
 
         <Route element={<SignUpLayout />}>
-          <Route path="/login" element={<Login/>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />}></Route>
         </Route>
       </>
     )
   );
 
   return (
-  
-  <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   );
 }
 

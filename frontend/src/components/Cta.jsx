@@ -8,11 +8,14 @@ import {
   Button,
   Heading,
 } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
+import { Link } from "@chakra-ui/react";
 export default function Cta() {
   return (
     <Box>
       <Flex wrap={"wrap"} justifyContent={"center"} gap={"5em"}>
-        <Image flex={"1 1 auto"}
+        <Image
+          flex={"1 1 auto"}
           boxShadow={"2xl"}
           maxWidth={"520px"}
           minWidth={"320px"}
@@ -31,7 +34,9 @@ export default function Cta() {
           </Text>
           <Center marginTop={"20px"}>
             <Button colorScheme={"blue"} size={"lg"} borderRadius="12px">
-              Sign Up
+              <Link as={NavLink} to="/signup">
+                Sign Up
+              </Link>
             </Button>
           </Center>
         </Box>

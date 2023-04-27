@@ -1,23 +1,21 @@
 import React from 'react'
 import { useRef } from 'react'
 import {Text,Heading, Card,CardHeader,CardBody,CardFooter, FormControl, FormLabel, Input, FormHelperText, Button } from '@chakra-ui/react'
-import { AuthProvider, useAuth } from '../context/AuthContext' 
-import { Link } from '@chakra-ui/react'
-import { NavLink } from 'react-router-dom'
+import { AuthProvider, } from '../context/AuthContext' 
 
 
 export default function LogIn() {
 
-
-  const emailRef = useRef(null);
+  
+   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-  const {currentUser,signup} = useAuth();
+ 
 
 
 
   function handleSubmit(e){
     e.preventDefault();
-    signup(emailRef.current.value,passwordRef.current.value)
+    signup(emailRef.current.value,passwordRef.current.value);
   }
   return (
     
@@ -54,5 +52,5 @@ export default function LogIn() {
 {/*       <Link as={NavLink} to = "/signup"> Dont have an account? Sign</Link>
  */}
     </>
-  )
+  );
 }

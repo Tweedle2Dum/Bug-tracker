@@ -11,7 +11,6 @@ export default function RootLayout() {
 
       <Outlet />
       </Grid>
-        
     </div>
   )
 }
