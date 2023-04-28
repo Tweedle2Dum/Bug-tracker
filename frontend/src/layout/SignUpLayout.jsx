@@ -7,8 +7,8 @@ export default function SignUpLayout() {
   return (
     <>
      
-      <Container maxW="xl" minH="75vH" display="flex" alignItems={"center"}>
-        <Center flex={"1 1 auto"}>
+      <Container maxW="xl" minH="75vH" display="flex"  alignItems={"center"}>
+        <Center flex={"1 1 auto"} display={"flex"} flexDir={"column"} gap={"20px"}>
         <Outlet />
         </Center>
         
