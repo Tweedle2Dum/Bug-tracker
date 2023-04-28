@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
-import { Link } from "@chakra-ui/react";
+import React, { useRef,useState } from "react";
+import { FormErrorMessage, Link } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
+
 import {
   Text,
   Heading,
@@ -15,18 +16,31 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useAuth } from "../context/AuthContext";
+import { FirebaseError } from "firebase/app";
 
 export default function SignUp() {
+  const [isError,setisError] = useState(false);
+  const [formError,setformError] = useState("");
   const { signup } = useAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
   async function handleSubmit(e) {
     e.preventDefault();
+     if(passwordRef.current.value !== passwordConfirmRef.current.value)
+    {
+      setisError("The entered passwords do not match!")
+      console.log("yolo")
+      return;
+    } 
+
+
     try {
       await signup(emailRef.current.value, passwordRef.current.value);
     } catch (e) {
-      console.warn(e);
+      console.warn(e.message);
+      setformError(e.FirebaseError)
+
     }
   }
 
@@ -40,22 +54,23 @@ export default function SignUp() {
         </CardHeader>
 
         <CardBody display={"flex"} flexDir={"column"} gap={"16px"}>
-          <FormControl isRequired>
+          <FormControl isRequired  >
             <FormLabel>Email Address</FormLabel>
             <Input type="email" ref={emailRef} />
             <FormHelperText>We' ll never share your email.</FormHelperText>
           </FormControl>
 
-          <FormControl isRequired>
+          <FormControl isRequired >
             <FormLabel>Password</FormLabel>
             <Input type="password" ref={passwordRef} />
             <FormHelperText>Enter Password</FormHelperText>
           </FormControl>
 
-          <FormControl isRequired>
+          <FormControl isRequired isInvalid={isError}>
             <FormLabel>Confirm Password</FormLabel>
-            <Input type="password" ref={passwordRef} />
+            <Input type="password" ref={passwordConfirmRef} />
             <FormHelperText>Confirm your Password</FormHelperText>
+            <FormErrorMessage>{isError}</FormErrorMessage>
           </FormControl>
 
           <Button

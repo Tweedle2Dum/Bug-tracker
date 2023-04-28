@@ -1,5 +1,5 @@
 import React from "react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Link,
@@ -18,6 +18,8 @@ import {
 import { AuthProvider } from "../context/AuthContext";
 
 export default function LogIn() {
+
+  const [isError,setisError] = useState()
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -36,13 +38,13 @@ export default function LogIn() {
           </CardHeader>
 
           <CardBody display={"flex"} flexDir={"column"} gap={"16px"}>
-            <FormControl isRequired>
+            <FormControl isRequired isInvalid={isError}>
               <FormLabel>Email Address</FormLabel>
               <Input type="email" ref={emailRef} />
               <FormHelperText>We' ll never share your email.</FormHelperText>
             </FormControl>
 
-            <FormControl isRequired>
+            <FormControl isRequired isInvalid={isError}>
               <FormLabel>Password</FormLabel>
               <Input type="password" ref={passwordRef} />
               <FormHelperText>Enter Password</FormHelperText>
