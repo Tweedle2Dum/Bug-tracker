@@ -3,6 +3,9 @@ import { FormErrorMessage, Link } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 
 import {
+  Alert,
+  AlertIcon,
+  Center,
   Text,
   Heading,
   Card,
@@ -16,32 +19,49 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useAuth } from "../context/AuthContext";
-import { FirebaseError } from "firebase/app";
 
 export default function SignUp() {
+  const[isLoading,setisLoading] = useState(false)
   const [isError,setisError] = useState(false);
   const [formError,setformError] = useState("");
   const { signup } = useAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  async function handleSubmit(e) {
-    e.preventDefault();
-     if(passwordRef.current.value !== passwordConfirmRef.current.value)
+
+  function handleChange(){
+
+    if(passwordRef.current.value !== passwordConfirmRef.current.value)
     {
       setisError("The entered passwords do not match!")
-      console.log("yolo")
-      return;
-    } 
 
+    }
+    else{
+      setisError(false)
+    }
 
+  }
+  
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if(passwordRef.current.value !== passwordConfirmRef.current.value)
+    {
+        return;
+    }
+
+     
     try {
+      setisLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value);
     } catch (e) {
       console.warn(e.message);
-      setformError(e.FirebaseError)
+      setformError(e.message)
+      
 
     }
+    setisLoading(false)
   }
 
   return (
@@ -60,13 +80,13 @@ export default function SignUp() {
             <FormHelperText>We' ll never share your email.</FormHelperText>
           </FormControl>
 
-          <FormControl isRequired >
+          <FormControl isRequired onChange={handleChange} >
             <FormLabel>Password</FormLabel>
             <Input type="password" ref={passwordRef} />
             <FormHelperText>Enter Password</FormHelperText>
           </FormControl>
 
-          <FormControl isRequired isInvalid={isError}>
+          <FormControl isRequired isInvalid={isError} onChange={handleChange}>
             <FormLabel>Confirm Password</FormLabel>
             <Input type="password" ref={passwordConfirmRef} />
             <FormHelperText>Confirm your Password</FormHelperText>
@@ -76,13 +96,20 @@ export default function SignUp() {
           <Button
             type="submit"
             colorScheme="blue"
-            size={"lg"}
+            isLoading={isLoading}
             marginBottom={"20px"}
             onClick={handleSubmit}
           >
             Submit
           </Button>
         </CardBody>
+        <Center>
+          {formError && <Alert status='error' display={"flex"} justifyContent={"center"}>
+          <AlertIcon />
+          {formError}
+          </Alert>}
+        </Center>
+        
       </Card>
 
       {
