@@ -1,23 +1,28 @@
 import React, { useContext, useState, createContext } from "react";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { useEffect } from "react";
 
 export const AuthContext = createContext();
-export function useAuth(){
+export function useAuth() {
   return useContext(AuthContext);
 }
 
-
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
+  const [token, settoken] = useState(null);
+
+ 
 
   function signup(email, password) {
     return createUserWithEmailAndPassword(auth, email, password);
   }
 
-  function login(email,password){
-    return signInWithEmailAndPassword(auth,email,password)
+  function login(email, password) {
+    return signInWithEmailAndPassword(auth, email, password);
   }
 
   useEffect(() => {
@@ -30,7 +35,8 @@ export function AuthProvider({ children }) {
   const value = {
     currentUser,
     signup,
-    login
+    login,
+    
   };
 
   return (

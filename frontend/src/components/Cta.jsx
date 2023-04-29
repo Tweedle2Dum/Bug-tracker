@@ -34,7 +34,7 @@ export default function Cta() {
           </Text>
           <Center marginTop={"20px"}>
             <Button colorScheme={"blue"} size={"lg"} borderRadius="12px">
-              <Link as={NavLink} to="/signup" padding={"100%"}>
+              <Link as={NavLink} to="/signup" padding={"20%"}>
                 Sign Up
               </Link>
             </Button>

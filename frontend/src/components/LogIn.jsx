@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink,useNavigate } from "react-router-dom";
 import {
   Link,
   Text,
@@ -21,6 +21,8 @@ import {
 import {  useAuth } from "../context/AuthContext";
 
 export default function LogIn() {
+
+  const navigate = useNavigate();
   const {login} = useAuth();
   const [isLoading, setisLoading] = useState(false);
   const [formError, setformError] = useState("");
@@ -33,6 +35,7 @@ export default function LogIn() {
     try {
       setisLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
+      navigate("/dashboard/home");
     } catch (e) {
       console.warn(e.message);
       setformError(e.message);

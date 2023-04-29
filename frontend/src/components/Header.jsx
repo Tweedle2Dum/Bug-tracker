@@ -22,9 +22,6 @@ export default function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
-
-
-
   return (
     <>
       <header>
@@ -61,7 +58,18 @@ export default function Header() {
             </Text>
           </Box>
 
-          <Box marginLeft={"auto"} display={{base:"none",sm:"none",md:"flex",lg:"flex",xl:"flex"}} alignItems="center" gap="16">
+          <Box
+            marginLeft={"auto"}
+            display={{
+              base: "none",
+              sm: "none",
+              md: "flex",
+              lg: "flex",
+              xl: "flex",
+            }}
+            alignItems="center"
+            gap="16"
+          >
             <Box>
               <Link as={NavLink} to="/">
                 Home
@@ -79,8 +87,16 @@ export default function Header() {
                 About
               </Link>
             </Box>
-            <Button  colorScheme="blue" size={"lg"}>
-              <Link as={NavLink} to="/login" textDecor={"none"} size={"lg"}padding={"100%"}>Log In</Link>
+            <Button colorScheme="blue" size={"lg"}>
+              <Link
+                as={NavLink}
+                to="/login"
+                textDecor={"none"}
+                size={"lg"}
+                padding={"20%"}
+              >
+                Log In
+              </Link>
             </Button>
           </Box>
 
@@ -100,7 +116,7 @@ export default function Header() {
             onClick={onOpen}
             position="absolute"
             right={"10"}
-            display = {{md:"none"}}
+            display={{ md: "none" }}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +163,9 @@ export default function Header() {
                   </Box>
 
                   <Button colorScheme="blue" size={"lg"}>
-                    Log In
+                    <Link as={NavLink} to="/login" padding={"20%"}>
+                      Log In
+                    </Link>
                   </Button>
                 </Box>
               </DrawerBody>

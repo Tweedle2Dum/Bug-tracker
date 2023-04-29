@@ -1,6 +1,6 @@
-import React, { useRef,useState } from "react";
+import React, { useRef, useState } from "react";
 import { FormErrorMessage, Link } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import {
   Alert,
@@ -21,47 +21,42 @@ import {
 import { useAuth } from "../context/AuthContext";
 
 export default function SignUp() {
-  const[isLoading,setisLoading] = useState(false)
-  const [isError,setisError] = useState(false);
-  const [formError,setformError] = useState("");
-  const { signup } = useAuth();
+  const navigate = useNavigate();
+  const [isLoading, setisLoading] = useState(false);
+  const [isError, setisError] = useState(false);
+  const [formError, setformError] = useState("");
+  const { signup, currentUser } = useAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
 
-  function handleChange(){
-
-    if(passwordRef.current.value !== passwordConfirmRef.current.value)
-    {
-      setisError("The entered passwords do not match!")
-
+  function handleChange() {
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+      setisError("The entered passwords do not match!");
+    } else {
+      setisError(false);
     }
-    else{
-      setisError(false)
-    }
-
   }
-  
 
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if(passwordRef.current.value !== passwordConfirmRef.current.value)
-    {
-        return;
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+      return;
     }
 
-     
     try {
-      setisLoading(true)
+      setisLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
+      navigate("/dashboard/home")
+      
     } catch (e) {
       console.warn(e.message);
-      setformError(e.message)
-      
-
+      setformError(e.message);
     }
-    setisLoading(false)
+    setisLoading(false);
+
+    console.log(currentUser);
   }
 
   return (
@@ -74,13 +69,13 @@ export default function SignUp() {
         </CardHeader>
 
         <CardBody display={"flex"} flexDir={"column"} gap={"16px"}>
-          <FormControl isRequired  >
+          <FormControl isRequired>
             <FormLabel>Email Address</FormLabel>
             <Input type="email" ref={emailRef} />
             <FormHelperText>We' ll never share your email.</FormHelperText>
           </FormControl>
 
-          <FormControl isRequired onChange={handleChange} >
+          <FormControl isRequired onChange={handleChange}>
             <FormLabel>Password</FormLabel>
             <Input type="password" ref={passwordRef} />
             <FormHelperText>Enter Password</FormHelperText>
@@ -104,12 +99,13 @@ export default function SignUp() {
           </Button>
         </CardBody>
         <Center>
-          {formError && <Alert status='error' display={"flex"} justifyContent={"center"}>
-          <AlertIcon />
-          {formError}
-          </Alert>}
+          {formError && (
+            <Alert status="error" display={"flex"} justifyContent={"center"}>
+              <AlertIcon />
+              {formError}
+            </Alert>
+          )}
         </Center>
-        
       </Card>
 
       {
