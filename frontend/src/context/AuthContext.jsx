@@ -13,7 +13,6 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
-  const [token, settoken] = useState(null);
 
  
 
@@ -33,7 +32,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const value = {
-    currentUser,
+    currentUser:false,
     signup,
     login,
     
