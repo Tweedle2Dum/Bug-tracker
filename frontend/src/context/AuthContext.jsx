@@ -12,7 +12,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState(false);
 
  
 
@@ -27,12 +27,13 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
+      console.log(user)
     });
     return unsubscribe;
   }, []);
 
   const value = {
-    currentUser:false,
+    currentUser,
     signup,
     login,
     

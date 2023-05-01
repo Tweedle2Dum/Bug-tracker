@@ -56,7 +56,7 @@ export default function SignUp() {
     }
     setisLoading(false);
 
-    console.log(currentUser);
+    
   }
 
   return (

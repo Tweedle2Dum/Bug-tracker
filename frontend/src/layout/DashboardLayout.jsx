@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext'
 
 export default function RootLayout() {
   const {currentUser} = useAuth()
+  console.log(currentUser)
   
   return (
     <div className="Root-layout">
