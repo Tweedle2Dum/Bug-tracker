@@ -1,9 +1,16 @@
 import React from "react";
-import { Box, Text, Link } from "@chakra-ui/react";
+import { Box, Text, Link, Center } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
+import SignOut from "./SignOut";
 export default function Sidebar() {
   return (
-    <Box  display="flex" flexDir={"column"} rowGap="36px" borderRadius={"12px"} boxShadow={"2xl"}>
+    <Box
+      display="flex"
+      flexDir={"column"}
+      rowGap="36px"
+      borderRadius={"12px"}
+      boxShadow={"2xl"}
+    >
       <Box position={"relative"}>
         <svg
           viewBox="0 0 200 200"
@@ -25,24 +32,34 @@ export default function Sidebar() {
           Tracker
         </Text>
       </Box>
-    <Box display={"flex"} flexDir="column" gap={"20px"} fontSize="20px" padding={"24px"} rowGap="36px">
-      <Link as={NavLink} to="/dashboard/home">
-        {" "}
-        Home
-      </Link>
-      <Link as={NavLink} to="/dashboard/settings">
-        Active Bugs
-      </Link>
+      <Box
+        display={"flex"}
+        flexDir="column"
+        gap={"20px"}
+        fontSize="20px"
+        padding={"24px"}
+        rowGap="36px"
+      >
+        <Link as={NavLink} to="/dashboard/home">
+          {" "}
+          Home
+        </Link>
+        <Link as={NavLink} to="/dashboard/settings">
+          Active Bugs
+        </Link>
 
-      <Link as={NavLink} to="/dashboard/statistics">
-        {" "}
-        Statistics
-      </Link>
-      <Link as={NavLink} to="/dashboard/profile">
-        {" "}
-        Profile
-      </Link>
+        <Link as={NavLink} to="/dashboard/statistics">
+          {" "}
+          Statistics
+        </Link>
+        <Link as={NavLink} to="/dashboard/profile">
+          {" "}
+          Profile
+        </Link>
       </Box>
+      <Center margin={"auto 0 20px 0"}>
+        <SignOut />
+      </Center>
     </Box>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { FormErrorMessage, Link } from "@chakra-ui/react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { addNewUser } from "../firestore";
 
 import {
   Alert,
@@ -28,6 +29,7 @@ export default function SignUp() {
   const { signup, currentUser } = useAuth();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const usernameRef = useRef();
   const passwordConfirmRef = useRef();
 
   function handleChange() {
@@ -48,6 +50,8 @@ export default function SignUp() {
     try {
       setisLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
+      await addNewUser(emailRef.current.value,usernameRef.current.value);
+
       navigate("/dashboard/home")
       
     } catch (e) {
@@ -69,6 +73,13 @@ export default function SignUp() {
         </CardHeader>
 
         <CardBody display={"flex"} flexDir={"column"} gap={"16px"}>
+        <FormControl isRequired>
+            <FormLabel>Username</FormLabel>
+            <Input type="text" ref={usernameRef} />
+            <FormHelperText>Enter your username.</FormHelperText>
+          </FormControl>
+
+
           <FormControl isRequired>
             <FormLabel>Email Address</FormLabel>
             <Input type="email" ref={emailRef} />
