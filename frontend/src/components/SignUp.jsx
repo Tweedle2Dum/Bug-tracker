@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { FormErrorMessage, Link } from "@chakra-ui/react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { addNewUser } from "../firestore";
@@ -27,6 +27,7 @@ export default function SignUp() {
   const [isError, setisError] = useState(false);
   const [formError, setformError] = useState("");
   const { signup, currentUser } = useAuth();
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const usernameRef = useRef();
@@ -47,20 +48,28 @@ export default function SignUp() {
       return;
     }
 
-    try {
-      setisLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
-      await addNewUser(emailRef.current.value,usernameRef.current.value);
+    setisLoading(true);
+    signup(emailRef.current.value, passwordRef.current.value)
+      .then(() => {
+        addNewUser(emailRef.current.value, usernameRef.current.value);
+      })
+      .then(() => {
+        setisLoading(false);
+      })
+      .then(() => {
+        navigate("/dashboard/home");
+      })
+      .catch((e) => {
+        setisLoading(false);
 
-      navigate("/dashboard/home")
+        console.warn(e.message);
+        setformError(e.message);
+      });
+
+
+     
+     
       
-    } catch (e) {
-      console.warn(e.message);
-      setformError(e.message);
-    }
-    setisLoading(false);
-
-    
   }
 
   return (
@@ -73,12 +82,11 @@ export default function SignUp() {
         </CardHeader>
 
         <CardBody display={"flex"} flexDir={"column"} gap={"16px"}>
-        <FormControl isRequired>
+          <FormControl isRequired>
             <FormLabel>Username</FormLabel>
             <Input type="text" ref={usernameRef} />
             <FormHelperText>Enter your username.</FormHelperText>
           </FormControl>
-
 
           <FormControl isRequired>
             <FormLabel>Email Address</FormLabel>
