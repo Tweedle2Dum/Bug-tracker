@@ -1,8 +1,12 @@
 import React from "react";
 import { Box, Grid } from "@chakra-ui/react";
 import WelcomeBar from "../components/WelcomeBar";
+import { useOutletContext } from "react-router-dom";
 export default function DashboardHome() {
+  const {userDetails} = useOutletContext();
+  console.log(userDetails)
   return (
+    
     <Box>
       <Grid
       gridGap={"20px"}
@@ -10,7 +14,7 @@ export default function DashboardHome() {
       gridTemplateRows = {"8em 20vh 20vh 15em"}
       gridTemplateAreas={" 'h h h' 'g1 g1 g2' 'g1 g1 g3' 'g4 g5 .' "}>
         <Box gridArea={"h"}>
-          <WelcomeBar />
+          <WelcomeBar user={userDetails.User} />
         </Box>
         <Box gridArea={"g1"} bgColor="orange">
           {" "}

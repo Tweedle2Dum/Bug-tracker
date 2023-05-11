@@ -6,6 +6,7 @@ import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
 import { getUserDetails } from "../firestore";
 import { Spinner, Center } from "@chakra-ui/react";
+import InfoModal from "../components/InfoModal";
 
 export default function DashboardLayout() {
   const { currentUser } = useAuth();
@@ -30,7 +31,8 @@ export default function DashboardLayout() {
       return (
         <div className="Root-layout">
           <>
-          {console.log(userDetails)}
+
+          <InfoModal userDetails = {userDetails} />
             <Grid
               gridTemplateColumns={"200px 1fr"}
               gridAutoRows={"90vh"}
@@ -40,7 +42,7 @@ export default function DashboardLayout() {
             >
               <Sidebar />
 
-              <Outlet />
+              <Outlet context={{userDetails}} />
             </Grid>
           </>
         </div>

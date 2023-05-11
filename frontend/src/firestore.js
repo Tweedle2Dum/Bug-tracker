@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { doc,setDoc, getDoc } from "firebase/firestore";
+import { doc,setDoc, getDoc, updateDoc } from "firebase/firestore";
 import { auth } from "./firebase";
 
 export async function addNewUser(email,username){
@@ -41,4 +41,18 @@ export async function getUserDetails() {
   
 
   
+}
+
+
+export async function updateUserDetails(role,intro){
+
+  const docRef = doc(db,'users',auth.currentUser.uid);
+
+  await updateDoc(docRef, {
+    "role": role,
+    "intro": intro,
+    "newUser":false
+  })
+
+
 }
