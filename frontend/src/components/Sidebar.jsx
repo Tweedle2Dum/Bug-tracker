@@ -44,7 +44,8 @@ export default function Sidebar() {
           {" "}
           Home
         </Link>
-        <Link as={NavLink} to="/dashboard/settings">
+        <Link as={NavLink} to="/dashboard/activebugs">
+          {" "}
           Active Bugs
         </Link>
 

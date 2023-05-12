@@ -31,13 +31,7 @@ export default function InfoModal({ userDetails }) {
   const introRef = useRef();
   const [formError,setformError] = useState();
 
-  function handleCheck() {
-    console.log(adminRef.current.checked);
-    console.log(adminRef.current.id);
-    console.log(devRef.current.checked);
-    console.log(devRef.current.id);
-    console.log(introRef.current.value)
-  }
+
 
   async function handleSubmit() {
     setisLoading(true);
@@ -57,8 +51,8 @@ export default function InfoModal({ userDetails }) {
 
     try {
       const update = await updateUserDetails(role,introRef.current.value)
-      console.log(update)
       setisLoading(false);
+      onClose();
 
     }
     catch(e){
@@ -101,10 +95,10 @@ export default function InfoModal({ userDetails }) {
             <FormControl isRequired display={"flex"} flexDir={"column"}>
               <FormLabel>Select your role</FormLabel>
               <CheckboxGroup>
-                <Checkbox ref={adminRef} id="admin" onChange={handleCheck}>
+                <Checkbox ref={adminRef} id="admin" >
                   Administrator
                 </Checkbox>
-                <Checkbox id="dev" ref={devRef} onChange={handleCheck}>
+                <Checkbox id="dev" ref={devRef} >
                   Developer
                 </Checkbox>
               </CheckboxGroup>

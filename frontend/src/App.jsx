@@ -20,6 +20,9 @@ import How from "./pages/How";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
+import ActiveBugs from "./pages/activeBugs";
+import Statistics from "./pages/Statistics";
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -32,6 +35,9 @@ function App() {
 
         <Route element={<DashBoardLayout />}>
           <Route path="/dashboard/home" element={<Dashboard />} />
+          <Route path ="/dashboard/profile" element={<Profile/>} />
+          <Route path="/dashboard/activebugs" element={<ActiveBugs/>} />
+          <Route path="/dashboard/statistics" element={<Statistics/>} />
         </Route>
 
         <Route element={<SignUpLayout />}>
