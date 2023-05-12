@@ -1,7 +1,14 @@
 import React from 'react'
+import ProfileCard from '../components/ProfileCard'
+import { useOutletContext } from 'react-router-dom'
 
 export default function Profile() {
+  const {userDetails} = useOutletContext();
+  console.log(userDetails)
   return (
-    <div>Profile</div>
+    
+    <>
+      <ProfileCard userDetails= {userDetails} />
+    </>
   )
 }
