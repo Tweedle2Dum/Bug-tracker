@@ -57,6 +57,17 @@ export default function Sidebar() {
           {" "}
           Profile
         </Link>
+
+        <Link as={NavLink} to="/dashboard/oraganzation">
+          {" "}
+        Organization
+        </Link>
+
+        <Link as={NavLink} to="/dashboard/projects">
+          {" "}
+        Projects
+        </Link>
+
       </Box>
       <Center margin={"auto 0 20px 0"}>
         <SignOut />

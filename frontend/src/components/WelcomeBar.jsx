@@ -8,7 +8,7 @@ export default function WelcomeBar({user}) {
         <Heading>Welcome {user}!!</Heading>
         <Text>Some random text regarding the content</Text>
         </Box>
-        <Avatar name={user} src="" size={"xl"} marginLeft="auto" marginRight={"20px"} ></Avatar>
+        <Avatar name={user} src="" size={"xl"} marginLeft="auto" marginRight={"20px"} bgColor={"blue.500"} ></Avatar>
     </Box>
     )
 }

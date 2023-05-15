@@ -18,7 +18,7 @@ export default function DashboardHome() {
         <Box gridArea={"h"}>
           <WelcomeBar user={userDetails.User} />
         </Box>
-        <Box gridArea={"g1"}>
+        <Box gridArea={"g1"}  borderRadius={"12px"}>
           <Graphactivebugs  bgColor="orange">
             {" "}
           </Graphactivebugs>
