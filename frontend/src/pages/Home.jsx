@@ -1,7 +1,7 @@
 import { Container } from "@chakra-ui/react";
 import React from "react";
-import Cta from "../components/Cta";
-import Features from "../components/Features";
+import Cta from "../components/LandingPage/Cta";
+import Features from "../components/LandingPage/Features";
 export default function Home() {
   return (
     <>

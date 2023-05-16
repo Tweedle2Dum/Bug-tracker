@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Grid } from "@chakra-ui/react";
-import WelcomeBar from "../components/WelcomeBar";
+import WelcomeBar from "../components/Dashboard/Home/WelcomeBar";
 import { useOutletContext } from "react-router-dom";
-import Graphactivebugs from "../components/Graphactivebugs";
+import Graphactivebugs from "../components/Dashboard/Home/Graphactivebugs";
 
 export default function DashboardHome() {
   const { userDetails } = useOutletContext();

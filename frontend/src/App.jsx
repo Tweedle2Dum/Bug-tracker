@@ -6,7 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import {  AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 
 //layout
 import DashBoardLayout from "./layout/DashboardLayout";
@@ -23,6 +23,8 @@ import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import ActiveBugs from "./pages/activeBugs";
 import Statistics from "./pages/Statistics";
+import Projects from "./pages/Projects";
+import Organization from "./pages/Organization";
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -35,9 +37,11 @@ function App() {
 
         <Route element={<DashBoardLayout />}>
           <Route path="/dashboard/home" element={<Dashboard />} />
-          <Route path ="/dashboard/profile" element={<Profile/>} />
-          <Route path="/dashboard/activebugs" element={<ActiveBugs/>} />
-          <Route path="/dashboard/statistics" element={<Statistics/>} />
+          <Route path="/dashboard/profile" element={<Profile />} />
+          <Route path="/dashboard/activebugs" element={<ActiveBugs />} />
+          <Route path="/dashboard/statistics" element={<Statistics />} />
+          <Route path="/dashboard/projects" element={<Projects />} />
+          <Route path="/dashboard/organization" element={<Organization />} />
         </Route>
 
         <Route element={<SignUpLayout />}>

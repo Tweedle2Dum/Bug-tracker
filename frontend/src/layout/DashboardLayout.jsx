@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/Dashboard/Sidebar";
 import { Navigate, Outlet } from "react-router-dom";
 import { Grid } from "@chakra-ui/react";
 import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
 import { getUserDetails } from "../firestore";
 import { Spinner, Center } from "@chakra-ui/react";
-import InfoModal from "../components/InfoModal";
+import InfoModal from "../components/Dashboard/Home/InfoModal";
 
 export default function DashboardLayout() {
   const { currentUser } = useAuth();

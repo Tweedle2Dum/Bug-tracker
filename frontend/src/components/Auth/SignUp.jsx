@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
 import { FormErrorMessage, Link } from "@chakra-ui/react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { addNewUser } from "../firestore";
+import { addNewUser } from "../../firestore";
 
 import {
   Alert,
@@ -19,7 +19,8 @@ import {
   FormHelperText,
   Button,
 } from "@chakra-ui/react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
+import FormError from "../FormError";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -118,12 +119,13 @@ export default function SignUp() {
           </Button>
         </CardBody>
         <Center>
-          {formError && (
+          {/* {formError && (
             <Alert status="error" display={"flex"} justifyContent={"center"}>
               <AlertIcon />
               {formError}
             </Alert>
-          )}
+          )} */}
+          <FormError formError = {formError}  />
         </Center>
       </Card>
 

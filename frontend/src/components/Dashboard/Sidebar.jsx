@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text, Link, Center } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
-import SignOut from "./SignOut";
+import SignOut from "../Auth/SignOut";
 export default function Sidebar() {
   return (
     <Box
@@ -58,7 +58,7 @@ export default function Sidebar() {
           Profile
         </Link>
 
-        <Link as={NavLink} to="/dashboard/oraganzation">
+        <Link as={NavLink} to="/dashboard/organization">
           {" "}
         Organization
         </Link>

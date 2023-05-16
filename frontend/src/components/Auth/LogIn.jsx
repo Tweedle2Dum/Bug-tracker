@@ -18,7 +18,8 @@ import {
   Alert,
   AlertIcon
 } from "@chakra-ui/react";
-import {  useAuth } from "../context/AuthContext";
+import {  useAuth } from "../../context/AuthContext";
+import FormError from "../FormError";
 
 export default function LogIn() {
 
@@ -77,10 +78,12 @@ export default function LogIn() {
             </Button>
           </CardBody>
           <Center>
-          {formError && <Alert status='error' display={"flex"} justifyContent={"center"}>
+
+            <FormError  formError={formError}/>
+          {/* {formError && <Alert status='error' display={"flex"} justifyContent={"center"}>
           <AlertIcon />
           {formError}
-          </Alert>}
+          </Alert>} */}
         </Center>
         </Card>
       

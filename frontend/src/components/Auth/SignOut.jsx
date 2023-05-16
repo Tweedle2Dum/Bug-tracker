@@ -1,5 +1,5 @@
 import React from "react";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 import { Button } from "@chakra-ui/react";
 import { signOut } from "firebase/auth";
 export default function SignOut() {

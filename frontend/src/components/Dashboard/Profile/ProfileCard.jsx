@@ -1,8 +1,5 @@
 import {
   Avatar,
-  Card,
-  CardBody,
-  CardHeader,
   Heading,
   Text,
   Box
