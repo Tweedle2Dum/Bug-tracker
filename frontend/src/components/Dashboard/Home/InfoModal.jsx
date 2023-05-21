@@ -21,7 +21,7 @@ import {
   Heading,
   Center
 } from "@chakra-ui/react";
-import { updateUserDetails } from "../../../firestore";
+import { updateUserDetails } from "../../../utils";
 
 export default function InfoModal({ userDetails }) {
   const { isOpen, onOpen, onClose } = useDisclosure();

@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { Grid } from "@chakra-ui/react";
 import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
-import { getUserDetails } from "../firestore";
+import { getUserDetails } from "../utils";
 import { Spinner, Center } from "@chakra-ui/react";
 import InfoModal from "../components/Dashboard/Home/InfoModal";
 

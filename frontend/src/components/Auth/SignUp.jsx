@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
 import { FormErrorMessage, Link } from "@chakra-ui/react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { addNewUser } from "../../firestore";
+import { addNewUser } from "../../utils";
 
 import {
   Alert,
