@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { getUserDetails } from "../utils";
 import { Spinner, Center } from "@chakra-ui/react";
 import InfoModal from "../components/Dashboard/Home/InfoModal";
+import Loading from "../components/Loading";
 
 export default function DashboardLayout() {
   const { currentUser } = useAuth();
@@ -53,15 +54,7 @@ export default function DashboardLayout() {
       return (
         <>
           <div className="Root-layout">
-            <Center height={"100vh"}>
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="blue.500"
-                size="xl"
-              />
-            </Center>
+            <Loading />
           </div>
         </>
       );

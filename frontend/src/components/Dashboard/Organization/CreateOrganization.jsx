@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import FormError from "../../FormError";
 import {
   Heading,
@@ -23,6 +23,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { addNewOrganization } from "../../../utils";
+import { getOrganizationDetails } from "../../../utils";
 
 export default function CreateOrganization() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,6 +31,12 @@ export default function CreateOrganization() {
   const [formError, setformError] = useState();
   const nameRef = useRef(null);
   const introRef = useRef(null);
+  const Droparea = useRef(null);
+
+
+
+  
+
 
   async function handleSubmit() {
     try {
@@ -50,6 +57,10 @@ export default function CreateOrganization() {
     console.log("yolo");
     onOpen();
   }
+
+
+
+
 
   return (
     <>
@@ -73,6 +84,7 @@ export default function CreateOrganization() {
                 outline={"dashed"}
                 outlineColor={"#cccccc"}
                 borderRadius={"12px"}
+                ref = {Droparea}
                 
                 
               >
