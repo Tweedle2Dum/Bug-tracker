@@ -5,10 +5,11 @@ import { addNewOrganization, getOrganizationDetails } from "../utils";
 import { Box } from "@chakra-ui/react";
 import OrganizationTip from "../components/Dashboard/Organization/OrganizationTip";
 import Loading from "../components/Loading";
-
+import { onSnapshot,doc } from "firebase/firestore";
+import { auth,db } from "../firebase";
 
 export default function Organization() {
-  const [organization, setOrganization] = useState(null);
+  const [organization, setOrganization] = useState([]);
   const [message,setMessage] = useState(null)
   const [isLoading,setisLoading] = useState(true);
   useEffect(() => {
@@ -26,6 +27,26 @@ export default function Organization() {
   }, []);
 
 
+
+
+  useEffect(()=>{
+
+      const unsubscribe = onSnapshot(doc(db,"organizations",auth.currentUser.uid),(doc)=>{
+        setOrganization(doc.data())
+      })
+
+
+      return ()=>{
+        unsubscribe()
+      }
+  },[])
+
+  
+
+
+
+
+
 if(isLoading){
   return <><Loading/></>
 }
@@ -40,7 +61,7 @@ else
       <OrganizationTip message= {message} />
       <CreateOrganization />
       </Box>
-      <OrganizationList name={organization.Organization} intro = {organization.Intro}   />
+      <OrganizationList data={organization} />
       </Box>
   );
 

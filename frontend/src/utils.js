@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { doc,setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { doc,setDoc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { auth } from "./firebase";
 import { storage } from "./firebase";
 
@@ -78,12 +78,34 @@ export async function getOrganizationDetails() {
 
 
 export async function addNewOrganization(organization,intro){
+
+  const docRef = doc(db,"organizations",auth.currentUser.uid)
+  const obj = {
+    Organization:organization,
+    Intro:intro
+  }
+
   try {
-    await setDoc(doc(db,"organizations",auth.currentUser.uid),{
-      Organization:organization,
-      Intro:intro
+
+    const docSnap = await getDoc(docRef) 
+
+
+    if(docSnap.exists())
+    {
+    await updateDoc(doc(db,"organizations",auth.currentUser.uid),{
+      
+      Organizations:arrayUnion(obj)
 
    });
+  }
+  else
+  {
+    await setDoc(doc(db,"organizations",auth.currentUser.uid),{
+      Organizations:arrayUnion(obj)
+
+   });
+    
+  }
    
   }
   
