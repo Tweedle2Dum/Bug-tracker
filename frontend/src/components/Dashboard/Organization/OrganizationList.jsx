@@ -1,16 +1,18 @@
 import React from 'react'
-
+import OrganizationCard from './OrganizationCard';
 export default function OrganizationList({data}) {
-  let i = 0 ; 
-  const chemist = (data.Organizations).map(organization=>{
-     return <li>{organization.Intro}</li>
-  })
+  
   
   
   return (
     <>
-    <div>{console.log((data.Organizations))}</div>
-    <ul>{chemist}</ul>
+    
+
+
+    {data && (data.Organizations).map(organization=>{
+      let i = 0 ;
+     return (<> <OrganizationCard key={organization.Id} name = {organization.Name} intro = {organization.Intro} /></>)
+  })}
     
    </>
   )

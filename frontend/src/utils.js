@@ -77,11 +77,14 @@ export async function getOrganizationDetails() {
 }
 
 
-export async function addNewOrganization(organization,intro){
+export async function addNewOrganization(name,intro){
 
   const docRef = doc(db,"organizations",auth.currentUser.uid)
+  
+  
   const obj = {
-    Organization:organization,
+    Id:docRef.id,
+    Name:name,
     Intro:intro
   }
 
