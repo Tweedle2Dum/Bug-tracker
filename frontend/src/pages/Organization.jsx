@@ -15,7 +15,7 @@ export default function Organization() {
   useEffect(() => {
     const data = getOrganizationDetails()
       .then((data) => {
-        setOrganization(data);
+        setOrganization(prevState => [...prevState,data]);
         setMessage("Here is a list of all the organizations that you are part of....")
         setisLoading(false)
       })

@@ -21,7 +21,7 @@ export default function DashboardLayout() {
       setUserDetails(data);
     })
     .catch((e)=>{
-      console.warm("unable to fetch user data");
+      console.warn("unable to fetch user data");
 
     })
   

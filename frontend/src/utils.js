@@ -2,6 +2,7 @@ import { db } from "./firebase";
 import { doc,setDoc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { auth } from "./firebase";
 import { storage } from "./firebase";
+import { v4 as uuidv4 } from "uuid";
 
 export async function addNewUser(email,username){
     try {
@@ -83,7 +84,7 @@ export async function addNewOrganization(name,intro){
   
   
   const obj = {
-    Id:docRef.id,
+    Id:uuidv4(),
     Name:name,
     Intro:intro
   }

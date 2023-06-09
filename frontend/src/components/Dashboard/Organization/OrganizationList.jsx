@@ -1,19 +1,21 @@
 import React from 'react'
 import OrganizationCard from './OrganizationCard';
+import { Box } from '@chakra-ui/react';
 export default function OrganizationList({data}) {
   
   
   
-  return (
-    <>
-    
+  
+    return (
+      <>
+      {data && (data.Organizations).map(organization=>{
+       return (<Box key={organization.Id}> <OrganizationCard key={organization.Id} name = {organization.Name} intro = {organization.Intro} /></Box>)
+    })}
+      </>
+    )
+
+  }
+  
+ 
 
 
-    {data && (data.Organizations).map(organization=>{
-      let i = 0 ;
-     return (<> <OrganizationCard key={organization.Id} name = {organization.Name} intro = {organization.Intro} /></>)
-  })}
-    
-   </>
-  )
-}
