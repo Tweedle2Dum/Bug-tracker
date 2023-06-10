@@ -31,7 +31,7 @@ export default function Organization() {
 
   useEffect(()=>{
 
-      const unsubscribe = onSnapshot(doc(db,"organizations",auth.currentUser.uid),(doc)=>{
+      const unsubscribe = onSnapshot(doc(db,"userorganizations",auth.currentUser.uid),(doc)=>{
         setOrganization(doc.data())
       })
 

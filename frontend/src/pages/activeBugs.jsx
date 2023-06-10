@@ -1,7 +1,13 @@
-import React from 'react'
-
+import React from "react";
+import CreateBug from "../components/Dashboard/ActiveBugs/CreateBug";
+import { Box } from "@chakra-ui/react";
 export default function activeBugs() {
   return (
-    <div>activeBugs</div>
-  )
+    <>
+      <Box display={"flex"}>
+        <Box marginLeft={'auto'}><CreateBug/></Box>
+        
+      </Box>
+    </>
+  );
 }

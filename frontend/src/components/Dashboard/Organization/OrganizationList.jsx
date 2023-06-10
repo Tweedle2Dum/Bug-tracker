@@ -4,8 +4,14 @@ import { Box } from '@chakra-ui/react';
 export default function OrganizationList({data}) {
   
   
-  
-  
+  if(data===undefined){
+    return <></>
+  }
+  if(data.Organizations===undefined){
+    return <></>
+  }
+  else
+  {
     return (
       <>
       {data && (data.Organizations).map(organization=>{
@@ -14,6 +20,10 @@ export default function OrganizationList({data}) {
       </>
     )
 
+
+  }
+  
+  
   }
   
  

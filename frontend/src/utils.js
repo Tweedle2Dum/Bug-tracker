@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { doc,setDoc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc,setDoc, getDoc, updateDoc, arrayUnion,addDoc } from "firebase/firestore";
 import { auth } from "./firebase";
 import { storage } from "./firebase";
 import { v4 as uuidv4 } from "uuid";
@@ -40,9 +40,6 @@ export async function getUserDetails() {
     console.log("NO SUCH DOCUMENT");
   }
 
-  
-
-  
 }
 
 
@@ -61,7 +58,7 @@ export async function updateUserDetails(role,intro){
 
 
 export async function getOrganizationDetails() {
-  const docRef = doc(db,"organizations",auth.currentUser.uid);
+  const docRef = doc(db,"userorganizations",auth.currentUser.uid);
   const docSnap = await getDoc(docRef);
 
   if(docSnap.exists()){
@@ -78,25 +75,45 @@ export async function getOrganizationDetails() {
 }
 
 
-export async function addNewOrganization(name,intro){
+export async function addOrgList (id,name,intro){
 
-  const docRef = doc(db,"organizations",auth.currentUser.uid)
-  
+try {
+  await setDoc(doc(db,"organizations",id),{
+    Id:id,
+    Name:name,
+    Intro:intro,
+
+  })
+
+
+}
+catch(e){
+  console.log(e)
+}
+ 
+}
+
+
+export async function addNewOrganization(name,intro){
+  const Id = uuidv4()
+  const docRef = doc(db,"userorganizations",auth.currentUser.uid)
   
   const obj = {
-    Id:uuidv4(),
+    Id:Id,
     Name:name,
     Intro:intro
   }
 
-  try {
+  await addOrgList(Id,name,intro);
 
+  try {
+    
     const docSnap = await getDoc(docRef) 
 
 
     if(docSnap.exists())
     {
-    await updateDoc(doc(db,"organizations",auth.currentUser.uid),{
+    await updateDoc(doc(db,"userorganizations",auth.currentUser.uid),{
       
       Organizations:arrayUnion(obj)
 
@@ -104,7 +121,7 @@ export async function addNewOrganization(name,intro){
   }
   else
   {
-    await setDoc(doc(db,"organizations",auth.currentUser.uid),{
+    await setDoc(doc(db,"userorganizations",auth.currentUser.uid),{
       Organizations:arrayUnion(obj)
 
    });
@@ -130,5 +147,10 @@ export async function addProfileImg(){
 
 
 export async function addOrganizationImg(){
+
+}
+
+
+export async function createNewBug(type,severity,comment,organization){
 
 }
