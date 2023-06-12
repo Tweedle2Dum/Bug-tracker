@@ -73,13 +73,30 @@ export default function CreateBug() {
             </Heading>
           </ModalHeader>
           <ModalBody display={"flex"} flexDir={"column"} gap={"1em"}>
-           
+           <FormControl isRequired>
+            <FormLabel>Organization</FormLabel>
           <Select placeholder="Select the organization"  >
               <option value={"High"}>High</option>
               <option value={"Medium"}>Medium</option>
               <option value = {"Low"}>Low</option>
 
             </Select>
+            <FormHelperText>Select the organization which the bug belongs to.</FormHelperText>
+            </FormControl>
+
+
+            <FormControl isRequired>
+              <FormLabel>Select the project</FormLabel>
+            <Select placeholder="Select the project" >
+              <option value={"High"}>High</option>
+              <option value={"Medium"}>Medium</option>
+              <option value = {"Low"}>Low</option>
+
+            </Select>
+
+            <FormHelperText>Select the project in which the bug exists.</FormHelperText>
+            </FormControl>
+            
             <FormControl isRequired display={"flex"} flexDir={"column"}>
               <FormLabel>Enter type</FormLabel>
               <Input type="text" ref={nameRef} />
@@ -87,12 +104,18 @@ export default function CreateBug() {
               <FormHelperText>Keywords to characterize the type of bug.</FormHelperText>
             </FormControl>
             <Divider orientation="horizontal"></Divider>
+            
+            <FormControl isRequired>
+              <FormLabel>Select the severity of the bug</FormLabel>
             <Select placeholder="Select the severity" >
               <option value={"High"}>High</option>
               <option value={"Medium"}>Medium</option>
               <option value = {"Low"}>Low</option>
 
             </Select>
+
+            <FormHelperText>How urgent the bug needs to be dealth with.</FormHelperText>
+            </FormControl>
 
            
             <FormControl isRequired display={"flex"} flexDir={"column"}>
