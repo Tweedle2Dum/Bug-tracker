@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { doc,setDoc, getDoc, updateDoc, arrayUnion,addDoc } from "firebase/firestore";
+import { doc,setDoc, getDoc, updateDoc, arrayUnion,addDoc,collection} from "firebase/firestore";
 import { auth } from "./firebase";
 import { storage } from "./firebase";
 import { v4 as uuidv4 } from "uuid";
@@ -150,13 +150,38 @@ export async function addOrganizationImg(){
 
 }
 
+export async function addNewProject(name,orgId,desc){
+  const docRef = doc(db,'organizations',orgId);
+  const colRef = collection(docRef,"projects")
+try{
+  await addDoc(colRef,{
+    name:name,
+    desc:desc,
+    addedby:auth.currentUser.uid
+
+  })
+  
+
+
+}
+catch(e){
+  console.error(e)
+  return Promise.reject(false)
+}
+
+}
+
 export async function getBugs(){
 
 }
 
 
-export async function createNewBug(type,severity,comment,organization){
+export async function createNewBug(type,severity,comment,orgId){
+
+
+  
+
+
 
 }
-
 

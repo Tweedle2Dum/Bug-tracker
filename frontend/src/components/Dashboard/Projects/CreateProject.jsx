@@ -24,15 +24,16 @@ import {
   Select
 } from "@chakra-ui/react";
 import { addNewOrganization } from "../../../utils";
-import { getOrganizationDetails } from "../../../utils";
+import { addNewProject } from "../../../utils";
+
 
 export default function CreateProject({organizations}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setisLoading] = useState();
   const [formError, setformError] = useState();
   const nameRef = useRef(null);
-  const introRef = useRef(null);
-  const projRef = useRef(null);
+  const descRef = useRef(null);
+  const orgRef = useRef(null);
 
 
 
@@ -42,10 +43,7 @@ export default function CreateProject({organizations}) {
   async function handleSubmit() {
     try {
       setisLoading(true);
-      const update = await addNewOrganization(
-        nameRef.current.value,
-        introRef.current.value
-      );
+      await addNewProject(nameRef.current.value,orgRef.current.value,descRef.current.value)
       setisLoading(false);
     } catch (e) {
       console.warn(e);
@@ -83,11 +81,11 @@ export default function CreateProject({organizations}) {
               <FormHelperText>Name of the project</FormHelperText>
             </FormControl>
             <FormControl isRequired>
-            <FormLabel>Organization</FormLabel>
-          <Select placeholder="Select the organization" ref={projRef}  > {/*render a list here*/}
+            <FormLabel>Select the Organization</FormLabel>
+          <Select placeholder="Select the organization" ref={orgRef}  > {/*render a list here*/}
           {organizations && organizations.map((organization)=>{
             return (
-              <option key={organization.Id} value={organization.Name}>{organization.Name}</option>
+              <option key={organization.Id} value={organization.Id}>{organization.Name}</option>
             )
           })}
               {/* <option value={"High"}>High</option>
@@ -101,7 +99,7 @@ export default function CreateProject({organizations}) {
 
             <FormControl isRequired display={"flex"} flexDir={"column"}>
               <FormLabel>Tell us something about the Project</FormLabel>
-              <Textarea resize={"none"} ref={introRef} />
+              <Textarea resize={"none"} ref={descRef} />
               <FormHelperText>
                 Something about the project!
               </FormHelperText>
