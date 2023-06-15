@@ -150,7 +150,13 @@ export async function addOrganizationImg(){
 
 }
 
+export async function getBugs(){
+
+}
+
 
 export async function createNewBug(type,severity,comment,organization){
 
 }
+
+

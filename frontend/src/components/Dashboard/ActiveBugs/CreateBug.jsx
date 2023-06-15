@@ -24,24 +24,26 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { addNewOrganization } from "../../../utils";
+import { createNewBug } from "../../../utils";
 
-export default function CreateBug() {
+export default function CreateBug({organizations}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setisLoading] = useState();
   const [formError, setformError] = useState();
   const nameRef = useRef(null);
   const introRef = useRef(null);
-  const Droparea = useRef(null);
-
+  const commentRef = useRef(null);
+  const orgRef = useRef(null);
+  const projRef = useRef(null);
 
 
   
 
-
+  console.log(organizations)
   async function handleSubmit() {
     try {
       setisLoading(true);
-      const update = await addNewOrganization(
+      const bug = await createNewBug(
         nameRef.current.value,
         introRef.current.value
       );
@@ -54,9 +56,11 @@ export default function CreateBug() {
   }
 
   function handleClick() {
-    console.log("yolo");
     onOpen();
   }
+
+
+  
 
 
 
@@ -75,10 +79,15 @@ export default function CreateBug() {
           <ModalBody display={"flex"} flexDir={"column"} gap={"1em"}>
            <FormControl isRequired>
             <FormLabel>Organization</FormLabel>
-          <Select placeholder="Select the organization"  >
-              <option value={"High"}>High</option>
+          <Select placeholder="Select the organization" ref={orgRef}  > {/*render a list here*/}
+          {organizations && organizations.map((organization)=>{
+            return (
+              <option key={organization.Id} value={organization.Name}>{organization.Name}</option>
+            )
+          })}
+              {/* <option value={"High"}>High</option>
               <option value={"Medium"}>Medium</option>
-              <option value = {"Low"}>Low</option>
+              <option value = {"Low"}>Low</option> */}
 
             </Select>
             <FormHelperText>Select the organization which the bug belongs to.</FormHelperText>
@@ -87,12 +96,12 @@ export default function CreateBug() {
 
             <FormControl isRequired>
               <FormLabel>Select the project</FormLabel>
-            <Select placeholder="Select the project" >
+            <Select placeholder="Select the project" ref={projRef}>
               <option value={"High"}>High</option>
               <option value={"Medium"}>Medium</option>
               <option value = {"Low"}>Low</option>
 
-            </Select>
+            </Select> 
 
             <FormHelperText>Select the project in which the bug exists.</FormHelperText>
             </FormControl>
@@ -120,7 +129,7 @@ export default function CreateBug() {
            
             <FormControl isRequired display={"flex"} flexDir={"column"}>
               <FormLabel>Comments</FormLabel>
-              <Textarea resize={"none"} ref={introRef} />
+              <Textarea resize={"none"} ref={commentRef} />
               <FormHelperText>
                 Some additional information about the bug
               </FormHelperText>
