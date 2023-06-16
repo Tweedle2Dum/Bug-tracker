@@ -2,16 +2,18 @@ import React from 'react'
 import CreateProject from '../components/Dashboard/Projects/CreateProject'
 import { Box } from '@chakra-ui/react'
 import { useState, useEffect} from 'react';
-import { getOrganizationDetails } from '../utils';
+import { getOrganizationDetails,getAllProjects } from '../utils';
+import ProjectList from '../components/Dashboard/Projects/ProjectList';
+import Loading from '../components/Loading';
+import { onSnapshot } from 'firebase/firestore';
 export default function Projects() {
 
-
+  const [isLoading,setisLoading] = useState(true)
   const [organizations,setOrganization] = useState([]);
   //useEffect for pulling data of all orgs the user is part of 
   useEffect(()=>{
     const data = getOrganizationDetails()
       .then((data) => {
-        console.log(data)
         setOrganization(prevState => [...prevState,...data.Organizations]);
       })
       .catch((e) => {
@@ -19,12 +21,45 @@ export default function Projects() {
       });
 
   },[])
+
+  const [projects,setProjects]=useState([]);
+  useEffect(()=>{
+    const data = getAllProjects()
+    .then((data)=>{
+      console.log(data)
+      setProjects((prevState)=>[...data])
+      setisLoading(false)
+    })
+    .catch((e)=>{
+      setisLoading(false)
+      console.log("some error occured")
+    })
+  },[])
+
+
+
+ 
+
+
+ if(isLoading){
+  return  <><Loading/></>
+ }
+
+ else
+ {
   return (
     <>
-        <Box display={"flex"}>
+        <Box >
+          <Box display={"flex"}>
           <Box marginLeft={"auto"}><CreateProject organizations={organizations}/></Box>
-        
+          </Box>
+          <ProjectList projectsArray={projects} />
         </Box>
+
     </>
   )
+
+ }
+
+  
 }
