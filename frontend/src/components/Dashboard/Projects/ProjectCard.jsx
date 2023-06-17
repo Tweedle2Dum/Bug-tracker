@@ -1,9 +1,11 @@
 import React from 'react'
 
-export default function ProjectCard({name,desc}) {
+export default function ProjectCard({key,name,desc}) {
+ 
   return (
     <>
-        <div>
+    {console.log(name)}
+        <div key={key}>
         {name}
         {desc}
         </div>

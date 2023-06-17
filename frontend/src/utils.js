@@ -177,15 +177,29 @@ catch(e){
   const collectionRef = collection(db,"organizations");
   const docRef = doc(collectionRef,id);
   const projectRef = collection(docRef,"projects")
-  getDocs(projectRef)
+ try {
+  const querysnap = await getDocs(projectRef)
+  querysnap.forEach((doc)=>{
+    projects.push(doc.data())
+  });
+
+  console.log(projects)
+  return projects ;
+ }
+ catch(e){
+  console.log(e)
+ }
+  
+
+
+ /*  getDocs(projectRef)
   .then((querysnap)=>{
     querysnap.forEach((doc)=>{
       projects.push(doc.data())
-      return projects
     })
   }).then(()=>{
     console.log(projects)
-    return projects ;
+    
 
   })
   .catch((e)=>{
@@ -193,7 +207,7 @@ catch(e){
     console.log(e)
     
   })
-  return projects;
+  return projects; */
  
 }
  
@@ -207,7 +221,6 @@ export async function getAllProjects(){
 
     const organizations = docSnap.data();
     const orgId = organizations.Organizations.map(obj=>obj.Id)
-    console.log(orgId)
     const promises = orgId.map(id=>getProject(id));
     const p =await Promise.all(promises)
     .then(results =>{

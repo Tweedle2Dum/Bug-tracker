@@ -8,6 +8,7 @@ import Loading from '../components/Loading';
 import { onSnapshot } from 'firebase/firestore';
 export default function Projects() {
 
+
   const [isLoading,setisLoading] = useState(true)
   const [organizations,setOrganization] = useState([]);
   //useEffect for pulling data of all orgs the user is part of 
@@ -15,6 +16,7 @@ export default function Projects() {
     const data = getOrganizationDetails()
       .then((data) => {
         setOrganization(prevState => [...prevState,...data.Organizations]);
+       
       })
       .catch((e) => {
         console.warn(e);
@@ -24,16 +26,34 @@ export default function Projects() {
 
   const [projects,setProjects]=useState([]);
   useEffect(()=>{
-    const data = getAllProjects()
+    /* const data = getAllProjects()
     .then((data)=>{
       console.log(data)
-      setProjects((prevState)=>[...data])
+      
+      setProjects([...data])
       setisLoading(false)
     })
     .catch((e)=>{
       setisLoading(false)
       console.log("some error occured")
-    })
+
+      
+    }) */
+    async function test(){
+      try {
+      const data = await getAllProjects()
+      console.log(data);
+      const result = [...data]
+      setProjects(prevState => [...prevState,...result])
+      setisLoading(false);
+      }
+      catch(e){
+        console.log(e)
+      }
+    
+
+    }
+    test()
   },[])
 
 
