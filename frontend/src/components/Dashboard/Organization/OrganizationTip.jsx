@@ -1,10 +1,10 @@
-import { Text } from '@chakra-ui/react'
+import { Text,Heading } from '@chakra-ui/react'
 import React from 'react'
 
 export default function OrganizationTip({message}) {
   return (
     <>
-         <Text>{message}</Text>
+         <Heading size={"md"}>{message}</Heading>
     
     </>
   )
