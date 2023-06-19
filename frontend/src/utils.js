@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { doc,setDoc, getDoc, updateDoc, arrayUnion,addDoc,collection, getDocs} from "firebase/firestore";
+import { doc,setDoc, getDoc, updateDoc, arrayUnion,addDoc,collection, getDocs, query, where} from "firebase/firestore";
 import { auth } from "./firebase";
 import { storage } from "./firebase";
 import { v4 as uuidv4 } from "uuid";
@@ -236,13 +236,28 @@ export async function getAllProjects(){
   return projects ;
 }
 
-export async function createNewBug(type,severity,comment,orgId){
-  const docRef = doc(db,"userorganizations",auth.currentUser.uid);
+export async function createNewBug(orgId,proj,name,severity,comments){
+  const docRef = doc(db,"organizations",orgId);
   const docSnap = await getDoc(docRef);
 
   if(docSnap.exists()){
     const organizations = docSnap.data();
     console.log(organizations)
+    const projectRef = collection(docRef,"projects")
+    const q = query(projectRef, where("name","==",proj))
+    const querySnap = await getDocs(q);
+    querySnap.forEach((doc)=>{
+      const parentDocument = doc.ref;
+      console.log(parentDocument)
+      const bugsRef = collection(parentDocument,"bugs") ;
+       addDoc(bugsRef,{
+        orgId:orgId,
+        proj:proj,
+        name:name,
+        severity:severity,
+        comments:comments
+      })
+    })
 
   }
 

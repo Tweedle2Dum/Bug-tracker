@@ -23,29 +23,28 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
-import { addNewOrganization } from "../../../utils";
 import { createNewBug } from "../../../utils";
-import { getAllProjects } from "../../../utils";
-export default function CreateBug({organizations,projects}) {
+export default function CreateBug({ organizations, projects }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setisLoading] = useState();
   const [formError, setformError] = useState();
 
   const nameRef = useRef(null);
-  const introRef = useRef(null);
   const commentRef = useRef(null);
   const orgRef = useRef(null);
   const projRef = useRef(null);
+  const severityRef = useRef(null);
 
-  
-
-  console.log(organizations)
+  console.log(organizations);
   async function handleSubmit() {
     try {
       setisLoading(true);
       const bug = await createNewBug(
+        orgRef.current.value,
+        projRef.current.value,
         nameRef.current.value,
-        introRef.current.value
+        severityRef.current.value,
+        commentRef.current.value
       );
       setisLoading(false);
     } catch (e) {
@@ -59,16 +58,6 @@ export default function CreateBug({organizations,projects}) {
     onOpen();
   }
 
-
-
-  
-
-  
-
-
-
-
-
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={"2xl"}>
@@ -80,59 +69,66 @@ export default function CreateBug({organizations,projects}) {
             </Heading>
           </ModalHeader>
           <ModalBody display={"flex"} flexDir={"column"} gap={"1em"}>
-           <FormControl isRequired>
-            <FormLabel>Organization</FormLabel>
-          <Select placeholder="Select the organization" ref={orgRef}  > {/*render a list here*/}
-          {organizations && organizations.map((organization)=>{
-            return (
-              <option key={organization.Id} value={organization.Name}>{organization.Name}</option>
-            )
-          })}
-              {/* <option value={"High"}>High</option>
-              <option value={"Medium"}>Medium</option>
-              <option value = {"Low"}>Low</option> */}
-
-            </Select>
-            <FormHelperText>Select the organization which the bug belongs to.</FormHelperText>
+            <FormControl isRequired>
+              <FormLabel>Organization</FormLabel>
+              <Select placeholder="Select the organization" ref={orgRef}>
+                {" "}
+                {/*render a list here*/}
+                {organizations &&
+                  organizations.map((organization) => {
+                    return (
+                      <option key={organization.Id} value={organization.Id}>
+                        {organization.Name}
+                      </option>
+                    );
+                  })}
+              </Select>
+              <FormHelperText>
+                Select the organization which the bug belongs to.
+              </FormHelperText>
             </FormControl>
-
 
             <FormControl isRequired>
               <FormLabel>Select the project</FormLabel>
-            <Select placeholder="Select the project" ref={projRef}>
-                {projects && projects.map((project)=>{
-                  return (<option key={project.name} value={project.name}>{project.name}</option>)
-                })}
-              {/* option value={"High"}>High</option>
-              <option value={"Medium"}>Medium</option>
-              <option value = {"Low"}>Low</option> */}
+              <Select placeholder="Select the project" ref={projRef}>
+                {projects &&
+                  projects.map((project) => {
+                    return (
+                      <option key={project.name} value={project.name}>
+                        {project.name}
+                      </option>
+                    );
+                  })}
+              </Select>
 
-            </Select> 
-
-            <FormHelperText>Select the project in which the bug exists.</FormHelperText>
+              <FormHelperText>
+                Select the project in which the bug exists.
+              </FormHelperText>
             </FormControl>
-            
+
             <FormControl isRequired display={"flex"} flexDir={"column"}>
               <FormLabel>Enter type</FormLabel>
               <Input type="text" ref={nameRef} />
 
-              <FormHelperText>Keywords to characterize the type of bug.</FormHelperText>
+              <FormHelperText>
+                Keywords to characterize the type of bug.
+              </FormHelperText>
             </FormControl>
             <Divider orientation="horizontal"></Divider>
-            
+
             <FormControl isRequired>
               <FormLabel>Select the severity of the bug</FormLabel>
-            <Select placeholder="Select the severity" >
-              <option value={"High"}>High</option>
-              <option value={"Medium"}>Medium</option>
-              <option value = {"Low"}>Low</option>
+              <Select placeholder="Select the severity" ref={severityRef}>
+                <option value={"High"}>High</option>
+                <option value={"Medium"}>Medium</option>
+                <option value={"Low"}>Low</option>
+              </Select>
 
-            </Select>
-
-            <FormHelperText>How urgent the bug needs to be dealth with.</FormHelperText>
+              <FormHelperText>
+                How urgent the bug needs to be dealth with.
+              </FormHelperText>
             </FormControl>
 
-           
             <FormControl isRequired display={"flex"} flexDir={"column"}>
               <FormLabel>Comments</FormLabel>
               <Textarea resize={"none"} ref={commentRef} />
