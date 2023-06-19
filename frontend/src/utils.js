@@ -221,6 +221,7 @@ export async function getAllProjects(){
 
     const organizations = docSnap.data();
     const orgId = organizations.Organizations.map(obj=>obj.Id)
+    console.log(orgId)
     const promises = orgId.map(id=>getProject(id));
     const p =await Promise.all(promises)
     .then(results =>{
@@ -230,23 +231,20 @@ export async function getAllProjects(){
     .catch(error=>{
       console.error("some error occured in fetching list of projects")
     })
-
-
-    
-    
-
-    
-
   }
 
   return projects ;
-
-  
-
 }
 
 export async function createNewBug(type,severity,comment,orgId){
+  const docRef = doc(db,"userorganizations",auth.currentUser.uid);
+  const docSnap = await getDoc(docRef);
 
+  if(docSnap.exists()){
+    const organizations = docSnap.data();
+    console.log(organizations)
+
+  }
 
   
 

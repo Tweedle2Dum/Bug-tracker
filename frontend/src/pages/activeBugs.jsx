@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import CreateBug from "../components/Dashboard/ActiveBugs/CreateBug";
 import { Box } from "@chakra-ui/react";
-import { getOrganizationDetails } from "../utils";
+import { getOrganizationDetails,getAllProjects } from "../utils";
 export default function activeBugs() {
 
 
-
+  const [projects,setProjects]=useState([])
   const [organizations,setOrganization] = useState([]);
   //useEffect for pulling data of all orgs the user is part of 
   useEffect(()=>{
@@ -19,11 +19,21 @@ export default function activeBugs() {
       });
 
   },[])
+
+  useEffect(()=>{
+    async function getData (){
+      const data = await getAllProjects();
+      console.log(data)
+      console.log(data.flat(Infinity))
+      setProjects((prevState)=>[...prevState,...(data.flat(Infinity))])
+    }
+    getData()
+  },[])
   return (
     <>
       <Box display={"flex"}>
         <Box marginLeft={'auto'}>
-          <CreateBug organizations={organizations}/></Box>
+          <CreateBug organizations={organizations} projects={projects}/></Box>
         
       </Box>
     </>

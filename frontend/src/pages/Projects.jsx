@@ -5,7 +5,9 @@ import { useState, useEffect} from 'react';
 import { getOrganizationDetails,getAllProjects } from '../utils';
 import ProjectList from '../components/Dashboard/Projects/ProjectList';
 import Loading from '../components/Loading';
-import { onSnapshot } from 'firebase/firestore';
+import { onSnapshot,collection } from 'firebase/firestore';
+import { db } from '../firebase';
+
 export default function Projects() {
 
 
@@ -55,6 +57,12 @@ export default function Projects() {
     }
     test()
   },[])
+
+
+  useEffect(()=>{
+    
+
+  })
 
 
 

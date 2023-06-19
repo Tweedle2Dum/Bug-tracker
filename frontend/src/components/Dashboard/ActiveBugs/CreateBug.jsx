@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
 import FormError from "../../FormError";
-import { Select } from "@chakra-ui/react";
+import { Select, flatten } from "@chakra-ui/react";
 import {
   Heading,
   Button,
@@ -25,17 +25,17 @@ import {
 } from "@chakra-ui/react";
 import { addNewOrganization } from "../../../utils";
 import { createNewBug } from "../../../utils";
-
-export default function CreateBug({organizations}) {
+import { getAllProjects } from "../../../utils";
+export default function CreateBug({organizations,projects}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setisLoading] = useState();
   const [formError, setformError] = useState();
+
   const nameRef = useRef(null);
   const introRef = useRef(null);
   const commentRef = useRef(null);
   const orgRef = useRef(null);
   const projRef = useRef(null);
-
 
   
 
@@ -59,6 +59,9 @@ export default function CreateBug({organizations}) {
     onOpen();
   }
 
+
+
+  
 
   
 
@@ -97,9 +100,12 @@ export default function CreateBug({organizations}) {
             <FormControl isRequired>
               <FormLabel>Select the project</FormLabel>
             <Select placeholder="Select the project" ref={projRef}>
-              <option value={"High"}>High</option>
+                {projects && projects.map((project)=>{
+                  return (<option key={project.name} value={project.name}>{project.name}</option>)
+                })}
+              {/* option value={"High"}>High</option>
               <option value={"Medium"}>Medium</option>
-              <option value = {"Low"}>Low</option>
+              <option value = {"Low"}>Low</option> */}
 
             </Select> 
 
