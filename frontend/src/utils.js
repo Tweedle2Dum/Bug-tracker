@@ -246,9 +246,13 @@ export async function createNewBug(orgId, proj, name, severity, comments) {
     const querySnap = await getDocs(q);
     querySnap.forEach((doc) => {
       const parentDocument = doc.ref;
+      const id = parentDocument.id;
+      console.log(id)
       console.log(parentDocument)
       const bugsRef = collection(parentDocument, "bugs");
+
       addDoc(bugsRef, {
+        projId:id,
         orgId: orgId,
         proj: proj,
         name: name,
@@ -302,25 +306,17 @@ export async function getAllBugs() {
     const projectIds = await getAllProjectId();
     console.log(projectIds)
     console.log(projectIds.length)
-    const queryPromises = projectIds.map(async (projectId) => {
-      console.log('Project ID:', projectId);
-      const querySnapshot = await db
-        .collectionGroup('projects')
-        .where('__name__', '==', projectId)
-        .get();
+    const bugsCollectionRef = collectionGroup(db,"bugs");
+    const bugs = query(bugsCollectionRef,where("projId","in",projectIds));
+    const querySnapshot = await getDocs(bugs); 
 
-      return querySnapshot;
-    });
-    console.log(queryPromises)
-    const querySnapshots = await Promise.all(queryPromises);
+    querySnapshot.forEach((bugDoc)=>{
+      const bugData = bugDoc.data();
+      console.log(bugData)
 
+    })
 
-    querySnapshots.forEach((querySnapshot) => {
-      console.log('Query Snapshot:', querySnapshot);
-      querySnapshot.forEach((doc) => {
-        console.log('Project Document:', doc.data());
-      });
-    });
+   
 
   }
   catch (e) {
