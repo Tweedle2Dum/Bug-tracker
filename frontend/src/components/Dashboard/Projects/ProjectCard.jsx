@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card,CardHeader,CardBody,CardFooter,Heading,Text, Button } from '@chakra-ui/react'
 
-export default function ProjectCard({key,name,desc}) {
+export default function ProjectCard({name,desc}) {
  
   return (
     <>
@@ -9,10 +9,11 @@ export default function ProjectCard({key,name,desc}) {
     <Card margin={"4px 4px 4px 4px"}>
       <CardBody>
     
-        <div key={key}>
+        <div>
         <Heading size={"md"}>Name: {name}</Heading>
         
-        <Text padding={"4px 0"}><Heading size={"sm"} margin={"4px 0"}>Description:</Heading> {desc}</Text>
+        <Text padding={"4px"}><Heading as={"span"} display={"inline-block "} size={"sm"} margin={"4px 0"}>Description: </Heading> 
+<Text display={"inline"} padding={"0 4px"}>{desc}</Text></Text>
         </div>
         </CardBody>
         <CardFooter>

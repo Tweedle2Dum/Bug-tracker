@@ -35,7 +35,6 @@ export default function CreateBug({ organizations, projects }) {
   const projRef = useRef(null);
   const severityRef = useRef(null);
 
-  console.log(organizations);
   async function handleSubmit() {
     try {
       setisLoading(true);

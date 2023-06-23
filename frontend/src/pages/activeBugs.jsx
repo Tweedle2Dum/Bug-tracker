@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CreateBug from "../components/Dashboard/ActiveBugs/CreateBug";
 import { Box } from "@chakra-ui/react";
-import { getOrganizationDetails,getAllProjects } from "../utils";
+import { getOrganizationDetails,getAllProjects, getAllBugs } from "../utils";
 export default function activeBugs() {
 
 
@@ -29,6 +29,20 @@ export default function activeBugs() {
     }
     getData()
   },[])
+
+
+
+ 
+  useEffect(()=>{
+    async function bugs(){
+
+      await getAllBugs()
+    }
+    bugs()
+  },[])
+
+
+
   return (
     <>
       <Box display={"flex"}>
