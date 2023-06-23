@@ -36,7 +36,8 @@ export default function activeBugs() {
   useEffect(()=>{
     async function bugs(){
 
-      await getAllBugs()
+      const data=await getAllBugs();
+      console.log(data)
     }
     bugs()
   },[])

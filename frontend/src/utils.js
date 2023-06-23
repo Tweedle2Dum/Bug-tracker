@@ -302,6 +302,7 @@ export async function getAllProjectId() {
 
 
 export async function getAllBugs() {
+  const projArray = [];
   try {
     const projectIds = await getAllProjectId();
     console.log(projectIds)
@@ -312,9 +313,12 @@ export async function getAllBugs() {
 
     querySnapshot.forEach((bugDoc)=>{
       const bugData = bugDoc.data();
+      projArray.push(bugData)
       console.log(bugData)
 
     })
+
+    return projArray;
 
    
 
