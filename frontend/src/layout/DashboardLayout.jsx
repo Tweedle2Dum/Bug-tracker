@@ -36,7 +36,6 @@ export default function DashboardLayout() {
           <InfoModal userDetails = {userDetails} />
             <Grid
               gridTemplateColumns={"200px 1fr"}
-              gridAutoRows={"90vh"}
               padding={"12px"}
               gap={"24px"}
               letterSpacing="1px"

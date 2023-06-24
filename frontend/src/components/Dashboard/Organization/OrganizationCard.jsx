@@ -9,7 +9,7 @@ export default function OrganizationCard({name,intro}) {
         <div>
         <Heading size={"md"}>Name: {name}</Heading>
         
-        <Text padding={"4px 0"}><Heading size={"sm"} margin={"4px 0"}>Description:</Heading> {intro}</Text>
+        <Text padding={"4px 0"}><Heading  as ={"p"}size={"sm"} margin={"4px 0"}>Description:</Heading> {intro}</Text>
         </div>
         </CardBody>
         <CardFooter>

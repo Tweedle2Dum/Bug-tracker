@@ -10,6 +10,8 @@ export default function Sidebar() {
       rowGap="36px"
       borderRadius={"12px"}
       boxShadow={"2xl"}
+      minHeight={"100vh"}
+      
     >
       <Box position={"relative"}>
         <svg
@@ -39,6 +41,8 @@ export default function Sidebar() {
         fontSize="20px"
         padding={"24px"}
         rowGap="36px"
+        
+        
       >
         <Link as={NavLink} to="/dashboard/home">
           {" "}
@@ -67,11 +71,12 @@ export default function Sidebar() {
           {" "}
         Projects
         </Link>
-
-      </Box>
-      <Center margin={"auto 0 20px 0"}>
+        <Center margin={"auto 0 20px 0" } >
         <SignOut />
       </Center>
+
+      </Box>
+   
     </Box>
   );
 }
