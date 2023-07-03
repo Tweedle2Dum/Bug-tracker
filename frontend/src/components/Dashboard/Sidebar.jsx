@@ -11,6 +11,7 @@ export default function Sidebar() {
       borderRadius={"12px"}
       boxShadow={"2xl"}
       minHeight={"100vh"}
+      maxH={"110vh"}
       
     >
       <Box position={"relative"}>

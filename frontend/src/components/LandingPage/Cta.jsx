@@ -29,8 +29,9 @@ export default function Cta() {
             your organisation!
           </Heading>
           <Text fontSize={["20", "24"]} marginTop="2em">
+            <Center>
             Create, assign and prioritize all your important issues, improve
-            productivity and stay on top of your game!
+            productivity and stay on top of your game !</Center>
           </Text>
           <Center marginTop={"20px"}>
             <Button colorScheme={"blue"} size={"lg"} borderRadius="12px">
