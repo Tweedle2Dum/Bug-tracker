@@ -16,7 +16,24 @@ import {
   AlertDescription,
 } from "@chakra-ui/react";
 
-export default function BugCard({ name, severity, proj, comments }) {
+export default function BugCard({ name, severity, proj, comments,status }) {
+  let state ; 
+  let disabled ; 
+  console.log(status)
+    if (status=="pending"){
+        state = "red"
+        disabled = false ;
+    }
+    else
+    {
+      state = "green"
+      disabled = true ;
+    }
+
+
+  
+
+    
   return (
     <>
       <Alert
@@ -25,9 +42,9 @@ export default function BugCard({ name, severity, proj, comments }) {
         alignItems="center"
         justifyContent="center"
         textAlign="center"
-        minHeighteight="200px"
+        minHeight="200px"
         margin={"20px 0"}
-        colorScheme={"green"}
+        colorScheme={state}
         borderRadius={"12px"}
       >
         <AlertIcon boxSize="40px" mr={0} />
@@ -42,7 +59,7 @@ export default function BugCard({ name, severity, proj, comments }) {
           <br/>
           Severity: {severity}
         </AlertDescription>
-        <Button colorScheme={"blue"}>Mark as Done</Button>
+        <Button colorScheme={"blue"} isDisabled={disabled}>Mark as Done</Button>
       </Alert>
     </>
   );

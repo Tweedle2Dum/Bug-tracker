@@ -1,6 +1,4 @@
 import React from 'react'
-import { Box } from '@chakra-ui/react';
-import { v4 as uuidV4 } from 'uuid';
 import ProjectCard from './ProjectCard';
 export default function ProjectList({projectsArray}) {
   
@@ -13,12 +11,12 @@ export default function ProjectList({projectsArray}) {
       
     return (
       <>
-      {projectsArray.map((projects)=>{
-        return (projects.map((projects,index)=>{
-          return (<ProjectCard key={index} name={projects.name} desc={projects.desc}></ProjectCard>)
-        }))
-      })}
-        
+    
+
+            {projectsArray && projectsArray.map((project,index)=>{
+
+              return ( <ProjectCard key={index} name={project.name} desc={project.desc}></ProjectCard>)
+            })}
        
       </>
       

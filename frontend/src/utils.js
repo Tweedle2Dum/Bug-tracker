@@ -144,28 +144,26 @@ export async function addProfileImg() {
 }
 
 
+//to do
+
 export async function addOrganizationImg() {
 
 }
 
 export async function addNewProject(name, orgId, desc) {
-  const docRef = doc(db, 'organizations', orgId);
-  const colRef = collection(docRef, "projects")
-  try {
-    await addDoc(colRef, {
-      name: name,
-      desc: desc,
-      addedby: auth.currentUser.uid
+const projectColRef = collection(db,"projects");
+try {
+      await addDoc(projectColRef,{
+        name:name,
+        orgId:orgId,
+        desc: desc ,
+        projId:projectColRef.id
+      })
 
-    })
-
-
-
-  }
-  catch (e) {
-    console.error(e)
-    return Promise.reject(false)
-  }
+}
+catch(e){
+  console.warn("error  in adding new project")
+}
 
 }
 
@@ -190,22 +188,7 @@ async function getProject(id) {
 
 
 
-  /*  getDocs(projectRef)
-   .then((querysnap)=>{
-     querysnap.forEach((doc)=>{
-       projects.push(doc.data())
-     })
-   }).then(()=>{
-     console.log(projects)
-     
- 
-   })
-   .catch((e)=>{
- 
-     console.log(e)
-     
-   })
-   return projects; */
+
 
 }
 
@@ -218,55 +201,62 @@ export async function getAllProjects() {
   if (docSnap.exists()) {
 
     const organizations = docSnap.data();
-    const orgId = organizations.Organizations.map(obj => obj.Id)
-    console.log(orgId)
-    const promises = orgId.map(id => getProject(id));
-    const p = await Promise.all(promises)
-      .then(results => {
-        projects.push(...results)
-        console.log(projects)
+    const orgIdArray = organizations.Organizations.map(obj => obj.Id)
+    console.log(orgIdArray)
+    const projectRef = collection(db,"projects");
+    try{
+      const q =  query(projectRef,where("orgId","in",orgIdArray))
+      const querySnapshot =await  getDocs(q);
+     
+      querySnapshot.forEach((doc)=>{
+        const projectData = doc.data();
+        console.log(projectData)
+        console.log("hi")
+        projects.push(projectData)
       })
-      .catch(error => {
-        console.error("some error occured in fetching list of projects")
-      })
+
+      return projects;
+
+    }
+    catch(e){
+
+      console.warn(e)
+      return []
+    }
+   
   }
 
-  return projects;
+ 
 }
 
 export async function createNewBug(orgId, proj, name, severity, comments) {
-  const docRef = doc(db, "organizations", orgId);
-  const docSnap = await getDoc(docRef);
+try {
 
-  if (docSnap.exists()) {
-    const organizations = docSnap.data();
-    console.log(organizations)
-    const projectRef = collection(docRef, "projects")
-    const q = query(projectRef, where("name", "==", proj))
-    const querySnap = await getDocs(q);
-    querySnap.forEach((doc) => {
-      const parentDocument = doc.ref;
-      const id = parentDocument.id;
-      console.log(id)
-      console.log(parentDocument)
-      const bugsRef = collection(parentDocument, "bugs");
+  const collectionRef = collection(db,"bugs");
+  const docRef = await addDoc(collectionRef,{
+    orgId:orgId,
+    proj:proj,
+    name:name,
+    severity:severity,
+    comments:comments,
+    status:"pending"
+  });
 
-      addDoc(bugsRef, {
-        projId:id,
-        orgId: orgId,
-        proj: proj,
-        name: name,
-        severity: severity,
-        comments: comments
-      })
-    })
+  console.log("document added")
 
-  }
+   }
+
+
+catch(e){
+
+  console.warn("some error while writing the issue to the database")
+
+}
 
 }
 
 
-export async function getAllProjectId() {
+/* export async function getAllProjectId() {
   const ids = [];
 
   try {
@@ -297,28 +287,37 @@ export async function getAllProjectId() {
     throw e 
   }
 
-}
+} */
 
 
 
-export async function getAllBugs() {
-  const projArray = [];
+export async function getAllBugs(organizations) {
+  const bugsArray = [];
+  const bugRef = collection(db,"bugs");
+  const orgId  = organizations.map((org)=>{
+    return org.Id
+  })
+
+  console.log(orgId)
   try {
-    const projectIds = await getAllProjectId();
-    console.log(projectIds)
-    console.log(projectIds.length)
-    const bugsCollectionRef = collectionGroup(db,"bugs");
-    const bugs = query(bugsCollectionRef,where("projId","in",projectIds));
-    const querySnapshot = await getDocs(bugs); 
+    
 
-    querySnapshot.forEach((bugDoc)=>{
-      const bugData = bugDoc.data();
-      projArray.push(bugData)
+    console.log(organizations)
+    const q = query(bugRef,where("orgId","in",orgId));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc)=>{
+      const bugData = doc.data();
       console.log(bugData)
-
+      bugsArray.push(bugData)
     })
 
-    return projArray;
+    return bugsArray
+
+ 
+
+
+    
 
    
 
@@ -326,8 +325,10 @@ export async function getAllBugs() {
   catch (e) {
     console.error("error in get allbugs")
     console.log(e)
+    return []
   }
 
+ 
 
 
 

@@ -23,7 +23,6 @@ import {
   Text,
   Select
 } from "@chakra-ui/react";
-import { addNewOrganization } from "../../../utils";
 import { addNewProject } from "../../../utils";
 import { v4 as uuidV4 } from "uuid";
 
@@ -86,6 +85,7 @@ export default function CreateProject({organizations}) {
           <Select placeholder="Select the organization" ref={orgRef}  > {/*render a list here*/}
           {organizations && organizations.map((organization)=>{
             return (
+              
               <option key={uuidV4()} value={organization.Id}>{organization.Name}</option>
             )
           })}

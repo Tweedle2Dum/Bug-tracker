@@ -17,7 +17,8 @@ export default function BugList({bugsArray}) {
           {console.log(bugsArray)}
           { bugsArray.map((bug,index)=>{
             {console.log("runs")}
-            return <BugCard key = {index} name = {bug.name} proj = {bug.proj} severity = {bug.severity} comments = {bug.comments}></BugCard>
+            {console.log(bug.status)}
+            return <BugCard key = {index} name = {bug.name} proj = {bug.proj} severity = {bug.severity} comments = {bug.comments} status={bug.status}></BugCard>
           })}
             
            

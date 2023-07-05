@@ -31,12 +31,17 @@ export default function activeBugs() {
 
   useEffect(() => {
     async function bugs() {
-      const data = await getAllBugs();
+      const data = await getAllBugs(organizations);
       console.log(data);
-      setBugs((prevState =>[...prevState,...data]))
+     setBugs((prevState =>[...prevState,...data])) 
     }
-    bugs();
-  }, []);
+
+    if(organizations){
+      bugs();
+
+    }
+   
+  }, [organizations]);
 
   return (
     <>
