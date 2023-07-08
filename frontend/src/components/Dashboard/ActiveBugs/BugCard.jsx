@@ -16,11 +16,13 @@ import {
   AlertDescription,
 } from "@chakra-ui/react";
 
-export default function BugCard({ name, severity, proj, comments,status }) {
+export default function BugCard({ name, severity, proj, comments,status,orgId,projId }) {
   let state ; 
   let disabled ; 
-  console.log(status)
-    if (status=="pending"){
+  const oId = orgId;
+  const pId = projId ;
+/*   console.log(status)
+ */    if (status=="pending"){
         state = "red"
         disabled = false ;
     }

@@ -56,8 +56,8 @@ else
   return (
 
     <Box>
-      {console.log(organization)}
-      <Box display={"flex"} justifyContent={"space-between"} >
+{/*       {console.log(organization)}
+ */}      <Box display={"flex"} justifyContent={"space-between"} >
       <OrganizationTip message= {message} />
       <CreateOrganization />
       </Box>

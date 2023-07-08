@@ -53,8 +53,8 @@ export default function CreateProject({organizations}) {
   }
 
   function handleClick() {
-    console.log("yolo");
-    onOpen();
+/*     console.log("yolo");
+ */    onOpen();
   }
 
 

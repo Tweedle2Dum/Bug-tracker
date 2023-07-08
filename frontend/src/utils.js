@@ -22,9 +22,7 @@ export async function addNewUser(email, username) {
 }
 
 
-export async function checkUserExist() {
 
-}
 
 
 export async function getUserDetails() {
@@ -153,16 +151,21 @@ export async function addOrganizationImg() {
 export async function addNewProject(name, orgId, desc) {
 const projectColRef = collection(db,"projects");
 try {
-      await addDoc(projectColRef,{
+     const docRef =  await addDoc(projectColRef,{
         name:name,
         orgId:orgId,
         desc: desc ,
-        projId:projectColRef.id
-      })
+        
+      });
+
+
+      const projId = docRef.id ; 
+      await updateDoc(docRef,{projId:projId});
 
 }
 catch(e){
   console.warn("error  in adding new project")
+  console.log(e)
 }
 
 }
@@ -202,7 +205,6 @@ export async function getAllProjects() {
 
     const organizations = docSnap.data();
     const orgIdArray = organizations.Organizations.map(obj => obj.Id)
-    console.log(orgIdArray)
     const projectRef = collection(db,"projects");
     try{
       const q =  query(projectRef,where("orgId","in",orgIdArray))
@@ -210,8 +212,6 @@ export async function getAllProjects() {
      
       querySnapshot.forEach((doc)=>{
         const projectData = doc.data();
-        console.log(projectData)
-        console.log("hi")
         projects.push(projectData)
       })
 
@@ -229,15 +229,19 @@ export async function getAllProjects() {
  
 }
 
-export async function createNewBug(orgId, proj, name, severity, comments) {
+export async function createNewBug(orgId, projdetails, name, severity, comments) {
+
+  console.log(projdetails)
+  const [projId,projName] = projdetails.split(",")
 try {
 
   const collectionRef = collection(db,"bugs");
   const docRef = await addDoc(collectionRef,{
     orgId:orgId,
-    proj:proj,
-    name:name,
+    projId:projId,
+    projName:projName,
     severity:severity,
+    name:name,
     comments:comments,
     status:"pending"
   });
@@ -250,6 +254,7 @@ try {
 catch(e){
 
   console.warn("some error while writing the issue to the database")
+  console.log(e)
 
 }
 

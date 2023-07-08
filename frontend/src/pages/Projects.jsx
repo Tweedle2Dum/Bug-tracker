@@ -5,8 +5,6 @@ import { useState, useEffect} from 'react';
 import { getOrganizationDetails,getAllProjects } from '../utils';
 import ProjectList from '../components/Dashboard/Projects/ProjectList';
 import Loading from '../components/Loading';
-import { onSnapshot,collection } from 'firebase/firestore';
-import { db } from '../firebase';
 
 export default function Projects() {
 
@@ -44,8 +42,8 @@ export default function Projects() {
     async function test(){
       try {
       const data = await getAllProjects()
-      console.log(data);
-      const result = [...data]
+/*       console.log(data);
+ */      const result = [...data]
       setProjects(prevState => [...prevState,...result])
       setisLoading(false);
       }

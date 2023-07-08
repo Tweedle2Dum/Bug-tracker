@@ -54,8 +54,8 @@ export default function CreateOrganization() {
   }
 
   function handleClick() {
-    console.log("yolo");
-    onOpen();
+/*     console.log("yolo");
+ */    onOpen();
   }
 
 

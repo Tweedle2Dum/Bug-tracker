@@ -4,8 +4,8 @@ import { useOutletContext } from 'react-router-dom'
 
 export default function Profile() {
   const {userDetails} = useOutletContext();
-  console.log(userDetails)
-  return (
+/*   console.log(userDetails)
+ */  return (
     
     <>
       <ProfileCard userDetails= {userDetails} />

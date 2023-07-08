@@ -11,8 +11,8 @@ export default function activeBugs() {
   useEffect(() => {
     const data = getOrganizationDetails()
       .then((data) => {
-        console.log(data);
-        setOrganization((prevState) => [...prevState, ...data.Organizations]);
+/*         console.log(data);
+ */        setOrganization((prevState) => [...prevState, ...data.Organizations]);
       })
       .catch((e) => {
         console.warn(e);
@@ -22,9 +22,10 @@ export default function activeBugs() {
   useEffect(() => {
     async function getData() {
       const data = await getAllProjects();
-      console.log(data);
-      console.log(data.flat(Infinity));
-      setProjects((prevState) => [...prevState, ...data.flat(Infinity)]);
+/*       console.log(data);
+ */  
+/*     console.log(data.flat(Infinity));
+ */      setProjects((prevState) => [...prevState, ...data.flat(Infinity)]);
     }
     getData();
   }, []);
@@ -32,11 +33,11 @@ export default function activeBugs() {
   useEffect(() => {
     async function bugs() {
       const data = await getAllBugs(organizations);
-      console.log(data);
-     setBugs((prevState =>[...prevState,...data])) 
+/*       console.log(data);
+ */     setBugs((prevState =>[...prevState,...data])) 
     }
 
-    if(organizations){
+    if(organizations.length!==0){
       bugs();
 
     }

@@ -59,6 +59,9 @@ export default function CreateBug({ organizations, projects }) {
 
   return (
     <>
+    {
+      console.log(projects)
+    }
       <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={"2xl"}>
         <ModalOverlay />
         <ModalContent>
@@ -93,7 +96,7 @@ export default function CreateBug({ organizations, projects }) {
                 {projects &&
                   projects.map((project) => {
                     return (
-                      <option key={project.name} value={project.name}>
+                      <option key={project.name} value={`${project.projId},${project.name}`}>
                         {project.name}
                       </option>
                     );
