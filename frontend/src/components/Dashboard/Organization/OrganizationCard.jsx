@@ -3,7 +3,7 @@ import { Card,CardBody,Heading,Text,CardFooter,Button } from '@chakra-ui/react'
 export default function OrganizationCard({name,intro}) {
   return (
     <>
-         <Card margin={"4px 4px 4px 4px"}>
+         <Card margin={"4px 4px 4px 4px"} minW={"320px"} >
       <CardBody>
     
         <div>

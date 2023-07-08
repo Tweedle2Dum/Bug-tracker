@@ -260,46 +260,38 @@ export async function getAllBugs(organizations) {
   }
 }
 
+export async function updateBugStatus(projId, orgId, bugName, projName) {
+  console.log(projId);
+  console.log(orgId);
 
-export async function updateBugStatus(projId,orgId,bugName,projName){
-  console.log(projId)
-  console.log(orgId)
+  console.log(bugName);
 
-  console.log(bugName)
+  console.log(projName);
 
-  console.log(projName)
+  let bugRef;
+  const bugsRef = collection(db, "bugs");
+  const q = query(
+    bugsRef,
+    where("orgId", "==", orgId),
+    where("projId", "==", projId),
+    where("name", "==", bugName),
+    where("projName", "==", projName)
+  );
 
-  
-  let bugRef ;
-  const bugsRef = collection(db,"bugs");
-  const q = query(bugsRef,
-    where("orgId","==",orgId),
-    where("projId","==",projId),
-    where("name","==",bugName),
-    where("projName","==",projName)
-    );
+  try {
+    const querySnap = await getDocs(q);
+    querySnap.forEach((bugDoc) => {
+      bugRef = doc(bugsRef, bugDoc.id);
+    });
 
-    try {
-      const querySnap = await getDocs(q)
-      querySnap.forEach((bugDoc)=>{
-      bugRef = doc(bugsRef,bugDoc.id);
-      });
-
-      if(!bugRef){
-        console.log("bug document now found");
-        throw "bug document not found"
-        
-      }
-      await updateDoc(bugRef , {status:"completed"})
-
-
+    if (!bugRef) {
+      console.log("bug document now found");
+      throw "bug document not found";
     }
-    catch(e){
-      console.log(e)
-      console.log("some error occuered while updating the status of the bug")
-    }
-
-
-
-
+    await updateDoc(bugRef, { status: "completed" });
+  } catch (e) {
+    console.log(e);
+    console.log("some error occuered while updating the status of the bug");
+  }
 }
+

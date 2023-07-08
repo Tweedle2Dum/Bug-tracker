@@ -17,6 +17,8 @@ export default function BugList({ bugsArray,updatefunction }) {
     return (
       <>
         {console.log(bugsArray)}
+
+        <Box display={"grid"} gridTemplateColumns={"1fr 1fr 1fr"} gap={"20px"}>
         {bugsArray.map((bug, index) => {
           /*             {console.log("runs")}
            */
@@ -36,6 +38,7 @@ export default function BugList({ bugsArray,updatefunction }) {
             ></BugCard>
           );
         })}
+        </Box>
       </>
     );
   }

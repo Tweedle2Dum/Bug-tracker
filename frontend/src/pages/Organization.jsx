@@ -60,8 +60,11 @@ else
  */}      <Box display={"flex"} justifyContent={"space-between"} >
       <OrganizationTip message= {message} />
       <CreateOrganization />
-      </Box>
+      </Box >
+      <Box>
       <OrganizationList data={organization} />
+
+      </Box>
       </Box>
   );
 

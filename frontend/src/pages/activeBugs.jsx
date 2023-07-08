@@ -71,7 +71,9 @@ export default function activeBugs() {
           </Box>
         </Box>
 
+        <Box >
         <BugList bugsArray={bugs} updatefunction={handleStatusUpdate} />
+        </Box>
         
       </Box>
     </>

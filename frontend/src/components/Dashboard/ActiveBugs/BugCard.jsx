@@ -46,6 +46,7 @@ export default function BugCard({ name, severity, proj, comments,status,orgId,pr
   return (
     <>
       <Alert
+      minWidth={"320px"}
         variant="subtle"
         flexDirection="column"
         alignItems="center"

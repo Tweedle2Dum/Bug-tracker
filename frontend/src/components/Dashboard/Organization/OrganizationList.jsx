@@ -14,9 +14,11 @@ export default function OrganizationList({data}) {
   {
     return (
       <>
+      <Box display={"grid"} gridTemplateColumns={"1fr 1fr 1fr"} margin={"20px 0 0 0"}>
       {data && (data.Organizations).map(organization=>{
-       return (<Box key={organization.Id}> <OrganizationCard key={organization.Id} name = {organization.Name} intro = {organization.Intro} /></Box>)
+       return (<OrganizationCard key={organization.Id} name = {organization.Name} intro = {organization.Intro} />)
     })}
+    </Box>
       </>
     )
 
