@@ -16,7 +16,7 @@ import {
   AlertDescription,
 } from "@chakra-ui/react";
 
-export default function BugCard({ name, severity, proj, comments,status,orgId,projId }) {
+export default function BugCard({ name, severity, proj, comments,status,orgId,projId ,updatefunction}) {
   let state ; 
   let disabled ; 
   const oId = orgId;
@@ -34,6 +34,13 @@ export default function BugCard({ name, severity, proj, comments,status,orgId,pr
 
 
   
+
+    async function handleUpdate(){
+
+      await updatefunction(pId,oId,name,proj)
+
+    }
+
 
     
   return (
@@ -61,7 +68,7 @@ export default function BugCard({ name, severity, proj, comments,status,orgId,pr
           <br/>
           Severity: {severity}
         </AlertDescription>
-        <Button colorScheme={"blue"} isDisabled={disabled}>Mark as Done</Button>
+        <Button colorScheme={"blue"} isDisabled={disabled} onClick={handleUpdate}>Mark as Done</Button>
       </Alert>
     </>
   );

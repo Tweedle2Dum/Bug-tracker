@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import CreateBug from "../components/Dashboard/ActiveBugs/CreateBug";
 import { Box, Spacer } from "@chakra-ui/react";
-import { getOrganizationDetails, getAllProjects, getAllBugs } from "../utils";
+import { getOrganizationDetails, getAllProjects, getAllBugs, updateBugStatus } from "../utils";
 import BugList from "../components/Dashboard/ActiveBugs/BugList";
 export default function activeBugs() {
+  const [isLoading,setisLoading] = useState(true);
+
+
+
+
   const [projects, setProjects] = useState([]);
   const [organizations, setOrganization] = useState([]);
   const [bugs,setBugs] = useState([]);
@@ -44,6 +49,19 @@ export default function activeBugs() {
    
   }, [organizations]);
 
+
+  async function handleStatusUpdate(projId,orgId,bugName,projName){
+
+      try {
+         await updateBugStatus(projId,orgId,bugName,projName);
+      }
+      catch(e){
+
+      }
+
+
+  }
+
   return (
     <>
       <Box>
@@ -53,7 +71,7 @@ export default function activeBugs() {
           </Box>
         </Box>
 
-        <BugList bugsArray={bugs} />
+        <BugList bugsArray={bugs} updatefunction={handleStatusUpdate} />
         
       </Box>
     </>
