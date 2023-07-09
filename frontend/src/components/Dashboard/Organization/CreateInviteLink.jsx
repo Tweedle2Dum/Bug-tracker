@@ -23,6 +23,7 @@ import {
   Text,
   Select,
 } from "@chakra-ui/react";
+import { Form } from "react-router-dom";
 
 export default function CreateInviteLink({ data }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -42,7 +43,7 @@ export default function CreateInviteLink({ data }) {
 
   return (
     <>
-      <Button onClick={handleClick} size={"lg"} colorScheme={"blue"}>
+      <Button onClick={handleClick} size={"sm"} colorScheme={"blue"}>
         Create Invite Code
       </Button>
 
@@ -70,12 +71,14 @@ export default function CreateInviteLink({ data }) {
                       );
                     })}
                 </Select>
-                <FormHelperText>
-                  Select the organization which the bug belongs to
-                </FormHelperText>
+             
               </FormControl>
-
+                <FormControl display={"flex"} flexDir={"column"} justifyContent={"center"} alignItems={"center"} gap={"12px"} marginTop={"20px"}>
               <Input isDisabled={true} value={value}></Input>
+              <FormHelperText>
+                    Here is the secret code
+                </FormHelperText>
+                </FormControl>
             </Box>
           </Center>
 

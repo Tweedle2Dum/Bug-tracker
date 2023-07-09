@@ -119,7 +119,7 @@ export default function CreateOrganization() {
         </ModalContent>
       </Modal>
 
-      <Button size={"lg"} colorScheme="blue" onClick={handleClick}>
+      <Button size={"sm"} colorScheme="blue" onClick={handleClick}>
         Create Organization
       </Button>
     </>
