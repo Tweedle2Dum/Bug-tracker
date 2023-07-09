@@ -55,18 +55,19 @@ export default function LogIn() {
 
           <CardBody display={"flex"} flexDir={"column"} gap={"16px"}>
             <FormControl isRequired>
-              <FormLabel>Email Address</FormLabel>
-              <Input type="email" ref={emailRef} />
+              <FormLabel >Email Address</FormLabel>
+              <Input type="email" ref={emailRef} tabIndex={"1"} />
               <FormHelperText>We' ll never share your email.</FormHelperText>
             </FormControl>
 
             <FormControl isRequired>
-              <FormLabel>Password</FormLabel>
-              <Input type="password" ref={passwordRef} />
+              <FormLabel >Password</FormLabel>
+              <Input type="password" ref={passwordRef}  tabIndex={"2"}/>
               <FormHelperText>Enter Password</FormHelperText>
             </FormControl>
 
             <Button
+            tabIndex={"3"}
               type="submit"
               colorScheme="blue"
               size={"lg"}

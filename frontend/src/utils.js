@@ -11,6 +11,7 @@ import {
   query,
   where,
   collectionGroup,
+  serverTimestamp,
 } from "firebase/firestore";
 import { auth } from "./firebase";
 import { storage } from "./firebase";
@@ -81,6 +82,8 @@ export async function addNewOrganization(name, intro) {
     Id: Id,
     Name: name,
     Intro: intro,
+    timestamp:serverTimestamp()
+    
   };
 
   await addOrgList(Id, name, intro);
@@ -119,6 +122,7 @@ export async function addNewProject(name, orgId, desc) {
       name: name,
       orgId: orgId,
       desc: desc,
+      timestamp:serverTimestamp()
     });
 
     const projId = docRef.id;
@@ -191,6 +195,7 @@ export async function createNewBug(
       name: name,
       comments: comments,
       status: "pending",
+      timestamp:serverTimestamp()
     });
 
     console.log("document added");

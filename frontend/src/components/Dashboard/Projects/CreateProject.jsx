@@ -27,7 +27,7 @@ import { addNewProject } from "../../../utils";
 import { v4 as uuidV4 } from "uuid";
 
 
-export default function CreateProject({organizations}) {
+export default function CreateProject({organizations,updaterFunction}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setisLoading] = useState();
   const [formError, setformError] = useState();
@@ -44,6 +44,7 @@ export default function CreateProject({organizations}) {
     try {
       setisLoading(true);
       await addNewProject(nameRef.current.value,orgRef.current.value,descRef.current.value)
+      updaterFunction((prevState)=>{return prevState+1})
       setisLoading(false);
     } catch (e) {
       console.warn(e);

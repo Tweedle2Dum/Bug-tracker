@@ -24,7 +24,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { createNewBug } from "../../../utils";
-export default function CreateBug({ organizations, projects }) {
+export default function CreateBug({ organizations, projects,updateFunction }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setisLoading] = useState();
   const [formError, setformError] = useState();
@@ -46,6 +46,8 @@ export default function CreateBug({ organizations, projects }) {
         commentRef.current.value
       );
       setisLoading(false);
+
+      updateFunction((prevstate)=>{return prevstate+1})
     } catch (e) {
       console.warn(e);
       setformError(e.message);
