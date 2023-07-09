@@ -23,7 +23,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { addNewOrganization } from "../../../utils";
-import { getOrganizationDetails } from "../../../utils";
 
 export default function CreateOrganization() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -32,11 +31,6 @@ export default function CreateOrganization() {
   const nameRef = useRef(null);
   const introRef = useRef(null);
   const Droparea = useRef(null);
-
-
-
-  
-
 
   async function handleSubmit() {
     try {
@@ -54,13 +48,8 @@ export default function CreateOrganization() {
   }
 
   function handleClick() {
-/*     console.log("yolo");
- */    onOpen();
+    onOpen();
   }
-
-
-
-
 
   return (
     <>
@@ -73,39 +62,27 @@ export default function CreateOrganization() {
             </Heading>
           </ModalHeader>
           <ModalBody display={"flex"} flexDir={"column"} gap={"1em"}>
-            <FormControl
-              display={"flex"}
-              justifyContent={"center"}
-             
-            >
+            <FormControl display={"flex"} justifyContent={"center"}>
               <FormLabel
                 height={"200px"}
                 width={"300px"}
                 outline={"dashed"}
                 outlineColor={"#cccccc"}
                 borderRadius={"12px"}
-                ref = {Droparea}
-                
-                
+                ref={Droparea}
               >
                 <Center flexDir={"column"} gap={"2em"} margin={"8px"}>
-                  
                   <Text>Drop Image here!</Text>
                   OR
                   <Input
-                  paddingTop={"10px"}
+                    paddingTop={"10px"}
                     type="file"
                     accept="image/*"
                     borderRadius={"12px"}
                     height={"50px"}
-                    textAlign={"center"}                    
-                  
+                    textAlign={"center"}
                   />
-                  
-                  </Center>
-                
-
-               
+                </Center>
               </FormLabel>
             </FormControl>
 

@@ -7,6 +7,7 @@ import OrganizationTip from "../components/Dashboard/Organization/OrganizationTi
 import Loading from "../components/Loading";
 import { onSnapshot,doc } from "firebase/firestore";
 import { auth,db } from "../firebase";
+import CreateInviteLink from "../components/Dashboard/Organization/CreateInviteLink";
 
 export default function Organization() {
   const [organization, setOrganization] = useState([]);
@@ -57,8 +58,9 @@ else
 
     <Box>
 {/*       {console.log(organization)}
- */}      <Box display={"flex"} justifyContent={"space-between"} >
+ */}      <Box display={"flex"} justifyContent={"space-between"}  gap={"20px"}>
       <OrganizationTip message= {message} />
+      <CreateInviteLink data = {organization}/>
       <CreateOrganization />
       </Box >
       <Box>
