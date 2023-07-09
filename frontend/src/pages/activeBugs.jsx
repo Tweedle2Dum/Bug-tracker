@@ -8,14 +8,16 @@ import {
   updateBugStatus,
 } from "../utils";
 import BugList from "../components/Dashboard/ActiveBugs/BugList";
+import BugTip from "../components/Dashboard/ActiveBugs/BugTip";
 export default function activeBugs() {
   const [isLoading, setisLoading] = useState(true);
 
   const [projects, setProjects] = useState([]);
   const [organizations, setOrganization] = useState([]);
   const [bugs, setBugs] = useState([]);
-  const [addRemove,setaddRemove] = useState(0)
-
+  const [addRemove, setaddRemove] = useState(0);
+  const[message,setMessage] = useState(null)
+  
 
   //useEffect for pulling data of all orgs the user is part of
   useEffect(() => {
@@ -32,10 +34,20 @@ export default function activeBugs() {
   useEffect(() => {
     async function getData() {
       const data = await getAllProjects();
-      /*       console.log(data);
-       */
+
       /*     console.log(data.flat(Infinity));
-       */ setProjects((prevState) => [...prevState, ...data.flat(Infinity)]);
+       */
+
+      if (data!=undefined){
+        setProjects((prevState) => [...prevState, ...data.flat(Infinity)]);
+        setMessage("Here is a list of all the issues for you!")
+      }
+      else
+      {
+          setMessage("Errr.... looks like we dont have anything for you")
+
+      }
+
     }
     getData();
   }, []);
@@ -55,7 +67,9 @@ export default function activeBugs() {
   async function handleStatusUpdate(projId, orgId, bugName, projName) {
     try {
       await updateBugStatus(projId, orgId, bugName, projName);
-      setaddRemove((prevState)=>{return prevState + 1})
+      setaddRemove((prevState) => {
+        return prevState + 1;
+      });
     } catch (e) {}
   }
 
@@ -63,8 +77,13 @@ export default function activeBugs() {
     <>
       <Box>
         <Box display={"flex"}>
+          <BugTip message={message}></BugTip>
           <Box marginLeft={"auto"}>
-            <CreateBug organizations={organizations} projects={projects} updateFunction={setaddRemove} />
+            <CreateBug
+              organizations={organizations}
+              projects={projects}
+              updateFunction={setaddRemove}
+            />
           </Box>
         </Box>
 

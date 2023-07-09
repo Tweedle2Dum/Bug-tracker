@@ -5,8 +5,7 @@ import { Box } from '@chakra-ui/react';
 export default function ProjectList({projectsArray}) {
   
   if(projectsArray.length==0){
-/*     {console.log("here here")}
- */    return <>No projects</>
+   return <></>
   }
   else
   {

@@ -12,7 +12,6 @@ export default function Sidebar() {
       boxShadow={"2xl"}
       minHeight={"100vh"}
       maxH={"110vh"}
-      
     >
       <Box position={"relative"}>
         <svg
@@ -42,8 +41,6 @@ export default function Sidebar() {
         fontSize="20px"
         padding={"24px"}
         rowGap="36px"
-        
-        
       >
         <Link as={NavLink} to="/dashboard/home">
           {" "}
@@ -58,26 +55,25 @@ export default function Sidebar() {
           {" "}
           Statistics
         </Link>
-        <Link as={NavLink} to="/dashboard/profile">
-          {" "}
-          Profile
-        </Link>
 
         <Link as={NavLink} to="/dashboard/organization">
           {" "}
-        Organization
+          Organization
         </Link>
 
         <Link as={NavLink} to="/dashboard/projects">
           {" "}
-        Projects
+          Projects
         </Link>
-        <Center margin={"auto 0 20px 0" } >
-        <SignOut />
-      </Center>
 
+        <Link as={NavLink} to="/dashboard/profile">
+          {" "}
+          Profile
+        </Link>
+        <Center margin={"auto 0 20px 0"}>
+          <SignOut />
+        </Center>
       </Box>
-   
     </Box>
   );
 }
