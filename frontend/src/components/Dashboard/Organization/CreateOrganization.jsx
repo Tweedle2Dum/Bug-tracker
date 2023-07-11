@@ -24,7 +24,7 @@ import {
 } from "@chakra-ui/react";
 import { addNewOrganization } from "../../../utils";
 
-export default function CreateOrganization() {
+export default function CreateOrganization({updateFunction}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setisLoading] = useState();
   const [formError, setformError] = useState();
@@ -39,7 +39,10 @@ export default function CreateOrganization() {
         nameRef.current.value,
         introRef.current.value
       );
+      
+
       setisLoading(false);
+      updateFunction((prevState)=>{return prevState+1})
     } catch (e) {
       console.warn(e);
       setformError(e.message);

@@ -53,9 +53,29 @@ export async function updateUserDetails(role, intro) {
 export async function getOrganizationDetails() {
   const docRef = doc(db, "userorganizations", auth.currentUser.uid);
   const docSnap = await getDoc(docRef);
-
+  const orgId = [];
   if (docSnap.exists()) {
-    return docSnap.data();
+    const data = docSnap.data().Organizations;
+    data.forEach((org) => {
+      orgId.push(org.Id);
+    });
+
+    const orgRef = collection(db, "organizations");
+    const q = query(orgRef, where("Id", "in", orgId));
+    try {
+      const querySnapshot = await getDocs(q);
+      const data = [];
+      querySnapshot.forEach((org) => {
+        data.push(org.data());
+      });
+
+      console.log(data);
+     
+      return data;
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
   } else {
     console.log("NO SUCH DOCUMENT");
     return Promise.reject(false);
@@ -80,8 +100,6 @@ export async function addNewOrganization(name, intro) {
 
   const obj = {
     Id: Id,
-    Name: name,
-    Intro: intro,
   };
 
   await addOrgList(Id, name, intro);
@@ -100,6 +118,19 @@ export async function addNewOrganization(name, intro) {
     }
   } catch (e) {
     console.error(e);
+  }
+}
+
+export async function useInvite(orgId) {
+  const docRef = doc(db, "userorganizations", auth.currentUser.uid);
+
+  try {
+    await updateDoc(doc(db, "userorganizations", auth.currentUser.uid), {
+      Organizations: arrayUnion(orgId),
+    });
+  } catch (e) {
+    console.log("some error occured while using the invite code");
+    console.log(e);
   }
 }
 

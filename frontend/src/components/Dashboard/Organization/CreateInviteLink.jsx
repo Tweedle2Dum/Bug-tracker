@@ -43,6 +43,7 @@ export default function CreateInviteLink({ data }) {
 
   return (
     <>
+    
       <Button onClick={handleClick} size={"sm"} colorScheme={"blue"}>
         Create Invite Code
       </Button>
@@ -63,7 +64,7 @@ export default function CreateInviteLink({ data }) {
                   {" "}
                   {/*render a list here*/}
                   {data &&
-                    data.Organizations.map((organization) => {
+                    data.map((organization) => {
                       return (
                         <option value={organization.Id} key={organization.Id}>
                           {organization.Name}

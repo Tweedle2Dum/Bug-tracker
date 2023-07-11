@@ -5,17 +5,17 @@ export default function OrganizationList({data}) {
   
   
   if(data===undefined){
+    console.log("h1")
     return <></>
   }
-  if(data.Organizations===undefined){
-    return <></>
-  }
+
   else
   {
     return (
       <>
+      {console.log(data)}
       <Box display={"grid"} gridTemplateColumns={"1fr 1fr 1fr"} margin={"20px 0 0 0"}>
-      {data && (data.Organizations).map(organization=>{
+      {data && data.map(organization=>{
        return (<OrganizationCard key={organization.Id} name = {organization.Name} intro = {organization.Intro} />)
     })}
     </Box>
