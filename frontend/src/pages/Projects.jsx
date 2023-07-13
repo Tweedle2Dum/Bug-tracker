@@ -17,7 +17,7 @@ export default function Projects() {
   useEffect(() => {
     const data = getOrganizationDetails()
       .then((data) => {
-        setOrganization((prevState) => [...data.Organizations]);
+        setOrganization((prevState) => [...data]);
       })
       .catch((e) => {
         console.warn(e);

@@ -16,15 +16,16 @@ export default function activeBugs() {
   const [organizations, setOrganization] = useState([]);
   const [bugs, setBugs] = useState([]);
   const [addRemove, setaddRemove] = useState(0);
-  const[message,setMessage] = useState(null)
-  
+  const [message, setMessage] = useState(null);
 
   //useEffect for pulling data of all orgs the user is part of
   useEffect(() => {
     const data = getOrganizationDetails()
       .then((data) => {
         /*         console.log(data);
-         */ setOrganization((prevState) => [...data.Organizations]);
+         */ 
+        console.log(data)
+        setOrganization((prevState) => [...data]);
       })
       .catch((e) => {
         console.warn(e);
@@ -38,16 +39,12 @@ export default function activeBugs() {
       /*     console.log(data.flat(Infinity));
        */
 
-      if (data!=undefined){
+      if (data != undefined) {
         setProjects((prevState) => [...prevState, ...data.flat(Infinity)]);
-        setMessage("Here is a list of all the issues for you!")
+        setMessage("Here is a list of all the issues for you!");
+      } else {
+        setMessage("Errr.... looks like we dont have anything for you");
       }
-      else
-      {
-          setMessage("Errr.... looks like we dont have anything for you")
-
-      }
-
     }
     getData();
   }, []);
