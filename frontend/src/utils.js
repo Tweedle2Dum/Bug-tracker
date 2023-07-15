@@ -70,7 +70,7 @@ export async function getOrganizationDetails() {
       });
 
       console.log(data);
-     
+
       return data;
     } catch (e) {
       console.log(e);
@@ -326,5 +326,56 @@ export async function updateBugStatus(projId, orgId, bugName, projName) {
   } catch (e) {
     console.log(e);
     console.log("some error occuered while updating the status of the bug");
+  }
+}
+
+
+
+
+export async function fetchDataForOrganization() {
+  const data = [];
+  try {
+    // Fetch organization details
+    const orgDetails = await getOrganizationDetails();
+    const orgId = orgDetails.map((org) => org.Id);
+    const bugColRef = collection(db, "bugs");
+    const q = query(
+      bugColRef,
+      where("orgId", "in", orgId),
+      where("status", "==", "pending")
+    );
+    const querySnap = await getDocs(q);
+
+    querySnap.forEach((bug) => {
+      data.push(bug.data());
+    });
+
+    return data;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+}
+
+
+
+export async function getOrganizationBugs() {
+  try {
+    const organizations = await getOrganizationDetails();
+    const bugsArray = await getAllBugs(organizations);
+
+    const organizationBugs = organizations.map((org) => {
+      const organizationBugCount = {
+        organizationName: org.Name,
+        totalBugs: bugsArray.filter((bug) => bug.orgId === org.Id).length,
+      };
+      return organizationBugCount;
+    });
+
+    return organizationBugs;
+  } catch (e) {
+    console.error("Error retrieving organization bugs");
+    console.log(e);
+    return [];
   }
 }
