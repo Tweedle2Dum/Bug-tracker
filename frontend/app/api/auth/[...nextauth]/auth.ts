@@ -7,7 +7,7 @@ import { JWT } from "next-auth/jwt";
 
 export const authOptions: AuthOptions = {
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/auth/login",
     error: "/auth/error",
     signOut: "/",
   },

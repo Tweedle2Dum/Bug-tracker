@@ -1,12 +1,12 @@
 import React from 'react'
-import Forgot from '../../../components/UI/Authentication/Forgot/Forgot'
+import { Login } from 'components/UI/Authentication/Login/Login'
 
 type Props = {}
 
 export default function page({}: Props) {
   return (
-    <>
-    <Forgot/>
-    </>
+   <>
+   <Login/>
+   </>
   )
 }

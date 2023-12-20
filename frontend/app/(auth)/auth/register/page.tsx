@@ -1,5 +1,5 @@
 import React from 'react'
-import { Login } from '../../../components/UI/Authentication/Login/Login'
+import { Login } from 'components/UI/Authentication/Login/Login'
 
 type Props = {}
 
