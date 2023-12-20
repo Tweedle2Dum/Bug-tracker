@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 export function Login() {
   const router = useRouter();
   const form = useForm({
+    validateInputOnChange:true,
     initialValues: {
       email: "",
       password: "",
