@@ -1,4 +1,5 @@
 import React from "react";
+import { getServerSession } from "next-auth";
 
 type Props = { children: React.ReactNode };
 
