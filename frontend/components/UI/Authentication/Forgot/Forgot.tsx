@@ -28,7 +28,7 @@ import {
         <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
           <TextInput label="Your email" placeholder="me@mantine.dev" required />
           <Group justify="space-between" mt="lg" className={classes.controls}>
-            <Anchor c="dimmed" size="sm" className={classes.control} href='/login'>
+            <Anchor c="dimmed" size="sm" className={classes.control} href='/auth/login'>
               <Center inline>
                 <IconArrowLeft style={{ width: rem(12), height: rem(12) }} stroke={1.5} />
                 <Box ml={5}>Back to the login page</Box>

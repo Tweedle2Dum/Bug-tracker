@@ -1,5 +1,5 @@
 import React from 'react'
-import { Login } from 'components/UI/Authentication/Login/Login'
+import Register from 'components/UI/Authentication/Register/Register'
 
 type Props = {}
 
@@ -7,7 +7,7 @@ export default function page({}: Props) {
   return (
    
     <>
-    <Login/>
+   <Register/>
     </>
   )
 }

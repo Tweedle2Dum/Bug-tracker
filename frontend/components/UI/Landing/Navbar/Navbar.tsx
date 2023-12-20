@@ -43,8 +43,8 @@ export default function Navbar() {
         </Flex>
         <Divider size={'xs'}/>
         <Group gap={4} visibleFrom='xs'>
-              <Button variant="default" onClick={()=>{router.push('/login')}}>Log in</Button>
-            <Button onClick={()=>{router.push('/register')}}>Sign up</Button>
+              <Button variant="default" onClick={()=>{router.push('/auth/login')}}>Log in</Button>
+            <Button onClick={()=>{router.push('/auth/register')}}>Sign up</Button>
           </Group>
 
         <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />

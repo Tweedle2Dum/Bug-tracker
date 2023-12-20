@@ -5,6 +5,8 @@ export function mapAuthCodeToMessage(error: FirebaseError) {
   switch (error.code) {
     case "auth/invalid-password":
       return "Invalid Password";
+    case "auth/wrong-password":
+      return "Invalid Password";
     case "auth/invalid-email":
       return "Invalid Email";
     case "auth/email-already-exists":
@@ -13,6 +15,8 @@ export function mapAuthCodeToMessage(error: FirebaseError) {
       return "Some internal error occured";
     case "auth/email-already-in-use":
       return "Email already exists";
+    case "auth/too-many-requests":
+      return "Too many failed attempts, reset your password";
   }
 }
 
