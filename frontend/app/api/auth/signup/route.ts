@@ -1,6 +1,6 @@
-import { auth } from "../../../firebase";
-import { mapAuthCodeToMessage } from "../../../../utils";
+import { mapAuthCodeToMessage } from "utils";
 import { FirebaseError } from "firebase/app";
+import { auth } from "app/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { NextResponse, NextRequest } from "next/server";
 export async function POST(request: NextRequest) {

@@ -49,7 +49,7 @@ export function Hero() {
             </Button>
           </Group>
         </div>
-        <Image src={'./image.svg'} className={classes.image} />
+        <Image alt='Hero image' src={'./image.svg'} className={classes.image} />
       </div>
     </Container>
   );

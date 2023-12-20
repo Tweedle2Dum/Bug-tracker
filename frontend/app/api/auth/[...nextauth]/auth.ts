@@ -1,6 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../../firebase";
+import { auth } from "app/firebase";
 import { AuthOptions } from "next-auth";
 import { TokenObject } from "./nextauth";
 import { JWT } from "next-auth/jwt";
