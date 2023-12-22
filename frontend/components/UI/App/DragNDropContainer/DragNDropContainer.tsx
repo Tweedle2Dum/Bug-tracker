@@ -29,9 +29,9 @@ const dummyData = [
   },
 ];
 
-type Props = {children:React.ReactNode};
 
-export default function DragNDropContainer({children}: Props) {
+
+export default function DragNDropContainer() {
   function onDragEnd(){
 
   }
