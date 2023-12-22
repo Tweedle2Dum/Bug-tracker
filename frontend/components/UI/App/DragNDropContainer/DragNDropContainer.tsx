@@ -2,6 +2,7 @@
 import { useState } from "react";
 import DragNDropColumn from "../DragNDropColumn/DragNDropColumn";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
+import { Button } from "@mantine/core";
 
 const dummyData = [
   {
@@ -30,8 +31,15 @@ const dummyData = [
   },
 ];
 
+
 export default function DragNDropContainer() {
   const [data, setData] = useState(dummyData);
+
+
+  function addList(){
+    setData([...dummyData,{columnId:'new list',tasks:[]}])
+  }
+  
 
   function onDragEnd(result: DropResult) {
     const { destination, source, draggableId } = result;
@@ -56,12 +64,13 @@ export default function DragNDropContainer() {
       destinationColumn?.tasks.splice(destinationTask, 0, toMove);
     }
     console.log(destinationColumn);
+    console.log(data)
   }
 
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div style={{ display: "flex", gap: "40px" }}>
+        <div style={{ display: "flex", gap: "40px", margin:'40px 40px'}}>
           {data.map((column) => (
             <DragNDropColumn
               key={column.columnId}
@@ -69,6 +78,7 @@ export default function DragNDropContainer() {
               tasks={column.tasks}
             />
           ))}
+          <Button variant="fill" onClick={addList}>Add another list</Button>
         </div>
       </DragDropContext>
     </>

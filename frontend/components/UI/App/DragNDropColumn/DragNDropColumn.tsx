@@ -43,7 +43,7 @@ export default function DragNDropColumn({
   console.log(tasks)
   return (
     <>
-      <Paper>
+      <Paper mih={'400px'} shadow="xs" p="xl" pt={'0'}>
         <Title mb={"md"} order={4}>
           {" "}
           {columnId.toUpperCase()}
@@ -52,7 +52,7 @@ export default function DragNDropColumn({
         <Droppable droppableId={columnId} type="TASK">
           {(provided, snapshot) => (
             <>
-              <div ref={provided.innerRef} {...provided.droppableProps} >
+              <div ref={provided.innerRef} {...provided.droppableProps} style={{height:'100%'}} >
                 <Stack gap={"md"}>
                   {tasks.map((task, index) => (
                     <Task key={task.id} {...task} index={index} />
