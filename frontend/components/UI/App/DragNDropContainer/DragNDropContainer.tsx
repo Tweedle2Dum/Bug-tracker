@@ -1,6 +1,7 @@
 "use client";
+import { useState } from "react";
 import DragNDropColumn from "../DragNDropColumn/DragNDropColumn";
-import { DragDropContext } from "@hello-pangea/dnd";
+import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 
 const dummyData = [
   {
@@ -29,23 +30,47 @@ const dummyData = [
   },
 ];
 
-
-
 export default function DragNDropContainer() {
-  function onDragEnd(){
+  const [data, setData] = useState(dummyData);
 
+  function onDragEnd(result: DropResult) {
+    const { destination, source, draggableId } = result;
+    if (destination === null) return;
+    if (source.droppableId == destination.droppableId) return;
+    console.log(source);
+    console.log(destination);
+    const sourceTask = source.index;
+    const destinationTask = destination.index;
+    console.log(sourceTask, destinationTask);
+    const sourceColumn = data.find(
+      (column) => column.columnId === source.droppableId
+    );
+    const destinationColumn = data.find(
+      (column) => column.columnId === destination.droppableId
+    );
+    console.log(sourceColumn);
+    console.log(destinationColumn);
+    const toMove = sourceColumn?.tasks.splice(sourceTask, 1)[0];
+    console.log(toMove);
+    if (toMove) {
+      destinationColumn?.tasks.splice(destinationTask, 0, toMove);
+    }
+    console.log(destinationColumn);
   }
-  
-  return (
 
-   <>
-    <DragDropContext onDragEnd={onDragEnd}>
-          <div style={{display:'flex', gap:'40px'}}>
-          {dummyData.map((column) => (
-            <DragNDropColumn key={column.columnId} {...column} />
+  return (
+    <>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div style={{ display: "flex", gap: "40px" }}>
+          {data.map((column) => (
+            <DragNDropColumn
+              key={column.columnId}
+              columnId={column.columnId}
+              tasks={column.tasks}
+            />
           ))}
-          </div>
-    </DragDropContext>
-   </>
+        </div>
+      </DragDropContext>
+    </>
   );
 }
