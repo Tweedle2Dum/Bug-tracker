@@ -1,13 +1,7 @@
 "use client";
 import { useDisclosure } from "@mantine/hooks";
-import { Modal, Button, Divider } from "@mantine/core";
-import { TextInput, Textarea } from "@mantine/core";
-type props = {
-  opened: boolean;
-  open: () => void;
-  close: () => void;
-  contentType: "Workspace" | "Board" | "";
-};
+import { Modal, Button, Divider, Title, Flex, ScrollArea, Paper, Stack } from "@mantine/core";
+import { TextInput, Textarea, Box } from "@mantine/core";
 
 function WorkspaceForm() {
   return (
@@ -48,21 +42,104 @@ function BoardForm() {
   );
 }
 
-export default function Modals({ opened, open, close, contentType }: props) {
-  const modalContent = {};
+type TaskProps = {
+  taskName: string;
+};
 
+function Comments() {
+  return <Paper shadow="xl" p={'xl'}>Comment</Paper>;
+}
+
+function CommentList() {
+  return (
+    <Box my={'lg'}>
+      <ScrollArea h={'250px'}>
+        {" "}
+        <Comments />
+        <Comments />
+        <Comments />
+        <Comments />
+        <Comments />
+        <Comments />
+        <Comments />
+        <Comments />
+        <Comments />
+      </ScrollArea>
+    </Box>
+  );
+}
+
+
+
+function Sidebar() {
+  return(
+    <>
+      <Title order={6}>Add</Title>
+      <Stack gap={'8px'} mt={'4px'}>
+        <Button size="xs">Member</Button>
+        <Button size="xs">Deadline</Button>
+      </Stack>
+    </>
+  )
+}
+
+function TaskForm({ taskName }: TaskProps) {
+  return (
+    <>
+      <Flex gap={"xl"}>
+        <div style={{ flexGrow: 0.75 }}>
+          <Title order={4}>{taskName}</Title>
+          <Textarea
+            label="Description"
+            placeholder="Write a description about the task"
+          />
+          <Divider m={"md"} />
+          <Title order={5}>Comments</Title>
+          <Textarea
+            label="Add a comment"
+            placeholder="Write a comment about the task"
+          />
+          <Box mt={"8px"}>
+            <Button>Add</Button>
+          </Box>
+          <CommentList />
+        </div>
+        <Divider orientation="vertical" />
+        <div style={{ flexGrow: 0.25 }}><Sidebar/></div>
+      </Flex>
+    </>
+  );
+}
+
+type ModalProps = {
+  opened: boolean;
+  open: () => void;
+  close: () => void;
+  contentType: "Workspace" | "Board" | "Task" | "";
+  taskName?: string;
+};
+export default function Modals({
+  opened,
+  open,
+  close,
+  contentType,
+  taskName,
+}: ModalProps) {
   return (
     <>
       <Modal
         opened={opened}
         onClose={close}
-        title={"Create a " + contentType}
+        title={contentType}
         centered
+        size={"lg"}
       >
         {contentType === "Workspace" ? (
           <WorkspaceForm />
         ) : contentType === "Board" ? (
           <BoardForm />
+        ) : contentType === "Task" ? (
+          <TaskForm taskName="taskName" />
         ) : null}
       </Modal>
     </>
