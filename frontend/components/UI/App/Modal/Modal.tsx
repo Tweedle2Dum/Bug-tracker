@@ -2,6 +2,7 @@
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button, Divider, Title, Flex, ScrollArea, Paper, Stack } from "@mantine/core";
 import { TextInput, Textarea, Box } from "@mantine/core";
+import Comment from "../Comments/Comment";
 
 function WorkspaceForm() {
   return (
@@ -55,15 +56,10 @@ function CommentList() {
     <Box my={'lg'}>
       <ScrollArea h={'250px'}>
         {" "}
-        <Comments />
-        <Comments />
-        <Comments />
-        <Comments />
-        <Comments />
-        <Comments />
-        <Comments />
-        <Comments />
-        <Comments />
+        <Comment/>
+        <Comment/>
+        <Comment/>
+        <Comment/>
       </ScrollArea>
     </Box>
   );

@@ -2,7 +2,7 @@
 import { useState } from "react";
 import DragNDropColumn from "../DragNDropColumn/DragNDropColumn";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
-import { Button } from "@mantine/core";
+import { Button, ScrollArea,Box,Flex } from "@mantine/core";
 
 const dummyData = [
   {
@@ -37,7 +37,7 @@ export default function DragNDropContainer() {
 
 
   function addList(){
-    setData([...dummyData,{columnId:'new list',tasks:[]}])
+    setData([...dummyData,{columnId:'new  1 list',tasks:[]}])
   }
   
 
@@ -69,18 +69,22 @@ export default function DragNDropContainer() {
 
   return (
     <>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div style={{ display: "flex", gap: "40px", margin:'40px 40px'}}>
-          {data.map((column) => (
-            <DragNDropColumn
-              key={column.columnId}
-              columnId={column.columnId}
-              tasks={column.tasks}
-            />
-          ))}
-          <Button variant="fill" onClick={addList}>Add another list</Button>
-        </div>
-      </DragDropContext>
+      <div style={{marginTop:'40px'}}>
+        <DragDropContext onDragEnd={onDragEnd}>
+            <ScrollArea scrollbars='x' w={'100%'}>
+            <Box w={'100%'} display={'flex'}>
+              {data.map((column) => (
+                <DragNDropColumn
+                  key={column.columnId}
+                  columnId={column.columnId}
+                  tasks={column.tasks}
+                />
+              ))}
+              <Button variant="fill" onClick={addList}>Add another list</Button>
+            </Box>
+            </ScrollArea>
+        </DragDropContext>
+      </div>
     </>
   );
 }
