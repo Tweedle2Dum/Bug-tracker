@@ -1,5 +1,7 @@
-import { BoardNavbar } from 'components/UI/App/BoardNavbar/BoardNavbar'
-import DragNDropContainer from 'components/UI/App/DragNDropContainer/DragNDropContainer'
+
+import { Flex } from '@mantine/core'
+import { Empty } from 'components/UI/App/Empty/Empty'
+import { GradientCard } from 'components/UI/App/GradientCard/GradientCard'
 import React from 'react'
 
 type Props = {}
@@ -7,9 +9,16 @@ type Props = {}
 export default function page({}: Props) {
   return (
     <div>
-      <BoardNavbar/>
-      <DragNDropContainer/>
-    
+     {/* <Empty/> */}
+    <Flex wrap={'wrap'} gap={'20px'}>
+      <GradientCard/>
+      <GradientCard/>
+
+      <GradientCard/>
+
+      <GradientCard/>
+
+    </Flex>
     </div>
   )
 }

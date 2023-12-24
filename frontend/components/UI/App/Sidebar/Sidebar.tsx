@@ -51,18 +51,17 @@ function NavbarLink({ icon: Icon, label, active, path }: NavbarLinkProps) {
   );
 }
 
-const mockdata = [
+const routes = [
   { icon: IconHome2, label: "Home", path: "/home" },
   { icon: IconGauge, label: "Dashboard", path: "/dashboard" },
   { icon: IconDeviceDesktopAnalytics, label: "Analytics", path: "/analytics" },
-  { icon: IconUser, label: "Account", path: "/account" },
-  { icon: IconSettings, label: "Settings", path: "/settings" },
+  
 ];
 
 export default function Sidebar() {
   const [active, setActive] = useState(2);
 
-  const links = mockdata.map((link, index) => (
+  const links = routes.map((link, index) => (
     <NavbarLink
       {...link}
       key={link.label}
