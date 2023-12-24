@@ -2,7 +2,7 @@
 import { useState } from "react";
 import DragNDropColumn from "../DragNDropColumn/DragNDropColumn";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
-import { Button, ScrollArea,Box,Flex } from "@mantine/core";
+import { Button, ScrollArea, Box, Flex } from "@mantine/core";
 
 const dummyData = [
   {
@@ -29,17 +29,15 @@ const dummyData = [
       { id: "9", title: "Task 9", content: "Task 9 Content" },
     ],
   },
+  
 ];
-
 
 export default function DragNDropContainer() {
   const [data, setData] = useState(dummyData);
 
-
-  function addList(){
-    setData([...dummyData,{columnId:'new  1 list',tasks:[]}])
+  function addList() {
+    setData([...dummyData, { columnId: "new  1 list", tasks: [] }]);
   }
-  
 
   function onDragEnd(result: DropResult) {
     const { destination, source, draggableId } = result;
@@ -64,25 +62,29 @@ export default function DragNDropContainer() {
       destinationColumn?.tasks.splice(destinationTask, 0, toMove);
     }
     console.log(destinationColumn);
-    console.log(data)
+    console.log(data);
   }
 
   return (
     <>
-      <div style={{marginTop:'40px'}}>
+      <div style={{ marginTop: "40px" }}>
         <DragDropContext onDragEnd={onDragEnd}>
-            <ScrollArea scrollbars='x' w={'100%'}>
-            <Box w={'100%'} display={'flex'}>
+          <ScrollArea scrollbars="x" w={"90%"} style={{ overflowX:'scroll' }}>
+            <Box w={"100%"} display={"flex"} style={{ minWidth: '100%' }}>
               {data.map((column) => (
                 <DragNDropColumn
                   key={column.columnId}
                   columnId={column.columnId}
                   tasks={column.tasks}
+                  
                 />
               ))}
-              <Button variant="fill" onClick={addList}>Add another list</Button>
+
+              <Button variant="fill" onClick={addList} style={{ margin: '0 10px' }}>
+                Add another list
+              </Button>
             </Box>
-            </ScrollArea>
+          </ScrollArea>
         </DragDropContext>
       </div>
     </>

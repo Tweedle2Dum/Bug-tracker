@@ -25,6 +25,7 @@ export function BoardNavbar() {
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
           <MantineLogo size={28} />
           BoardName
+          <Dropdown/>
         </Group>
 
         <Group>
@@ -54,3 +55,60 @@ export function BoardNavbar() {
     </header>
   );
 }
+
+
+import { Menu, Button, Text} from "@mantine/core";
+import {
+  IconSettings,
+  IconPhoto,
+  IconMessageCircle,
+  IconTrash,
+  IconArrowsLeftRight,
+} from "@tabler/icons-react";
+
+ function Dropdown() {
+  return (
+    <Menu shadow="md" width={200}>
+      <Menu.Target>
+        <Button variant="outline">Other boards</Button>
+      </Menu.Target>
+
+      <Menu.Dropdown>
+        <Menu.Item
+          leftSection={
+            <IconSettings style={{ width: rem(14), height: rem(14) }} />
+          }
+        >
+          Workspaces
+        </Menu.Item>
+        <Menu.Divider></Menu.Divider>
+        
+        <Menu.Item
+          leftSection={
+            <IconSettings style={{ width: rem(14), height: rem(14) }} />
+          }
+        >
+          Workspaces
+        </Menu.Item>
+        <Menu.Divider></Menu.Divider>
+        <Menu.Item
+          leftSection={
+            <IconSettings style={{ width: rem(14), height: rem(14) }} />
+          }
+        >
+          Workspaces
+        </Menu.Item>
+        <Menu.Divider></Menu.Divider>
+        <Menu.Item
+          leftSection={
+            <IconSettings style={{ width: rem(14), height: rem(14) }} />
+          }
+        >
+          Workspaces
+        </Menu.Item>
+        <Menu.Divider></Menu.Divider>
+      </Menu.Dropdown>
+    </Menu>
+  );
+}
+

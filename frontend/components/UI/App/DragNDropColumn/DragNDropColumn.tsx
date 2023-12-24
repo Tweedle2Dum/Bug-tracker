@@ -22,7 +22,7 @@ export default function DragNDropColumn({
   console.log(tasks);
   return (
     <>
-      <Box mih={"100%"}>
+      <Box mih={"100%"} miw={'400px'} maw={'400px'}>
         <Paper shadow="xs" p="xl" pt={"0"} miw={"300px"}>
           <Title mb={"md"} order={4}>
             {" "}

@@ -7,10 +7,11 @@ export default function Comment() {
     <Paper withBorder radius="md" className={classes.comment}>
       <Group>
         <Avatar
-          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png"
+        color='cyan'
           alt="Jacob Warnhalter"
           radius="xl"
-        />
+          
+        > US</Avatar>
         <div>
           <Text fz="sm">Jacob Warnhalter</Text>
           <Text fz="xs" c="dimmed">
