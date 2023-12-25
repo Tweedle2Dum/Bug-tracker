@@ -6,8 +6,8 @@ import "log"
 
 func Migrate() {
 	database := db.GetDB()
-	err := database.AutoMigrate(&models.User{})
-	if(err==nil) {
+	err := database.AutoMigrate(&models.User{},&models.Board{},&models.Column{},&models.Comment{},&models.Task{},&models.Workspace{})
+	if(err!=nil) {
 		log.Println("Migrations failed")
 		return 
 	}
