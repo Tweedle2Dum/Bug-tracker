@@ -7,15 +7,22 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/tweedle2dum/tracker/config"
+	"github.com/tweedle2dum/tracker/db"
+	"github.com/tweedle2dum/tracker/migrations"
 	"github.com/tweedle2dum/tracker/router"
+	"github.com/tweedle2dum/tracker/utils"
 )
 
 func main() {
-
+	utils.ImportEnv()
+	config.LoadCfg()
+	db.Connect()
+	migrations.Migrate()
 	app := fiber.New()
 	app.Use(logger.New(logger.Config{
 		Next: func(c *fiber.Ctx) bool {
-			return strings.HasPrefix(c.Path(), "/")
+			return strings.HasPrefix(c.Path(), "/api")
 		},
 	}))
 
