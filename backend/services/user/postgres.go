@@ -15,12 +15,17 @@ func NewPostgresRepo(db *gorm.DB) Repository {
 	}
 }
 
-func (r *repo) CreateUser(user models.User) (*models.User, error) {
+func (r *repo) CreateUser(email string , name string ) (*models.User, error) {
+	user := &models.User{
+		Email:     email,
+		Name:      name,
+	}
+
 	err := r.DB.Create(&user).Error
 	if err != nil {
 		return nil, err
 	}
-	return &user, nil
+	return user, nil
 
 }
 

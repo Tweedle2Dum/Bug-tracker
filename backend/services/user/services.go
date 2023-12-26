@@ -3,7 +3,7 @@ package user
 import "github.com/tweedle2dum/tracker/models"
 
 type Service interface {
-	CreateUser(user models.User) (*models.User, error)
+	CreateUser(email string , name string ) (*models.User, error)
 	FetchProfileByEmail(email string) (*models.User, error)
 }
 
@@ -12,8 +12,8 @@ type userSvc struct {
 }
 
 // CreateUser implements Service.
-func (s *userSvc) CreateUser(user models.User) (*models.User, error) {
-	 return s.repo.CreateUser(user)
+func (s *userSvc) CreateUser(email string , name string) (*models.User, error) {
+	 return s.repo.CreateUser(email,name)
 }
 
 // FetchProfileByEmail implements Service.

@@ -9,14 +9,6 @@ type Comment struct {
 	Text      string    `json:"text"`
 	TaskID    uuid.UUID `json:"task_id"`
 	UserID    uuid.UUID `json:"user_id"`
-    User User `gorm:"foreignKey:Email" json:"user"`
-	Task Task `json:"task"`
-
-
-	
-
+	User      User      `gorm:"foreignKey:UserID" json:"user"`
+	Task      Task      `json:"task"`
 }
-
-
-
- 
