@@ -3,9 +3,11 @@ package router
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/tweedle2dum/tracker/controllers"
+	"github.com/tweedle2dum/tracker/middlewares"
 )
 
 func userRouter(c fiber.Router) {
-		c.Get("",func(c *fiber.Ctx) error{ return c.SendString("User router") })
 		c.Post("",controllers.CreateUser)
+		c.Use(middlewares.CheckAuth)
+		c.Get("",controllers.GetUser)
 }

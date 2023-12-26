@@ -13,13 +13,9 @@ import (
 
 
 func GetUser(c *fiber.Ctx) error {
-		var user schemas.UserSchema
-		err := c.BodyParser(&user)
-		if(err != nil) {
-			fmt.Println("Bad request while getting user")
-			return c.Status(400).JSON(fiber.Map{"ok":false,"err":"Bad Request"})
-		}
-		data , err := db.UsersSvc.FetchProfileByEmail(user.Email)
+		userEmail := c.Locals("userEmail").(string)
+		fmt.Println(userEmail)
+		data , err := db.UsersSvc.FetchProfileByEmail(userEmail)
 		if(err!=nil) {
 			if errors.Is(err, gorm.ErrRecordNotFound) {
 				return c.Status(500).JSON(fiber.Map{"ok":false,"err":"User not found"})

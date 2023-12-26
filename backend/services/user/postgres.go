@@ -31,7 +31,7 @@ func (r *repo) CreateUser(email string , name string ) (*models.User, error) {
 
 func (r *repo) FetchProfileByEmail(email string) (*models.User, error) {
 	user := &models.User{}
-	err := r.DB.Preload("Users").First(user, "email = ?", email).Error
+	err := r.DB.Preload("Workspaces").First(user, "email = ?", email).Error
 	if err != nil {
 		return nil, err
 	}
