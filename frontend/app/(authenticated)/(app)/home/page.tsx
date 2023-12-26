@@ -8,10 +8,13 @@ import {
   rem,
 } from "@mantine/core";
 import StatsRing from "components/UI/App/StatsRing/StatsRing";
+import { useSession } from "next-auth/react";
 
 const PRIMARY_COL_HEIGHT = rem(500);
 
 export default function page() {
+  const {data:session,status} = useSession()
+  console.log(session)
   const SECONDARY_COL_HEIGHT = `calc(${PRIMARY_COL_HEIGHT} / 2 - var(--mantine-spacing-md) / 2)`;
 
   return (

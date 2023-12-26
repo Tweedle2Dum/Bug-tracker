@@ -24,6 +24,7 @@ export default function Register({}: Props) {
   const form = useForm({
     validateInputOnChange: true,
     initialValues: {
+      username:"",
       email: "",
       password: "",
       confirmPassword: "",
@@ -42,6 +43,7 @@ export default function Register({}: Props) {
       method: "POST",
       mode: "no-cors",
       body: JSON.stringify({
+        username:form.values.username,
         email: form.values.email,
         password: form.values.password,
       }),
@@ -51,7 +53,7 @@ export default function Register({}: Props) {
       console.log(data);
       return;
     }
-    ("/auth/login");
+    router.push("/auth/login");
   }
 
   return (
@@ -68,6 +70,13 @@ export default function Register({}: Props) {
 
       <form onSubmit={handleSubmit}>
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+        <TextInput
+            label="Username"
+            placeholder="tweedle2dum"
+            required
+            {...form.getInputProps("username")}
+          />
+
           <TextInput
             label="Email"
             placeholder="you@mantine.dev"

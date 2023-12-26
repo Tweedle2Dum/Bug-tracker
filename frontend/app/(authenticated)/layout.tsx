@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import authOptions from "app/api/auth/[...nextauth]/auth";
 import Sidebar from "components/UI/App/Sidebar/Sidebar";
 import Navbar from "components/UI/App/Navbar/Navbar";
+import SessionProvider from "components/Providers/SessionProvider";
+import QueryProvider from "components/Providers/QueryProvider";
 
 type Props = { children: React.ReactNode };
 
@@ -13,13 +15,17 @@ export default async function layout({ children }: Props) {
 
   return (
     <>
-      <Navbar/>
-        <div style={{ display: "flex", minHeight: "100%" }}>
-      <div>
-        <Sidebar />
-      </div>
-      <div style={{ flexGrow: "1" }}>{children}</div>
-    </div>
+      <SessionProvider session={session}>
+        <QueryProvider>
+          <Navbar />
+          <div style={{ display: "flex", minHeight: "100%" }}>
+            <div>
+              <Sidebar />
+            </div>
+            <div style={{ flexGrow: "1" }}>{children}</div>
+          </div>
+        </QueryProvider>
+      </SessionProvider>
     </>
   );
 }
