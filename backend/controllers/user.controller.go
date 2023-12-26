@@ -39,6 +39,7 @@ func CreateUser(c *fiber.Ctx) error {
 		fmt.Println("Bad request while getting user")
 		return c.Status(400).JSON(fiber.Map{"ok":false,"err":"Bad Request"})
 	}
+	fmt.Println("the user is " + user.Name)
 	createdUser, err := db.UsersSvc.CreateUser(user.Email,user.Name)
 	if err != nil {
         fmt.Println("Error creating user:", err)
