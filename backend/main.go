@@ -18,7 +18,12 @@ func main() {
 	utils.ImportEnv()
 	config.LoadCfg()
 	db.Connect()
-	migrations.Migrate()
+
+	db.InitServices()
+
+	if config.MIGRATE {
+		migrations.Migrate()
+	}	
 	app := fiber.New()
 	app.Use(logger.New(logger.Config{
 		Next: func(c *fiber.Ctx) bool {
