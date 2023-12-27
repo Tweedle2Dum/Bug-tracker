@@ -1,24 +1,57 @@
 "use client";
 import { useDisclosure } from "@mantine/hooks";
-import { Modal, Button, Divider, Title, Flex, ScrollArea, Paper, Stack } from "@mantine/core";
+import {
+  Modal,
+  Button,
+  Divider,
+  Title,
+  Flex,
+  ScrollArea,
+  Paper,
+  Stack,
+} from "@mantine/core";
 import { TextInput, Textarea, Box } from "@mantine/core";
 import Comment from "../Comments/Comment";
+import { useForm } from "@mantine/form";
+import { FormEvent } from "react";
+import usePostWorkspace from "components/Hooks/API/useCreateWorkspace";
+import { useSession } from "next-auth/react";
 
 function WorkspaceForm() {
+  const {data:session,status} = useSession();
+  const {mutate,isSuccess,isError} = usePostWorkspace()
+  const form = useForm({
+    initialValues: {
+      name: "",
+      description: "",
+    },
+  });
+
+
+  function handleSubmit(e:FormEvent) {
+      e.preventDefault();
+      if(session) {
+        mutate({session,workspace:{name:form.values.name,description:form.values.description}})
+      }
+
+  }
   return (
     <>
-      <TextInput
-        label="Workspace name"
-        placeholder="Best workspace in the world"
-      />
-      <Divider m={"md"} />
-      <Textarea
-        label="Description"
-        placeholder="Best description in the world"
-      />
-      <Divider m={"md"} />
-
-      <Button fullWidth>Create workspace</Button>
+      <form action="" onSubmit={handleSubmit}>
+        <TextInput
+          label="Workspace name"
+          placeholder="Best workspace in the world"
+          {...form.getInputProps('name')}
+        />
+        <Divider m={"md"} />
+        <Textarea
+          label="Description"
+          placeholder="Best description in the world"
+          {...form.getInputProps('description')}
+        />
+        <Divider m={"md"} />
+        <Button fullWidth type="submit">Create workspace</Button>
+      </form>
     </>
   );
 }
@@ -48,35 +81,37 @@ type TaskProps = {
 };
 
 function Comments() {
-  return <Paper shadow="xl" p={'xl'}>Comment</Paper>;
+  return (
+    <Paper shadow="xl" p={"xl"}>
+      Comment
+    </Paper>
+  );
 }
 
 function CommentList() {
   return (
-    <Box my={'lg'}>
-      <ScrollArea h={'250px'}>
+    <Box my={"lg"}>
+      <ScrollArea h={"250px"}>
         {" "}
-        <Comment/>
-        <Comment/>
-        <Comment/>
-        <Comment/>
+        <Comment />
+        <Comment />
+        <Comment />
+        <Comment />
       </ScrollArea>
     </Box>
   );
 }
 
-
-
 function Sidebar() {
-  return(
+  return (
     <>
       <Title order={6}>Add</Title>
-      <Stack gap={'8px'} mt={'4px'}>
+      <Stack gap={"8px"} mt={"4px"}>
         <Button size="xs">Member</Button>
         <Button size="xs">Deadline</Button>
       </Stack>
     </>
-  )
+  );
 }
 
 function TaskForm({ taskName }: TaskProps) {
@@ -101,7 +136,9 @@ function TaskForm({ taskName }: TaskProps) {
           <CommentList />
         </div>
         <Divider orientation="vertical" />
-        <div style={{ flexGrow: 0.25 }}><Sidebar/></div>
+        <div style={{ flexGrow: 0.25 }}>
+          <Sidebar />
+        </div>
       </Flex>
     </>
   );

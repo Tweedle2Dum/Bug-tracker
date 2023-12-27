@@ -10,7 +10,9 @@ import {
 } from "@tabler/icons-react";
 import Modals from "../Modal/Modal";
 
-export default function ButtonMenu() {
+
+
+export default function ButtonMenu({}) {
   const [opened, { open, close }] = useDisclosure(false);
   const [contentType, setContentType] = useState<'Workspace' | 'Board' | ''>("");
   const theme = useMantineTheme();

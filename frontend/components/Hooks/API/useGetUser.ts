@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Session } from "next-auth";
+import { User } from "types";
 
 async function getUser(session: Session) {
   const response = await fetch("http://localhost:3001/api/v1/user", {
@@ -11,8 +12,7 @@ async function getUser(session: Session) {
     console.log(await response.json());
     throw new Error("Some error occured while fetching user details");
   }
-  const data = await response.json();
-  console.log(data)
+  const data:User = await response.json();
   return data;
 }
 
