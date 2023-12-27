@@ -3,7 +3,7 @@ package workspace
 import "github.com/tweedle2dum/tracker/models"
 
 type Service interface {
-	CreateWorkspace(email string) (*models.Workspace,error)
+	CreateWorkspace( email string ,name string, description string ) (*models.Workspace,error)
 	GetWorkspace(email string) (*models.Workspace, error)
 	GetWorkspaces(email string) (*models.Workspace, error)
 }
@@ -14,8 +14,8 @@ type workspaceSvc struct {
 
 
 // CreateWorkspace implements Service.
-func (s *workspaceSvc) CreateWorkspace(email string) (*models.Workspace, error) {
-	return s.repo.CreateWorkspace(email)
+func (s *workspaceSvc) CreateWorkspace(email string ,name string, description string) (*models.Workspace, error) {
+	return s.repo.CreateWorkspace(email , name,description)
 }
 
 // FetchWorkspaceByEmail implements Service.

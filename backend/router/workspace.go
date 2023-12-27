@@ -10,4 +10,5 @@ import (
 func workspaceRouter(c fiber.Router) {
 	c.Use(middlewares.CheckAuth)
 	c.Get("",controllers.GetAllWorkspaces)
+	c.Post("",controllers.PostWorkspace)
 }
