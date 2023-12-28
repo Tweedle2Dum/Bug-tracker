@@ -8,4 +8,5 @@ import (
 
 func boardRouter(c fiber.Router) {
 	c.Get("",controllers.GetAllBoards)
+	c.Post("",controllers.PostBoard)
 }
