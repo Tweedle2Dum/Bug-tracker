@@ -18,7 +18,7 @@ async function postBoard(session: Session, board: FormData) {
     body: JSON.stringify({
       name: board.name,
       description: board.description,
-      boardId:board.workspaceId
+      workspaceId:board.workspaceId
     }),
   });
   if (!response.ok) {
