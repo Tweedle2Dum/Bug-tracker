@@ -9,6 +9,7 @@ import {
   ScrollArea,
   Paper,
   Stack,
+  Select,
 } from "@mantine/core";
 import { TextInput, Textarea, Box } from "@mantine/core";
 import Comment from "../Comments/Comment";
@@ -16,10 +17,13 @@ import { useForm } from "@mantine/form";
 import { FormEvent } from "react";
 import usePostWorkspace from "components/Hooks/API/useCreateWorkspace";
 import { useSession } from "next-auth/react";
+import usePostBoard from "components/Hooks/API/useCreateBoard";
+import useGetUser from "components/Hooks/API/useGetUser";
+import { Session } from "next-auth";
 
 function WorkspaceForm() {
-  const {data:session,status} = useSession();
-  const {mutate,isSuccess,isError} = usePostWorkspace()
+  const { data: session, status } = useSession();
+  const { mutate, isSuccess, isError } = usePostWorkspace();
   const form = useForm({
     initialValues: {
       name: "",
@@ -27,13 +31,17 @@ function WorkspaceForm() {
     },
   });
 
-
-  function handleSubmit(e:FormEvent) {
-      e.preventDefault();
-      if(session) {
-        mutate({session,workspace:{name:form.values.name,description:form.values.description}})
-      }
-
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    if (session) {
+      mutate({
+        session,
+        workspace: {
+          name: form.values.name,
+          description: form.values.description,
+        },
+      });
+    }
   }
   return (
     <>
@@ -41,37 +49,81 @@ function WorkspaceForm() {
         <TextInput
           label="Workspace name"
           placeholder="Best workspace in the world"
-          {...form.getInputProps('name')}
+          {...form.getInputProps("name")}
         />
         <Divider m={"md"} />
         <Textarea
           label="Description"
           placeholder="Best description in the world"
-          {...form.getInputProps('description')}
+          {...form.getInputProps("description")}
         />
         <Divider m={"md"} />
-        <Button fullWidth type="submit">Create workspace</Button>
+        <Button fullWidth type="submit">
+          Create workspace
+        </Button>
       </form>
     </>
   );
 }
 
 function BoardForm() {
+  const { data: session, status } = useSession();
+  const {
+    data,
+    isError: getError,
+    isSuccess: getSuccess,
+    isLoading,
+  } = useGetUser(session as Session);
+  const { mutate, isError, isSuccess } = usePostBoard();
+  const form = useForm({
+    initialValues: {
+      name: "",
+      description: "",
+      workspace: "",
+    },
+  });
+
+  function handleClick() {
+    console.log(form.values);
+    if (session) {
+      mutate({
+        session,
+        board: {
+          name: form.values.name,
+          description: form.values.description,
+          workspaceId: form.values.workspace,
+        },
+      });
+    }
+  }
   return (
     <>
+      <Select
+        label="Your workspace"
+        placeholder="Select a workspace"
+        data={data?.workspaces.map((workspace)=>{
+              return {value:workspace.id,label:workspace.name}
+        })}
+        {...form.getInputProps("workspace")}
+      />
+
       <TextInput
         label="Board Title"
         description="Name of the board"
         placeholder="Best board in the world"
+        {...form.getInputProps("name")}
       />
       <Divider m={"md"} />
       <Textarea
         label="Description"
         placeholder="Best description in the world"
+        {...form.getInputProps("description")}
       />
       <Divider m={"md"} />
 
-      <Button fullWidth>Create Board</Button>
+      <Button fullWidth onClick={handleClick}>
+        Create Board
+      </Button>
     </>
   );
 }

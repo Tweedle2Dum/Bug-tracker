@@ -79,22 +79,7 @@ export default function ButtonMenu({}) {
           >
             Board
           </Menu.Item>
-          <Menu.Item
-            leftSection={
-              <IconCalendar
-                style={{ width: rem(16), height: rem(16) }}
-                color={theme.colors.violet[6]}
-                stroke={1.5}
-              />
-            }
-            rightSection={
-              <Text size="xs" tt="uppercase" fw={700} c="dimmed">
-                Ctrl + E
-              </Text>
-            }
-          >
-            Event
-          </Menu.Item>
+         
         </Menu.Dropdown>
       </Menu>
       <Modals
