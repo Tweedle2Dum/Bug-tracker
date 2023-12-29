@@ -7,5 +7,6 @@ import (
 
 type Repository interface {
 	CreateBoard(workspaceId uuid.UUID ,description string, name string) (*models.Board,error)
+	GetBoards(workspaceId uuid.UUID) ([]models.Board,error)
 	
 }

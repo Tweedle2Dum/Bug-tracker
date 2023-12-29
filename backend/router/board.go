@@ -7,6 +7,6 @@ import (
 
 
 func boardRouter(c fiber.Router) {
-	c.Get("",controllers.GetAllBoards)
+	c.Get("/:workspaceId",controllers.GetBoards)
 	c.Post("",controllers.PostBoard)
 }

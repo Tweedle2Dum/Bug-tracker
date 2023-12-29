@@ -29,3 +29,13 @@ func (r *repo) CreateBoard(workspaceId uuid.UUID , name string , description str
 	}
 	return newBoard,nil
 }
+
+func (r *repo) GetBoards(workspaceId uuid.UUID) ([]models.Board,error) {
+	var boards []models.Board
+	err := r.DB.Where("workspace_id = ?",workspaceId).Find(&boards).Error
+	if err != nil {
+		return nil, err
+	}
+	return boards , nil
+	
+}
