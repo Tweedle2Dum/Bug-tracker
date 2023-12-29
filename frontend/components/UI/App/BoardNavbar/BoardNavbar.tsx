@@ -13,7 +13,11 @@ const links = [
   { link: "/community", label: "Community" },
 ];
 
-export function BoardNavbar() {
+type BoardNavbarProps  = {
+  items : Board[]
+}
+
+export function BoardNavbar({items}:BoardNavbarProps) {
   const [opened, { toggle }] = useDisclosure(false);
 
  
@@ -65,6 +69,7 @@ import {
   IconTrash,
   IconArrowsLeftRight,
 } from "@tabler/icons-react";
+import { Board } from "types";
 
  function Dropdown() {
   return (
