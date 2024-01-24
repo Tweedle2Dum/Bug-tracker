@@ -10,7 +10,6 @@ type Props = {params:{workspaceId:string}}
 export default function page({params}: Props) {
   const {data:session,status} = useSession()
   console.log(params.workspaceId)
-  console.log("hello")
   const {data,isSuccess} = useGetBoards(session as Session,params.workspaceId)
   if(isSuccess){
     console.log(data)

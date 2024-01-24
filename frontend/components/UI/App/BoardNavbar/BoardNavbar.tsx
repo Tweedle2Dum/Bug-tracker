@@ -13,14 +13,13 @@ const links = [
   { link: "/community", label: "Community" },
 ];
 
-type BoardNavbarProps  = {
-  items : Board[]
-}
+type BoardNavbarProps = {
+  items: Board[];
+};
 
-export function BoardNavbar({items}:BoardNavbarProps) {
+export function BoardNavbar({ items }: BoardNavbarProps) {
   const [opened, { toggle }] = useDisclosure(false);
-
- 
+  console.log(items);
 
   return (
     <header className={classes.header}>
@@ -29,11 +28,10 @@ export function BoardNavbar({items}:BoardNavbarProps) {
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
           <MantineLogo size={28} />
           BoardName
-          <Dropdown/>
+          <Dropdown {...items} />
         </Group>
 
         <Group>
-         
           <Autocomplete
             className={classes.search}
             placeholder="Search"
@@ -60,8 +58,7 @@ export function BoardNavbar({items}:BoardNavbarProps) {
   );
 }
 
-
-import { Menu, Button, Text} from "@mantine/core";
+import { Menu, Button, Text } from "@mantine/core";
 import {
   IconSettings,
   IconPhoto,
@@ -70,8 +67,17 @@ import {
   IconArrowsLeftRight,
 } from "@tabler/icons-react";
 import { Board } from "types";
+import useGetBoards from "components/Hooks/API/useGetBoards";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 
- function Dropdown() {
+
+type DropDownProps = {
+  items : Board[]
+}
+
+function Dropdown({items}:DropDownProps) {
+  console.log(items)
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
@@ -79,41 +85,8 @@ import { Board } from "types";
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Menu.Item
-          leftSection={
-            <IconSettings style={{ width: rem(14), height: rem(14) }} />
-          }
-        >
-          Workspaces
-        </Menu.Item>
-        <Menu.Divider></Menu.Divider>
         
-        <Menu.Item
-          leftSection={
-            <IconSettings style={{ width: rem(14), height: rem(14) }} />
-          }
-        >
-          Workspaces
-        </Menu.Item>
-        <Menu.Divider></Menu.Divider>
-        <Menu.Item
-          leftSection={
-            <IconSettings style={{ width: rem(14), height: rem(14) }} />
-          }
-        >
-          Workspaces
-        </Menu.Item>
-        <Menu.Divider></Menu.Divider>
-        <Menu.Item
-          leftSection={
-            <IconSettings style={{ width: rem(14), height: rem(14) }} />
-          }
-        >
-          Workspaces
-        </Menu.Item>
-        <Menu.Divider></Menu.Divider>
       </Menu.Dropdown>
     </Menu>
   );
 }
-

@@ -1,3 +1,4 @@
+'sue client'
 import { Menu, Button, Text, rem } from "@mantine/core";
 import {
   IconSettings,
@@ -7,19 +8,22 @@ import {
   IconTrash,
   IconArrowsLeftRight,
 } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 
-interface DropdownList<T extends { name: string }> {
+interface DropdownList<T extends { name: string, id:string }> {
   items: T[];
 }
 
-export default function Dropdown<T extends { name: string }>({
+export default function Dropdown<T extends { name: string,id:string }>({
   items = [],
 }: DropdownList<T>) {
   console.log("Inside dropdown menu", items);
+  const router = useRouter()
 
   const MenuItems = items.map((item, index) => {
     return (
       <Menu.Item
+      onClick={()=>{router.push(`/dashboard/${item.id}`)}}
         key={index}
         leftSection={
           <IconSettings style={{ width: rem(14), height: rem(14) }} />
