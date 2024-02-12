@@ -27,8 +27,8 @@ export function BoardNavbar({ items }: BoardNavbarProps) {
         <Group>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
           <MantineLogo size={28} />
-          BoardName
-          <Dropdown {...items} />
+          {items[0].name}
+          <Dropdown items={items} />
         </Group>
 
         <Group>
@@ -67,11 +67,6 @@ import {
   IconArrowsLeftRight,
 } from "@tabler/icons-react";
 import { Board } from "types";
-import useGetBoards from "components/Hooks/API/useGetBoards";
-import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
-
-
 type DropDownProps = {
   items : Board[]
 }
