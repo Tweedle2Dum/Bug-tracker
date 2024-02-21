@@ -1,10 +1,7 @@
 "use client";
 import React from "react";
-import { useState } from "react";
-import { Draggable, Droppable } from "@hello-pangea/dnd";
+import {  Droppable } from "@hello-pangea/dnd";
 import { Paper, Stack, Text, Title, Box } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import Modals from "../Modal/Modal";
 import Task from "../Task/Task";
 import { TaskProps } from "../Task/Task";
 

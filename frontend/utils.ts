@@ -33,3 +33,15 @@ export function validateSchema<T extends z.ZodTypeAny>(
     }
   }
 }
+
+
+export function generateColumnDef(type:string){
+  switch (type) {
+    case 'Boards':
+      return 
+      
+      break;
+  
+   
+  }
+}

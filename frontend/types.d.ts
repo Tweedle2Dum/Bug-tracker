@@ -24,10 +24,25 @@ export interface Board {
   description: string;
   workspace_id: string;
   columns: Columns[];
-
 }
 
+export interface Columns {
+  id: string;
+  name: string;
+  tasks: Task[];
+}
 
+export interface Comment {
+  id: string;
+  issuer: string;
+  description: string;
+  time: string;
+}
 
-export interface Columns {}
-
+export interface Task {
+  id: string;
+  description: string;
+  time: string;
+  name: string;
+  comments: Comment[];
+}

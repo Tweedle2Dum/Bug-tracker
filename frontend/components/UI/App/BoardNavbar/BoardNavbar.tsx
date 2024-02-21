@@ -1,6 +1,6 @@
 "use client";
 
-import { Autocomplete, Group, Burger, rem } from "@mantine/core";
+import { Autocomplete, Group, Burger, rem, Box } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 import { MantineLogo } from "@mantinex/mantine-logo";
@@ -15,9 +15,11 @@ const links = [
 
 type BoardNavbarProps = {
   items: Board[];
+  setBoard: Dispatch<SetStateAction<Board | null>>;
+  selectedBoard: Board | null
 };
 
-export function BoardNavbar({ items }: BoardNavbarProps) {
+export function BoardNavbar({ items, setBoard,selectedBoard }: BoardNavbarProps) {
   const [opened, { toggle }] = useDisclosure(false);
   console.log(items);
 
@@ -27,8 +29,8 @@ export function BoardNavbar({ items }: BoardNavbarProps) {
         <Group>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
           <MantineLogo size={28} />
-          {items[0].name}
-          <Dropdown items={items} />
+          {selectedBoard === null ? (items.length > 0 ? items[0].name : "") : selectedBoard.name}
+          <Dropdown items={items} setBoard={setBoard} />
         </Group>
 
         <Group>
@@ -67,20 +69,32 @@ import {
   IconArrowsLeftRight,
 } from "@tabler/icons-react";
 import { Board } from "types";
+import { Dispatch, SetStateAction } from "react";
 type DropDownProps = {
-  items : Board[]
-}
+  items: Board[];
+  setBoard: Dispatch<SetStateAction<Board | null>>;
+};
 
-function Dropdown({items}:DropDownProps) {
-  console.log(items)
+function Dropdown({ items, setBoard }: DropDownProps) {
+  console.log("Inside dropdown component");
+  console.log(items);
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
         <Button variant="outline">Other boards</Button>
       </Menu.Target>
-
       <Menu.Dropdown>
-        
+        {items.map((board, index) => (
+          <Menu.Item
+            key={index}
+            onClick={() => {
+              const id = board.id;
+              setBoard(board);
+            }}
+          >
+            <Box>{board.name}</Box>
+          </Menu.Item>
+        ))}
       </Menu.Dropdown>
     </Menu>
   );
