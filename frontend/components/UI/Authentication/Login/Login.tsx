@@ -16,9 +16,12 @@ import { signIn } from "next-auth/react";
 import { useForm } from "@mantine/form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 
 export function Login() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const router = useRouter();
   const form = useForm({
     validateInputOnChange:true,
@@ -33,7 +36,7 @@ export function Login() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
+    setIsLoading((prevState)=>(!prevState))
     const res = await signIn("credentials", {
       email: form.values.email,
       password: form.values.password,
@@ -45,6 +48,8 @@ export function Login() {
       form.setFieldError("password", message.errors);
       return;
     }
+    setIsLoading((prevState)=>(!prevState))
+
     router.push("/home");
   }
 
@@ -81,7 +86,7 @@ export function Login() {
               <Link href={"/auth/reset"}>Forgot password?</Link>
             </Anchor>
           </Group>
-          <Button fullWidth mt="xl" type="submit">
+          <Button fullWidth mt="xl" type="submit" loading={isLoading}>
             Sign in
           </Button>
         </Paper>

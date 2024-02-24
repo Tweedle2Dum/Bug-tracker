@@ -16,15 +16,17 @@ import {
 } from "@mantine/core";
 import Link from "next/link";
 import classes from "./Register.module.css";
+import { useState } from "react";
 
 type Props = {};
 
 export default function Register({}: Props) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const form = useForm({
     validateInputOnChange: true,
     initialValues: {
-      username:"",
+      username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -38,19 +40,22 @@ export default function Register({}: Props) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
+    setIsLoading((prevState) => !prevState);
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       mode: "no-cors",
       body: JSON.stringify({
-        username:form.values.username,
+        username: form.values.username,
         email: form.values.email,
         password: form.values.password,
       }),
     });
     const data = await res.json();
+    setIsLoading((prevState) => !prevState);
+
     if (res.status == 500) {
       console.log(data);
+      form.setFieldError("email", data.message);
       return;
     }
     router.push("/auth/login");
@@ -70,7 +75,7 @@ export default function Register({}: Props) {
 
       <form onSubmit={handleSubmit}>
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <TextInput
+          <TextInput
             label="Username"
             placeholder="tweedle2dum"
             required
@@ -101,7 +106,7 @@ export default function Register({}: Props) {
           <Group justify="space-between" mt="lg">
             <Checkbox label="Remember me" />
           </Group>
-          <Button fullWidth mt="xl" type="submit">
+          <Button fullWidth mt="xl" type="submit" loading={isLoading}>
             Create Account
           </Button>
         </Paper>

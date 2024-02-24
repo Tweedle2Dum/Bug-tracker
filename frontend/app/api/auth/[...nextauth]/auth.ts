@@ -4,7 +4,6 @@ import { auth } from "app/firebase";
 import { AuthOptions } from "next-auth";
 import { TokenObject } from "./nextauth";
 import { JWT } from "next-auth/jwt";
-import { FirebaseError } from "firebase/app";
 import { mapAuthCodeToMessage } from "utils";
 
 export const authOptions: AuthOptions = {
@@ -41,7 +40,6 @@ export const authOptions: AuthOptions = {
           .catch((error)=>{
             console.log(error)
             const message = mapAuthCodeToMessage(error)
-            console.log(message)
             throw new Error( JSON.stringify({ errors:message , status: false }))
           });
       },

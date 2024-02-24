@@ -17,6 +17,8 @@ export function mapAuthCodeToMessage(error: FirebaseError) {
       return "Email already exists";
     case "auth/too-many-requests":
       return "Too many failed attempts, reset your password";
+    case "auth/user-not-found":
+      return "The user is not found"
   }
 }
 

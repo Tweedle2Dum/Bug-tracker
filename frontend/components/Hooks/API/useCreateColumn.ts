@@ -7,7 +7,7 @@ interface FormData {
 }
 
 async function postWorkspace(session: Session, column: FormData) {
-  const response = await fetch("http://localhost:3001/api/v1/workspace", {
+  const response = await fetch("http://localhost:3001/api/v1/column", {
     mode: "cors",
     method: "POST",
     headers: {
@@ -27,7 +27,7 @@ async function postWorkspace(session: Session, column: FormData) {
   return data;
 }
 
-export default function usePostWorkspace() {
+export default function usePostColumn() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({
@@ -43,8 +43,7 @@ export default function usePostWorkspace() {
       console.log(response);
 
       return Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["getWorkspace"] }),
-        queryClient.invalidateQueries({ queryKey: ["getUser"] }),
+        queryClient.invalidateQueries({ queryKey: ["getColumns"] }),
       ]);
     },
     onError: (error) => {
