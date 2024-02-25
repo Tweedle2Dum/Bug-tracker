@@ -9,5 +9,5 @@ type Workspace struct {
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
 	Boards      []Board   `json:"boards"`
-	Users 		[]*User   `gorm:"many2many:user_workspaces;" json:"users"`
+	Users 		[]User   `gorm:"many2many:user_workspaces;" json:"users"`
 }

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 	"github.com/tweedle2dum/tracker/db"
 	"github.com/tweedle2dum/tracker/schemas"
 )
@@ -28,5 +29,19 @@ func CreateColumn (c* fiber.Ctx) error {
 }
 
 func GetAllColumns ( c* fiber.Ctx) error {
-	panic("implement")
+	boardId := c.Params("boardId")
+	if boardId == "" {
+		fmt.Println("BoardId not provided in the URL")
+		return c.Status(400).JSON(fiber.Map{"ok": false, "err": "BoardId not provided"})
+	}
+	columns, err:= db.ColumnsSvc.GetAllColumns(uuid.MustParse(boardId))
+	if(err != nil) {
+		fmt.Println("error occured while getting the columns")
+		return c.Status(400).JSON(fiber.Map{"ok":false,"err":err})
+
+	}
+
+	return c.Status(200).JSON(fiber.Map{"ok":true,"columns":columns})
+
+
 }

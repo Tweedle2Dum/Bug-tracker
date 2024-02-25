@@ -21,4 +21,7 @@ func MountRoutes(app *fiber.App) {
 	boardRoute := v1.Group("/board") //api/vi/board
 	boardRouter(boardRoute)
 
+	columnRoute := v1.Group("/columns") //api/v1/columns
+	columnRouter(columnRoute)
+
 }

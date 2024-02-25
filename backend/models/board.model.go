@@ -9,6 +9,5 @@ type Board struct {
 	Name        string    `json:"name"`
 	Description string    `json:"description"`
 	WorkspaceID uuid.UUID `json:"workspace_id"`
-	 // Relationship: A board can have multiple columns
-	 Columns []Column `json:"columns"`
+	Columns     []Column  `json:"columns"`
 }
