@@ -2,21 +2,17 @@
 import React from "react";
 import {  Droppable } from "@hello-pangea/dnd";
 import { Paper, Stack, Text, Title, Box } from "@mantine/core";
-import Task from "../Task/Task";
-import { TaskProps } from "../Task/Task";
+import { Task } from "types";
 
 type DragNDropColumnProps = {
   columnId: string;
-  tasks: TaskProps[];
 };
 
 
 
 export default function DragNDropColumn({
   columnId,
-  tasks,
 }: DragNDropColumnProps) {
-  console.log(tasks);
   return (
     <>
       <Box mih={"100%"} miw={'400px'} maw={'400px'}>
@@ -34,9 +30,7 @@ export default function DragNDropColumn({
                   style={{ height: "100%" }}
                 >
                   <Stack gap={"md"}>
-                    {tasks.map((task, index) => (
-                      <Task key={task.id} {...task} index={index} />
-                    ))}
+                    {/* Render tasks */}
                   </Stack>
                 </div>
                 {provided.placeholder}

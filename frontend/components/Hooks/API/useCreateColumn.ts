@@ -6,8 +6,8 @@ interface FormData {
   boardId: string;
 }
 
-async function postWorkspace(session: Session, column: FormData) {
-  const response = await fetch("http://localhost:3001/api/v1/column", {
+async function postCreateColumn(session: Session, column: FormData) {
+  const response = await fetch("http://localhost:3001/api/v1/columns", {
     mode: "cors",
     method: "POST",
     headers: {
@@ -21,7 +21,7 @@ async function postWorkspace(session: Session, column: FormData) {
   });
   if (!response.ok) {
     console.log(await response.json());
-    throw new Error("Some Network Error occured while saving workspace");
+    throw new Error("Some Network Error occured while adding a new column");
   }
   const data = response.json();
   return data;
@@ -32,12 +32,12 @@ export default function usePostColumn() {
   return useMutation({
     mutationFn: ({
       session,
-      workspace,
+      column,
     }: {
       session: Session;
-      workspace: FormData;
+      column: FormData;
     }) => {
-      return postWorkspace(session, workspace);
+      return postCreateColumn(session, column);
     },
     onSuccess: (response) => {
       console.log(response);

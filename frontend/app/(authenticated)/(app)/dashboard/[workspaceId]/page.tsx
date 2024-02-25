@@ -6,7 +6,7 @@ import { Empty } from "components/UI/App/Empty/Empty";
 import Loading from "components/UI/App/LoadingOverlay/LoadingOverlay";
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Board } from "types";
 
@@ -21,10 +21,14 @@ export default function page({ params }: Props) {
   );
 
   const [selectedBoard, setSelectedBoard] = useState<Board | null>(null);
+  useEffect(() => {
+    // Update selectedBoard when data changes
+    setSelectedBoard(data?.boards[0] ?? null);
+  }, [data]);
 
   const empty = data?.boards === undefined;
-    console.log("empty logged")
-  console.log(empty)
+  console.log("empty logged");
+  console.log(empty);
   return (
     <>
       {isLoading ? (
@@ -32,7 +36,7 @@ export default function page({ params }: Props) {
       ) : isSuccess ? (
         <div>
           {empty ? (
-            <Empty content={'boards'} />
+            <Empty content={"boards"} />
           ) : (
             <>
               <BoardNavbar
@@ -40,7 +44,9 @@ export default function page({ params }: Props) {
                 setBoard={setSelectedBoard}
                 selectedBoard={selectedBoard}
               />
-              <DragNDropContainer />{" "}
+             
+                <DragNDropContainer board={selectedBoard} />
+              
             </>
           )}
         </div>

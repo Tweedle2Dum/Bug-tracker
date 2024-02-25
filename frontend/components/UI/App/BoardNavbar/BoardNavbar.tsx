@@ -23,6 +23,13 @@ export function BoardNavbar({ items, setBoard,selectedBoard }: BoardNavbarProps)
   const [opened, { toggle }] = useDisclosure(false);
   console.log(items);
 
+    useEffect(()=>{
+        if(selectedBoard!==null && items.length>0){
+        setBoard(items[0])
+
+        }
+    },[])
+
   return (
     <header className={classes.header}>
       <div className={classes.inner}>
@@ -69,7 +76,7 @@ import {
   IconArrowsLeftRight,
 } from "@tabler/icons-react";
 import { Board } from "types";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 type DropDownProps = {
   items: Board[];
   setBoard: Dispatch<SetStateAction<Board | null>>;

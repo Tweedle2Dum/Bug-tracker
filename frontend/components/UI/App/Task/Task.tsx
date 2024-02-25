@@ -12,21 +12,17 @@ import classes from "./Task.module.css";
 import { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { Draggable } from "@hello-pangea/dnd";
-export type TaskProps = {
-  id: string;
-  title: string;
-  content: string;
-  index?: number;
-};
+import { Task } from "types";
 
-export default function Task({ id, title, content, index }: TaskProps) {
+
+export default function Task(props: Task) {
   const [opened, { open, close }] = useDisclosure(false);
   const [contentType, setContentType] = useState<
     "Workspace" | "Board" | "Task" | ""
   >("");
   return (
     <>
-      <Draggable draggableId={id} index={index as number}>
+      <Draggable draggableId={props.id} index={index as number}>
         {(provided, snapshot) => (
           <Box
             ref={provided.innerRef}

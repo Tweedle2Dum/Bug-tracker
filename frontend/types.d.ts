@@ -46,3 +46,7 @@ export interface Task {
   name: string;
   comments: Comment[];
 }
+
+export interface Tasks {
+  tasks: Task[]
+}

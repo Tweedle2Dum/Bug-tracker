@@ -14,7 +14,7 @@ import {
 import { TextInput, Textarea, Box } from "@mantine/core";
 import Comment from "../Comments/Comment";
 import { useForm } from "@mantine/form";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import usePostWorkspace from "components/Hooks/API/useCreateWorkspace";
 import { useSession } from "next-auth/react";
 import usePostBoard from "components/Hooks/API/useCreateBoard";
@@ -23,6 +23,8 @@ import { Session } from "next-auth";
 
 function WorkspaceForm() {
   const { data: session, status } = useSession();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const { mutate, isSuccess, isError } = usePostWorkspace();
   const form = useForm({
     initialValues: {
@@ -33,14 +35,19 @@ function WorkspaceForm() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (session) {
-      mutate({
-        session,
-        workspace: {
-          name: form.values.name,
-          description: form.values.description,
-        },
-      });
+    setIsLoading((prevState) => (!prevState));
+    try {
+      if (session) {
+        mutate({
+          session,
+          workspace: {
+            name: form.values.name,
+            description: form.values.description,
+          },
+        });
+      }
+    } finally {
+      setIsLoading((prevState) => !prevState);
     }
   }
   return (
@@ -58,7 +65,7 @@ function WorkspaceForm() {
           {...form.getInputProps("description")}
         />
         <Divider m={"md"} />
-        <Button fullWidth type="submit">
+        <Button fullWidth type="submit" loading={isLoading}>
           Create workspace
         </Button>
       </form>
@@ -68,11 +75,11 @@ function WorkspaceForm() {
 
 function BoardForm() {
   const { data: session, status } = useSession();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
     data,
     isError: getError,
     isSuccess: getSuccess,
-    isLoading,
   } = useGetUser(session as Session);
   const { mutate, isError, isSuccess } = usePostBoard();
   const form = useForm({
@@ -85,25 +92,30 @@ function BoardForm() {
 
   function handleClick() {
     console.log(form.values);
-    if (session) {
-      mutate({
-        session,
-        board: {
-          name: form.values.name,
-          description: form.values.description,
-          workspaceId: form.values.workspace,
-        },
-      });
+    setIsLoading((prevState) => !prevState);
+    try {
+      if (session) {
+        mutate({
+          session,
+          board: {
+            name: form.values.name,
+            description: form.values.description,
+            workspaceId: form.values.workspace,
+          },
+        });
+      }
+    } finally {
+      setIsLoading((prevState) => !prevState);
     }
   }
-  
+
   return (
     <>
       <Select
         label="Your workspace"
         placeholder="Select a workspace"
-        data={data?.workspaces.map((workspace)=>{
-              return {value:workspace.id,label:workspace.name}
+        data={data?.workspaces.map((workspace) => {
+          return { value: workspace.id, label: workspace.name };
         })}
         {...form.getInputProps("workspace")}
       />
@@ -122,7 +134,7 @@ function BoardForm() {
       />
       <Divider m={"md"} />
 
-      <Button fullWidth onClick={handleClick}>
+      <Button fullWidth onClick={handleClick} loading={isLoading}>
         Create Board
       </Button>
     </>
