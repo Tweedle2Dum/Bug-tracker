@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Session } from "next-auth";
 
@@ -7,6 +8,7 @@ interface FormData {
 }
 
 async function postCreateColumn(session: Session, column: FormData) {
+  console.log(column)
   const response = await fetch("http://localhost:3001/api/v1/columns", {
     mode: "cors",
     method: "POST",
@@ -16,7 +18,7 @@ async function postCreateColumn(session: Session, column: FormData) {
     },
     body: JSON.stringify({
       name: column.name,
-      boardId: column.boardId,
+      boardId: column.boardId.boardId,
     }),
   });
   if (!response.ok) {

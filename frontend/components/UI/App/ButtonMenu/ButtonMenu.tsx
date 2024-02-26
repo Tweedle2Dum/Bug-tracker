@@ -14,7 +14,7 @@ import Modals from "../Modal/Modal";
 
 export default function ButtonMenu({}) {
   const [opened, { open, close }] = useDisclosure(false);
-  const [contentType, setContentType] = useState<'Workspace' | 'Board' | ''>("");
+  const [contentType, setContentType] = useState<'Workspace' | 'Board' | 'Task'|'Column'>('Workspace');
   const theme = useMantineTheme();
   return (
     <>

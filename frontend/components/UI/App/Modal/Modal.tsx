@@ -20,6 +20,8 @@ import { useSession } from "next-auth/react";
 import usePostBoard from "components/Hooks/API/useCreateBoard";
 import useGetUser from "components/Hooks/API/useGetUser";
 import { Session } from "next-auth";
+import usePostColumn from "components/Hooks/API/useCreateColumn";
+import useCreateTask from "components/Hooks/API/useCreateTask";
 
 function WorkspaceForm() {
   const { data: session, status } = useSession();
@@ -35,7 +37,7 @@ function WorkspaceForm() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setIsLoading((prevState) => (!prevState));
+    setIsLoading((prevState) => !prevState);
     try {
       if (session) {
         mutate({
@@ -179,6 +181,59 @@ function Sidebar() {
   );
 }
 
+function ColumnForm(boardId: string) {
+  const { data: session, status } = useSession();
+  console.log(boardId);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {
+    data,
+    isError: getError,
+    isSuccess: getSuccess,
+  } = useGetUser(session as Session);
+  const { mutate, isError, isSuccess } = usePostColumn();
+  const form = useForm({
+    initialValues: {
+      name: "",
+    },
+  });
+
+  function handleClick() {
+    console.log(form.values);
+    setIsLoading((prevState) => !prevState);
+    try {
+      if (session) {
+        mutate({
+          session,
+          column: {
+            name: form.values.name,
+            boardId: boardId,
+          },
+        });
+      }
+    } finally {
+      setIsLoading((prevState) => !prevState);
+    }
+  }
+
+  return (
+    <>
+      <TextInput
+        label="Column Title"
+        description="Name of the Column"
+        placeholder="Best Column in the world"
+        {...form.getInputProps("name")}
+      />
+      <Divider m={"md"} />
+
+      <Divider m={"md"} />
+
+      <Button fullWidth onClick={handleClick} loading={isLoading}>
+        Create Column
+      </Button>
+    </>
+  );
+}
+
 function TaskForm({ taskName }: TaskProps) {
   return (
     <>
@@ -209,12 +264,66 @@ function TaskForm({ taskName }: TaskProps) {
   );
 }
 
+type AddTaskFormProps = {
+  columnId:string
+}
+function AddTaskForm(props:AddTaskFormProps) {
+  const { data: session, status } = useSession();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {
+    data,
+    isError: getError,
+    isSuccess: getSuccess,
+  } = useGetUser(session as Session);
+  const { mutate, isError, isSuccess } = useCreateTask();
+  const form = useForm({
+    initialValues: {
+      name: "",
+    },
+  });
+
+  function handleClick() {
+    console.log(form.values);
+    setIsLoading((prevState) => !prevState);
+    try {
+      if (session) {
+        mutate({
+          session,
+          
+        });
+      }
+    } finally {
+      setIsLoading((prevState) => !prevState);
+    }
+  }
+
+  return (
+    <>
+      <TextInput
+        label="Column Title"
+        description="Name of the Column"
+        placeholder="Best Column in the world"
+        {...form.getInputProps("name")}
+      />
+      <Divider m={"md"} />
+
+      <Divider m={"md"} />
+
+      <Button fullWidth onClick={handleClick} loading={isLoading}>
+        Create Column
+      </Button>
+    </>
+  );
+}
+
 type ModalProps = {
   opened: boolean;
   open: () => void;
   close: () => void;
-  contentType: "Workspace" | "Board" | "Task" | "";
+  contentType: "Workspace" | "Board" | "Task" | "Column" | "AddTask";
   taskName?: string;
+  boardID?: string;
+  columnId?: string;
 };
 export default function Modals({
   opened,
@@ -222,6 +331,8 @@ export default function Modals({
   close,
   contentType,
   taskName,
+  boardID,
+  columnId
 }: ModalProps) {
   return (
     <>
@@ -238,6 +349,10 @@ export default function Modals({
           <BoardForm />
         ) : contentType === "Task" ? (
           <TaskForm taskName="taskName" />
+        ) : contentType === "Column" ? (
+          <ColumnForm boardId={boardID as string} />
+        ) : contentType === "AddTask" ? (
+          <AddTaskForm columnId={columnId as string} />
         ) : null}
       </Modal>
     </>

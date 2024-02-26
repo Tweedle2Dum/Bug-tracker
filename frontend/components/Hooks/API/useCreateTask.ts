@@ -6,7 +6,7 @@ interface FormData {
   description: string;
 }
 
-async function postWorkspace(session: Session, workspace: FormData) {
+async function postTask(session: Session, workspace: FormData) {
   const response = await fetch("http://localhost:3001/api/v1/workspace", {
     mode: "cors",
     method: "POST",
@@ -27,7 +27,7 @@ async function postWorkspace(session: Session, workspace: FormData) {
   return data;
 }
 
-export default function usePostWorkspace() {
+export default function useCreateTask() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({
@@ -37,7 +37,7 @@ export default function usePostWorkspace() {
       session: Session;
       workspace: FormData;
     }) => {
-      return postWorkspace(session, workspace);
+      return postTask(session, workspace);
     },
     onSuccess: (response) => {
       console.log(response);

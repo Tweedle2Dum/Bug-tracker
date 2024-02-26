@@ -26,7 +26,7 @@ export default function page({ params }: Props) {
     if (isSuccess) {
       setSelectedBoard(data.boards[0] ?? null);
     }
-  }, [data, isSuccess]);
+  }, [isSuccess]);
 
   return (
     <>
