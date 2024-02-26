@@ -23,30 +23,31 @@ export default function page({ params }: Props) {
   const [selectedBoard, setSelectedBoard] = useState<Board | null>(null);
   useEffect(() => {
     // Update selectedBoard when data changes
-    setSelectedBoard(data?.boards[0] ?? null);
-  }, [data]);
+    if (isSuccess) {
+      setSelectedBoard(data.boards[0] ?? null);
+    }
+  }, [data, isSuccess]);
 
-  const empty = data?.boards === undefined;
-  console.log("empty logged");
-  console.log(empty);
   return (
     <>
       {isLoading ? (
         <Loading />
       ) : isSuccess ? (
         <div>
-          {empty ? (
+          {data.boards.length === 0 ? (
             <Empty content={"boards"} />
           ) : (
             <>
               <BoardNavbar
-                items={data?.boards ?? []}
+                items={data.boards}
                 setBoard={setSelectedBoard}
                 selectedBoard={selectedBoard}
               />
-             
+              {selectedBoard ? (
                 <DragNDropContainer board={selectedBoard} />
-              
+              ) : (
+                "Select a board to get started"
+              )}
             </>
           )}
         </div>

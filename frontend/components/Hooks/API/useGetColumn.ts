@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Session } from "next-auth";
-import { Board, User } from "types";
+import { Board, Columns, User } from "types";
 
-async function getBoards(session: Session,boardID:string) {
+async function getColumns(session: Session,boardID:string):Promise<Columns> {
   const response = await fetch(`http://localhost:3001/api/v1/columns/${boardID}`, {
     mode: "cors",
     headers: { Authorization: 'Bearer '+ session.token.idToken as string,'content-type':'application/json' },
@@ -10,17 +10,17 @@ async function getBoards(session: Session,boardID:string) {
 
   if (!response.ok) {
     console.log(await response.json());
-    throw new Error("Some error occured while fetching user details");
+    throw new Error("Some error occured while fetching columns");
   }
-  const data:{boards:Board[]} = await response.json();
+  const data = await response.json();
   return data;
 }
 
-export default function useGetBoards(session: Session,boardID:string) {
+export default function useGetColumns(session: Session,boardID:string) {
   return useQuery({
-    queryKey: ["getColumn", session,boardID],
+    queryKey: ["getColumns"],
     queryFn: () => {
-      return getBoards(session,boardID);
+      return getColumns(session,boardID);
     },
   });
 }

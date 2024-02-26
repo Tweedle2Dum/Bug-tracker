@@ -27,6 +27,10 @@ export interface Board {
 }
 
 export interface Columns {
+  columns: Column[];
+}
+
+export interface Column {
   id: string;
   name: string;
   tasks: Task[];
@@ -48,5 +52,5 @@ export interface Task {
 }
 
 export interface Tasks {
-  tasks: Task[]
+  tasks: Task[];
 }

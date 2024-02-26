@@ -15,14 +15,14 @@ import { Draggable } from "@hello-pangea/dnd";
 import { Task } from "types";
 
 
-export default function Task(props: Task) {
+export default function Task(props: Task & {index:number}) {
   const [opened, { open, close }] = useDisclosure(false);
   const [contentType, setContentType] = useState<
     "Workspace" | "Board" | "Task" | ""
   >("");
   return (
     <>
-      <Draggable draggableId={props.id} index={index as number}>
+      <Draggable draggableId={props.id} index={props.index as number}>
         {(provided, snapshot) => (
           <Box
             ref={provided.innerRef}

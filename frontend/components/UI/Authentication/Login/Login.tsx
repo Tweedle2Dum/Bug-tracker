@@ -18,13 +18,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-
 export function Login() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
   const form = useForm({
-    validateInputOnChange:true,
+    validateInputOnChange: true,
     initialValues: {
       email: "",
       password: "",
@@ -36,21 +35,24 @@ export function Login() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setIsLoading((prevState)=>(!prevState))
-    const res = await signIn("credentials", {
-      email: form.values.email,
-      password: form.values.password,
-      redirect: false,
-    });
-    console.log(res);
-    if (res?.ok === false) {
-      const message = JSON.parse(res.error as string);
-      form.setFieldError("password", message.errors);
-      return;
-    }
-    setIsLoading((prevState)=>(!prevState))
+    setIsLoading((prevState) => !prevState);
 
-    router.push("/home");
+    try {
+      const res = await signIn("credentials", {
+        email: form.values.email,
+        password: form.values.password,
+        redirect: false,
+      });
+      console.log(res);
+      if (res?.ok === false) {
+        const message = JSON.parse(res.error as string);
+        form.setFieldError("password", message.errors);
+        return;
+      }
+      router.push("/home");
+    } finally {
+      setIsLoading((prevState) => !prevState);
+    }
   }
 
   return (

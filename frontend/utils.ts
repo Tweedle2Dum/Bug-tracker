@@ -19,6 +19,8 @@ export function mapAuthCodeToMessage(error: FirebaseError) {
       return "Too many failed attempts, reset your password";
     case "auth/user-not-found":
       return "The user is not found"
+    case "auth/network-request-failed":
+      return "Network error"
   }
 }
 

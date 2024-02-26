@@ -8,24 +8,28 @@ import useCreateColumn from "components/Hooks/API/useCreateColumn";
 import { Empty } from "../Empty/Empty";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
-
-type Props = { board: Board | null };
+import useGetColumns from "components/Hooks/API/useGetColumn";
+import { Column } from "types";
+import Loading from "../LoadingOverlay/LoadingOverlay";
+type Props = { board: Board };
 
 export default function DragNDropContainer(props: Props) {
+  console.log("THis is the default selected board");
   console.log(props.board);
   const { data: session, status } = useSession();
-  const [columns, setColumns] = useState(props.board?.columns ?? []);
   const { mutate, isError, data, isSuccess } = useCreateColumn();
-
+  const {
+    data: fetchData,
+    isError: fetchError,
+    isSuccess: fetchSuccess,
+    isLoading: fetchLoading,
+  } = useGetColumns(session as Session, props.board.id);
   function addList() {
     mutate({
-      column: { name: "Test", boardId: props.board?.id as string },
+      column: { name: "Test", boardId: props.board.id },
       session: session as Session,
     });
   }
-
-
-
   function onDragEnd(result: DropResult) {
     const { destination, source, draggableId } = result;
     if (destination === null) return;
@@ -35,14 +39,15 @@ export default function DragNDropContainer(props: Props) {
     const sourceTask = source.index;
     const destinationTask = destination.index;
     console.log(sourceTask, destinationTask);
-    const sourceColumn = columns.find(
+    const sourceColumn = fetchData?.columns.find(
       (column) => column.id === source.droppableId
     );
-    const destinationColumn = columns.find(
+    const destinationColumn = fetchData?.columns.find(
       (column) => column.id === destination.droppableId
     );
     console.log(sourceColumn);
     console.log(destinationColumn);
+    if (!sourceColumn || !destinationColumn) return;
     const toMove = sourceColumn?.tasks.splice(sourceTask, 1)[0];
     console.log(toMove);
     if (toMove) {
@@ -58,9 +63,13 @@ export default function DragNDropContainer(props: Props) {
         <DragDropContext onDragEnd={onDragEnd}>
           <ScrollArea scrollbars="x" w={"90%"} style={{ overflowX: "scroll" }}>
             <Box w={"100%"} display={"flex"} style={{ minWidth: "100%" }}>
-              {columns.map((column) => (
-                <DragNDropColumn key={column.id} columnId={column.id} />
-              ))}
+              {fetchLoading ? (
+                <Loading />
+              ) : fetchSuccess ? (
+                fetchData.columns.map((column) => (
+                  <DragNDropColumn key={column.id} columnId={column.id} />
+                ))
+              ) : null}
 
               <Button
                 variant="fill"
@@ -69,7 +78,7 @@ export default function DragNDropContainer(props: Props) {
               >
                 Add Column
               </Button>
-              {columns ? <Empty content="column" /> : null}
+              {fetchData?.columns ? null : <Empty content="column" />}
             </Box>
           </ScrollArea>
         </DragDropContext>
