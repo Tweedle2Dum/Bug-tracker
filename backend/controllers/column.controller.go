@@ -34,7 +34,13 @@ func GetAllColumns ( c* fiber.Ctx) error {
 		fmt.Println("BoardId not provided in the URL")
 		return c.Status(400).JSON(fiber.Map{"ok": false, "err": "BoardId not provided"})
 	}
-	columns, err:= db.ColumnsSvc.GetAllColumns(uuid.MustParse(boardId))
+	fmt.Println("This is the boardID "+boardId)
+	uuid,err:= uuid.Parse(boardId)
+	if (err != nil) {
+		fmt.Println("Invalid UUID or UUID is not present",err)
+		return c.Status(400).JSON((fiber.Map{"ok":false,"err":err}))
+	}
+	columns, err:= db.ColumnsSvc.GetAllColumns(uuid)
 	if(err != nil) {
 		fmt.Println("error occured while getting the columns")
 		return c.Status(400).JSON(fiber.Map{"ok":false,"err":err})
