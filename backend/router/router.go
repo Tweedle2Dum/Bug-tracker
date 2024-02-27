@@ -24,4 +24,7 @@ func MountRoutes(app *fiber.App) {
 	columnRoute := v1.Group("/columns") //api/v1/columns
 	columnRouter(columnRoute)
 
+	taskRoute  := v1.Group("/tasks")
+	taskRouter(taskRoute)
+
 }

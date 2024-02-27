@@ -14,6 +14,7 @@ func CreateColumn (c* fiber.Ctx) error {
 	err := c.BodyParser(&column)
 	if(err!=nil){
 		fmt.Println("Bad request while posting column")
+		fmt.Println(err)
 		return c.Status(400).JSON(fiber.Map{"ok":false,"err":"Bad Request"})
 	}
 	fmt.Println("The column data is "+column.Name)
