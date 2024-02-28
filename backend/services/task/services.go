@@ -17,12 +17,12 @@ type taskSvc struct {
 
 func (s *taskSvc) CreateTask (columnId uuid.UUID, name string, description string) (*models.Task, error) {
 	
-	panic("implement")
+	return s.repo.CreateTask(columnId,name,description)
 
 }
 
 func (s *taskSvc) GetAllTasks (columnId uuid.UUID) ([]models.Task, error) {
-	panic("implement")
+	return s.repo.GetAllTasks(columnId)
 
 }
 

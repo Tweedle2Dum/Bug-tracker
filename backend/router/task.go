@@ -7,6 +7,6 @@ import (
 
 
 func taskRouter (c fiber.Router){
-	c.Get("",controllers.GetAlltasks)
+	c.Get(":columnId",controllers.GetAlltasks)
 	c.Post(":columnId",controllers.CreateTask)
 }

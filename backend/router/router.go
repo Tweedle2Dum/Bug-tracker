@@ -27,7 +27,7 @@ func MountRoutes(app *fiber.App) {
 	taskRoute  := v1.Group("/tasks")
 	taskRouter(taskRoute)
 
-	commentRoute := v1.Group("/comment")
+	commentRoute := v1.Group("/comments")
 	commentRouter(commentRoute)
 
 }

@@ -38,6 +38,6 @@ func main() {
 	//Mount all routes 
 	router.MountRoutes(app)
 
-	app.Listen(":3001")
-	log.Fatal(app.Listen(":3001"))
+	err:= app.Listen(":3001")
+	log.Fatal(err)
 }
