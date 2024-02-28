@@ -50,18 +50,11 @@ func GetAlltasks(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"ok": false, "err": "Not a valid UUID"})
 
 	}
-	var task schemas.TaskSchema
-	err= c.BodyParser(&task)
-	if err != nil {
-		fmt.Println("Error occured while parsing the task schema ", err)
-		return c.Status(400).JSON(fiber.Map{"ok": false, "err": err})
-
-	}
 	tasks, err := db.TasksSvc.GetAllTasks(uuid)
 	if err != nil {
 		fmt.Println("Error occured while getting all the task  ", err)
 		return c.Status(400).JSON(fiber.Map{"ok": false, "err": err})
 
 	}
-	return c.Status(400).JSON(fiber.Map{"ok": false, "tasks": tasks})
+	return c.Status(200).JSON(fiber.Map{"ok": true, "tasks": tasks})
 }
