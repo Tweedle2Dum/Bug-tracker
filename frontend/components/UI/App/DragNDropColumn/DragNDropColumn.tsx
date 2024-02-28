@@ -1,11 +1,14 @@
 "use client";
 import React from "react";
+import { Session } from "next-auth";
 import {  Droppable } from "@hello-pangea/dnd";
 import { Paper, Stack, Text, Title, Box, Button, Flex, Modal } from "@mantine/core";
 import Task from "../Task/Task";
 import { Column } from "types";
 import { useDisclosure } from "@mantine/hooks";
 import Modals from '../Modal/Modal'
+import useGetAllTask from "components/Hooks/API/useGetTask";
+import { useSession } from "next-auth/react";
 type DragNDropColumnProps = {
   column:Column,
   index: number
@@ -17,10 +20,17 @@ export default function DragNDropColumn({
   column,index
 }: DragNDropColumnProps) {
   const [opened, { open, close }] = useDisclosure(false);
+  const {data:session,status} = useSession();
+
+  const {data , isError, isSuccess, isLoading} = useGetAllTask(session as Session , column.id)
 
 
   function handleClick(){
     open()
+  }
+
+  if(isSuccess){
+    console.log(data)
   }
 
   return (
@@ -53,7 +63,7 @@ export default function DragNDropColumn({
               Add Task
             </Button>
           </Flex>
-          <Modals open={open} opened={opened} close={close} contentType="AddTask"/>
+          <Modals open={open} opened={opened} close={close} columnId={column.id} contentType="AddTask"/>
         </Paper>
       </Box>
     </>

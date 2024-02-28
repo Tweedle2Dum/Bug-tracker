@@ -279,6 +279,7 @@ function AddTaskForm(props:AddTaskFormProps) {
   const form = useForm({
     initialValues: {
       name: "",
+      description:""
     },
   });
 
@@ -289,6 +290,11 @@ function AddTaskForm(props:AddTaskFormProps) {
       if (session) {
         mutate({
           session,
+          task:{
+            name:form.values.name,
+            columnId:props.columnId,
+            description:form.values.description
+          }
           
         });
       }
@@ -300,17 +306,23 @@ function AddTaskForm(props:AddTaskFormProps) {
   return (
     <>
       <TextInput
-        label="Column Title"
-        description="Name of the Column"
-        placeholder="Best Column in the world"
+        label="Task title"
+        description="Name of the task"
+        placeholder="Enter name"
         {...form.getInputProps("name")}
       />
       <Divider m={"md"} />
+      <TextInput
+        label="Description"
+        description="Describle the task"
+        placeholder="Best description in the world"
+        {...form.getInputProps("description")}
+      />
 
       <Divider m={"md"} />
 
       <Button fullWidth onClick={handleClick} loading={isLoading}>
-        Create Column
+        Create Task
       </Button>
     </>
   );
