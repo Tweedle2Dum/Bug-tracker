@@ -41,7 +41,7 @@ export default function useCreateTask() {
     },
     onSuccess: (response,params) => {
       console.log(response);
-
+      queryClient.invalidateQueries({queryKey:["getColumns"]})
       return queryClient.invalidateQueries({ queryKey: ["getTasks",params.task.columnId] });
     },
     onError: (error) => {

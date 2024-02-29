@@ -3,65 +3,71 @@ import { useEffect, useState } from "react";
 import DragNDropColumn from "../DragNDropColumn/DragNDropColumn";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { Button, ScrollArea, Box, Flex } from "@mantine/core";
-import { Board, Columns } from "types";
+import { Board, Column, Columns } from "types";
 import useCreateColumn from "components/Hooks/API/useCreateColumn";
 import { Empty } from "../Empty/Empty";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
 import useGetColumns from "components/Hooks/API/useGetColumn";
-import { Column } from "types";
 import Loading from "../LoadingOverlay/LoadingOverlay";
 import Modals from "../Modal/Modal";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useListState } from "@mantine/hooks";
 type Props = { board: Board };
+
 
 export default function DragNDropContainer(props: Props) {
   const [opened, { open, close }] = useDisclosure(false);
-
+  const [state, handlers] = useListState<Column>();
   console.log("THis is the default selected board");
   console.log(props.board);
   const { data: session, status } = useSession();
-  const { mutate, isError, data, isSuccess } = useCreateColumn();
   const {
     data: fetchData,
     isError: fetchError,
     isSuccess: fetchSuccess,
     isLoading: fetchLoading,
   } = useGetColumns(session as Session, props.board.id);
+  useEffect(() => {
+    if (fetchSuccess) {
+      console.log(fetchData)
+      handlers.setState(fetchData.columns)
+    }
+  }, [fetchSuccess, fetchData]);
+  console.log("THis is state", state);
   function addList() {
     open();
-  }
-  function onDragEnd(result: DropResult) {
-    const { destination, source, draggableId } = result;
-    if (destination === null) return;
-    if (source.droppableId == destination.droppableId) return;
-    console.log(source);
-    console.log(destination);
-    const sourceTask = source.index;
-    const destinationTask = destination.index;
-    console.log(sourceTask, destinationTask);
-    const sourceColumn = fetchData?.columns.find(
-      (column) => column.id === source.droppableId
-    );
-    const destinationColumn = fetchData?.columns.find(
-      (column) => column.id === destination.droppableId
-    );
-    console.log(sourceColumn);
-    console.log(destinationColumn);
-    if (!sourceColumn || !destinationColumn) return;
-    const toMove = sourceColumn?.tasks.splice(sourceTask, 1)[0];
-    console.log(toMove);
-    if (toMove) {
-      destinationColumn?.tasks.splice(destinationTask, 0, toMove);
-    }
-    console.log(destinationColumn);
-    console.log(data);
   }
 
   return (
     <>
-      <div style={{ marginTop: "40px", maxWidth: "90vw",minHeight:'80vh', display: "flex" }}>
-        <DragDropContext onDragEnd={onDragEnd}>
+      <div
+        style={{
+          marginTop: "40px",
+          maxWidth: "90vw",
+          minHeight: "80vh",
+          display: "flex",
+        }}
+      >
+        <DragDropContext
+          onDragEnd={({ destination, source }) => {
+            if (!destination) return; // Do nothing if dropped outside the list
+            const updatedState = [...state];
+            const draggedColumnIndex = parseInt(source.droppableId);
+            const droppedColumnIndex = parseInt(destination.droppableId);
+            // If the task is moved within the same column
+            if (draggedColumnIndex === droppedColumnIndex) {
+              const column = updatedState[draggedColumnIndex];
+              const [draggedTask] = column.tasks.splice(source.index, 1);
+              column.tasks.splice(destination.index, 0, draggedTask);
+            } else {
+              // If the task is moved to a different column
+              const [draggedTask] = updatedState[draggedColumnIndex].tasks.splice(source.index, 1);
+              updatedState[droppedColumnIndex].tasks.splice(destination.index, 0, draggedTask);
+            }
+
+            handlers.setState(updatedState);
+          }}
+        >
           <ScrollArea scrollbars="x" w={"90%"} style={{ overflowX: "scroll" }}>
             <Box w={"100%"} display={"flex"} style={{ minWidth: "100%" }}>
               {fetchLoading ? (
@@ -69,15 +75,16 @@ export default function DragNDropContainer(props: Props) {
               ) : fetchSuccess ? (
                 <>
                   <Box w={"100%"} display={"flex"} style={{ minWidth: "100%" }}>
-                    {fetchData.columns.map((column, index) => (
+                    {state.map((column, index) => (
                       <DragNDropColumn
                         key={column.id}
                         index={index}
                         column={column}
+                        tasks={column.tasks}
                       />
                     ))}
                   </Box>
-                  
+
                   <Modals
                     opened={opened}
                     open={open}

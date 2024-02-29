@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Session } from "next-auth";
+import { Task, Tasks } from "types";
 
-async function getAllTask(session: Session, columnId: string) {
+async function getAllTask(session: Session, columnId: string):Promise<Tasks> {
   const response = await fetch(
     `http://localhost:3001/api/v1/tasks/${columnId}`,
     {
