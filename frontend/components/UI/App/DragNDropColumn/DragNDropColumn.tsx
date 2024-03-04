@@ -16,10 +16,7 @@ import Tasks from "../Task/Task";
 import { Column, Task } from "types";
 import { useDisclosure } from "@mantine/hooks";
 import Modals from "../Modal/Modal";
-import useGetAllTask from "components/Hooks/API/useGetTask";
-import { useSession } from "next-auth/react";
-import { Empty } from "../Empty/Empty";
-import Loading from "../LoadingOverlay/LoadingOverlay";
+
 type DragNDropColumnProps = {
   column: Column;
   index: number;

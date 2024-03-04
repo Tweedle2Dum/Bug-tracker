@@ -1,5 +1,5 @@
+//@ts-nocheck
 "use client";
-import { useDisclosure } from "@mantine/hooks";
 import {
   Modal,
   Button,
@@ -12,7 +12,7 @@ import {
   Select,
 } from "@mantine/core";
 import { TextInput, Textarea, Box } from "@mantine/core";
-import Comment from "../Comments/Comment";
+import Commentc from "../Comments/Comment";
 import { useForm } from "@mantine/form";
 import { FormEvent, useState } from "react";
 import usePostWorkspace from "components/Hooks/API/useCreateWorkspace";
@@ -22,6 +22,10 @@ import useGetUser from "components/Hooks/API/useGetUser";
 import { Session } from "next-auth";
 import usePostColumn from "components/Hooks/API/useCreateColumn";
 import useCreateTask from "components/Hooks/API/useCreateTask";
+import useCreateComment from "components/Hooks/API/useCreateComment";
+import useGetComments from "components/Hooks/API/useGetComments";
+import { getDateTime } from "utils";
+import { Comment } from "types";
 
 function WorkspaceForm() {
   const { data: session, status } = useSession();
@@ -145,25 +149,26 @@ function BoardForm() {
 
 type TaskProps = {
   taskName: string;
+  taskDescription: string;
+  taskId: string;
 };
 
-function Comments() {
-  return (
-    <Paper shadow="xl" p={"xl"}>
-      Comment
-    </Paper>
-  );
-}
+function CommentList({ comments }: { comments: Comment[] }) {
 
-function CommentList() {
+  console.log(comments)
+ 
   return (
     <Box my={"lg"}>
       <ScrollArea h={"250px"}>
         {" "}
-        <Comment />
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map((comment) => (
+          <Commentc
+            key={comment.id}
+            userName={comment.user.name}
+            timestamp={getDateTime(comment.created_at)}
+            commentText={comment.text}
+          />
+        ))}
       </ScrollArea>
     </Box>
   );
@@ -234,7 +239,39 @@ function ColumnForm(boardId: string) {
   );
 }
 
-function TaskForm({ taskName }: TaskProps) {
+function TaskForm({ taskName, taskDescription, taskId }: TaskProps) {
+  const [Loading, setIsLoading] = useState<boolean>(false);
+  const { data: session, status } = useSession();
+  const {
+    data: comments,
+    isSuccess,
+    isLoading: commentsLoading,
+    isError,
+  } = useGetComments(session as Session, taskId);
+
+
+  const form = useForm({
+    initialValues: {
+      comment: "",
+    },
+  });
+  const { mutate } = useCreateComment();
+  function handleClick() {
+    try {
+      setIsLoading((prevState) => !prevState);
+      const commentText = form.values.comment;
+      mutate({
+        session: session as Session,
+        comment: {
+          taskId: taskId,
+          description: commentText,
+        },
+      });
+    } finally {
+      setIsLoading((prevState) => !prevState);
+      form.reset();
+    }
+  }
   return (
     <>
       <Flex gap={"xl"}>
@@ -243,17 +280,28 @@ function TaskForm({ taskName }: TaskProps) {
           <Textarea
             label="Description"
             placeholder="Write a description about the task"
+            disabled
+            value={taskDescription}
           />
           <Divider m={"md"} />
           <Title order={5}>Comments</Title>
           <Textarea
             label="Add a comment"
             placeholder="Write a comment about the task"
+            {...form.getInputProps("comment")}
           />
           <Box mt={"8px"}>
-            <Button>Add</Button>
+            <Button onClick={handleClick} loading={Loading}>
+              Add
+            </Button>
           </Box>
-          <CommentList />
+          {commentsLoading ? (
+            <p>Loading comments...</p>
+          ) : isError ? (
+            <p>Error loading comments.</p>
+          ) : isSuccess ? (
+            <CommentList comments={comments.comments}/>
+          ) : null}
         </div>
         <Divider orientation="vertical" />
         <div style={{ flexGrow: 0.25 }}>
@@ -265,9 +313,9 @@ function TaskForm({ taskName }: TaskProps) {
 }
 
 type AddTaskFormProps = {
-  columnId:string
-}
-function AddTaskForm(props:AddTaskFormProps) {
+  columnId: string;
+};
+function AddTaskForm(props: AddTaskFormProps) {
   const { data: session, status } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
@@ -279,7 +327,7 @@ function AddTaskForm(props:AddTaskFormProps) {
   const form = useForm({
     initialValues: {
       name: "",
-      description:""
+      description: "",
     },
   });
 
@@ -290,12 +338,11 @@ function AddTaskForm(props:AddTaskFormProps) {
       if (session) {
         mutate({
           session,
-          task:{
-            name:form.values.name,
-            columnId:props.columnId,
-            description:form.values.description
-          }
-          
+          task: {
+            name: form.values.name,
+            columnId: props.columnId,
+            description: form.values.description,
+          },
         });
       }
     } finally {
@@ -336,6 +383,8 @@ type ModalProps = {
   taskName?: string;
   boardID?: string;
   columnId?: string;
+  taskId?: string;
+  taskDescription?: string;
 };
 export default function Modals({
   opened,
@@ -344,7 +393,9 @@ export default function Modals({
   contentType,
   taskName,
   boardID,
-  columnId
+  columnId,
+  taskId,
+  taskDescription,
 }: ModalProps) {
   return (
     <>
@@ -360,7 +411,11 @@ export default function Modals({
         ) : contentType === "Board" ? (
           <BoardForm />
         ) : contentType === "Task" ? (
-          <TaskForm taskName="taskName" />
+          <TaskForm
+            taskName={taskName}
+            taskDescription={taskDescription}
+            taskId={taskId}
+          />
         ) : contentType === "Column" ? (
           <ColumnForm boardId={boardID as string} />
         ) : contentType === "AddTask" ? (

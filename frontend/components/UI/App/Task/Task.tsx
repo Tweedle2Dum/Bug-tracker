@@ -9,10 +9,10 @@ import {
 } from "@mantine/core";
 import Modals from "../Modal/Modal";
 import classes from "./Task.module.css";
-import { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { Draggable } from "@hello-pangea/dnd";
 import { Task } from "types";
+import { getDateTime } from "utils";
 
 
 export default function Task(props: Task & {index:number}) {
@@ -34,14 +34,14 @@ export default function Task(props: Task & {index:number}) {
             <Paper withBorder radius="md" className={classes.comment}>
               <Group>
                 <Avatar
-                  src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png"
-                  alt="Jacob Warnhalter"
+                  color="cyan"
+                  alt={props.created_by}
                   radius="xl"
                 />
                 <div>
-                  <Text fz="sm">Jacob Warnhalter</Text>
+                  <Text fz="sm">{props.created_by}</Text>
                   <Text fz="xs" c="dimmed">
-                    10 minutes ago
+                    {getDateTime(props.created_at)}
                   </Text>
                 </div>
               </Group>
@@ -58,6 +58,8 @@ export default function Task(props: Task & {index:number}) {
         open={open}
         close={close}
         contentType={'Task'}
+        taskId={props.id}
+        taskDescription={props.description}
       />
     </>
   );

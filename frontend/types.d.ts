@@ -36,14 +36,25 @@ export interface Column {
   tasks: Task[];
 }
 
-export interface Comment {
+interface Comment {
   id: string;
-  issuer: string;
-  description: string;
-  time: string;
+  created_at: number;
+  updated_at: number;
+  task_id: string;
+  column_id: string; // Assuming you have a column ID in your comment data
+  text: string;
+  user: User;
+  task: Task;
+}
+
+interface CommentResponse {
+  comments: Comment[];
+  ok: boolean;
 }
 
 export interface Task {
+  created_by: string;
+  created_at: number;
   id: string;
   description: string;
   time: string;
