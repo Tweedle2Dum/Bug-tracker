@@ -34,9 +34,9 @@ func (r *repo) CreateColumn(boardId uuid.UUID, name string) (*models.Column, err
 
 func (r *repo) GetAllColumns(boardId uuid.UUID) ([]models.Column, error) {
 	var columns []models.Column
-	if err := r.DB.Where("board_id = ?", boardId).Find(&columns).Error; err != nil {
+	if err := r.DB.Preload("Tasks").Where("board_id = ?", boardId).Find(&columns).Error; err != nil {
 		log.Fatal(err)
-		return nil , err 
+		return nil, err
 	}
 	return columns, nil
 

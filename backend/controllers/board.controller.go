@@ -19,7 +19,7 @@ func PostBoard(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"ok": false, "err": "Bad Request"})
 	}
 	fmt.Println("the board name is: " + board.Name)
-	createdBoard, err := db.BoardsSvc.CreateBoard(board.WorkspaceId, board.Name, board.Description)
+	createdBoard, err := db.BoardsSvc.CreateBoard(board.WorkspaceId, board.Description, board.Name)
 	if err != nil {
         fmt.Println("Error creating boards:", err)
         return c.Status(500).JSON(fiber.Map{"ok": false, "err": "Internal Server Error"})

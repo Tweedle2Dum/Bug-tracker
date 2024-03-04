@@ -3,6 +3,7 @@ package db
 import (
 	"github.com/tweedle2dum/tracker/services/board"
 	"github.com/tweedle2dum/tracker/services/column"
+	"github.com/tweedle2dum/tracker/services/comment"
 	"github.com/tweedle2dum/tracker/services/task"
 	"github.com/tweedle2dum/tracker/services/user"
 	"github.com/tweedle2dum/tracker/services/workspace"
@@ -14,6 +15,7 @@ var (
 	BoardsSvc     board.Service     = nil
 	ColumnsSvc    column.Service    = nil
 	TasksSvc      task.Service      = nil
+	CommentsSvc   comment.Service   = nil
 )
 
 func InitServices() {
@@ -28,5 +30,7 @@ func InitServices() {
 	ColumnsSvc = column.NewService(colmnRepo)
 	tasksRepo := task.NewPostgresRepo(db)
 	TasksSvc = task.NewService(tasksRepo)
+	commentsRepo := comment.NewPostgresRepo(db)
+	CommentsSvc = comment.NewService(commentsRepo)
 
 }

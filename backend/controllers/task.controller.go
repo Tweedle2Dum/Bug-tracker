@@ -11,6 +11,8 @@ import (
 
 func CreateTask(c *fiber.Ctx) error {
 	columnId := c.Params("columnId")
+	userEmail := c.Locals("userEmail").(string)
+
 
 	if columnId == "" {
 		fmt.Println("ColumnId not provided in the URL")
@@ -28,7 +30,7 @@ func CreateTask(c *fiber.Ctx) error {
 		fmt.Println("Error occured while parsing the Task Schema", err)
 		return c.Status(400).JSON(fiber.Map{"ok": false, "err": err})
 	}
-	createdTask, err := db.TasksSvc.CreateTask(uuid, task.Name, task.Description)
+	createdTask, err := db.TasksSvc.CreateTask(uuid, task.Name, task.Description,userEmail)
 	if err != nil {
 		fmt.Println("Error occured while creating the Task ", err)
 		return c.Status(400).JSON(fiber.Map{"ok": false, "err": err})

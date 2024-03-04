@@ -6,6 +6,6 @@ import (
 )
 
 type Repository interface {
-	CreateTask(columnId uuid.UUID, name string, description string) (*models.Task, error)
+	CreateTask(columnId uuid.UUID, name string, description string,createdBy string) (*models.Task, error)
 	GetAllTasks(columnId uuid.UUID) ([]models.Task, error)
 }

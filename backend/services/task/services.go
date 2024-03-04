@@ -6,7 +6,7 @@ import (
 )
 
 type Service interface {
-	CreateTask(columnId uuid.UUID, name string, description string) (*models.Task, error)
+	CreateTask(columnId uuid.UUID, name string, description string,createdBy string) (*models.Task, error)
 	GetAllTasks(columnId uuid.UUID) ([]models.Task, error)
 }
 
@@ -15,9 +15,9 @@ type taskSvc struct {
 }
 
 
-func (s *taskSvc) CreateTask (columnId uuid.UUID, name string, description string) (*models.Task, error) {
+func (s *taskSvc) CreateTask (columnId uuid.UUID, name string, description string,createdBy string) (*models.Task, error) {
 	
-	return s.repo.CreateTask(columnId,name,description)
+	return s.repo.CreateTask(columnId,name,description,createdBy)
 
 }
 

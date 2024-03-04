@@ -24,10 +24,10 @@ func MountRoutes(app *fiber.App) {
 	columnRoute := v1.Group("/columns") //api/v1/columns
 	columnRouter(columnRoute)
 
-	taskRoute  := v1.Group("/tasks")
+	taskRoute  := v1.Group("/tasks") //api/v1/tasks
 	taskRouter(taskRoute)
 
-	commentRoute := v1.Group("/comments")
+	commentRoute := v1.Group("/comments")//api/v1/comments
 	commentRouter(commentRoute)
 
 }

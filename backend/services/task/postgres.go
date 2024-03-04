@@ -16,11 +16,12 @@ func NewPostgresRepo(db *gorm.DB) Repository {
 	}
 }
 
-func (r *repo) CreateTask(columnId uuid.UUID, name string, description string) (*models.Task, error) {
+func (r *repo) CreateTask(columnId uuid.UUID, name string, description string,createdBy string) (*models.Task, error) {
 	task := &models.Task{
 		Name:        name,
 		Description: description,
 		ColumnID:    columnId,
+		CreatedBy: createdBy,
 	}
 
 	err := r.DB.Create(task).Error
