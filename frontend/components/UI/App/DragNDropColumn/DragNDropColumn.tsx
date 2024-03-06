@@ -36,13 +36,13 @@ export default function DragNDropColumn({
 
   return (
     <>
-      <Box mih={"60vh"} miw={"400px"} maw={"400px"}>
-        <Paper shadow="xs" p="xl" pt={"0"} miw={"300px"}>
+      <Box mih={"60vh"} miw={"400px"} maw={"400px"} mx={'20px'}>
+        <Paper shadow="xs" p="xl" pt={"0"} miw={"300px"} >
           <Title mb={"md"} order={4}>
             {" "}
             {column.name.toUpperCase()}
           </Title>
-          <Droppable droppableId={index.toString()} type="TASK">
+          <Droppable droppableId={index.toString()} type="TASK" >
             {(provided, snapshot) => (
               <>
                 <div
@@ -50,7 +50,7 @@ export default function DragNDropColumn({
                   {...provided.droppableProps}
                   style={{ height: "100%" }}
                 >
-                  <Stack gap={"md"}>
+                  <Stack gap={"md"} mih={"100px"}>
                     {tasks.map((task, taskIndex) => (
                       <Tasks key={task.id} index={taskIndex} {...task} />
                     ))}
@@ -60,7 +60,7 @@ export default function DragNDropColumn({
               </>
             )}
           </Droppable>
-          <Flex display={"flex"} justify={"center"} pt={"20px"}>
+          <Flex display={"flex"} justify={"center"} pt={"20px"} mt={"40px"}>
             <Button
               variant="fill"
               onClick={handleClick}

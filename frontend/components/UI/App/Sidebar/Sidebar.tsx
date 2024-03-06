@@ -54,7 +54,6 @@ function NavbarLink({ icon: Icon, label, active, path }: NavbarLinkProps) {
 const routes = [
   { icon: IconHome2, label: "Home", path: "/home" },
   { icon: IconGauge, label: "Dashboard", path: "/dashboard" },
-  { icon: IconDeviceDesktopAnalytics, label: "Analytics", path: "/analytics" },
   
 ];
 

@@ -181,6 +181,9 @@ function Sidebar() {
       <Stack gap={"8px"} mt={"4px"}>
         <Button size="xs">Member</Button>
         <Button size="xs">Deadline</Button>
+        <Divider/>
+        <Button size="xs" color="green">Mark as Done</Button>
+        <Button size="xs" color="red">Flag as important</Button>
       </Stack>
     </>
   );

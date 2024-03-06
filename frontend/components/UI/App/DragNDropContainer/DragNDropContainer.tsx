@@ -46,6 +46,7 @@ export default function DragNDropContainer(props: Props) {
           maxWidth: "90vw",
           minHeight: "80vh",
           display: "flex",
+          gap:'50px'
         }}
       >
         <DragDropContext
@@ -74,7 +75,7 @@ export default function DragNDropContainer(props: Props) {
                 <Loading />
               ) : fetchSuccess ? (
                 <>
-                  <Box w={"100%"} display={"flex"} style={{ minWidth: "100%" }}>
+                  <Box w={"100%"} display={"flex"} mx={'20px'} style={{ minWidth: "100%" }}>
                     {state.map((column, index) => (
                       <DragNDropColumn
                         key={column.id}
