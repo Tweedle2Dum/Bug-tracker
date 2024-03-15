@@ -2,6 +2,7 @@
 import React from "react";
 import { Session } from "next-auth";
 import { Droppable } from "@hello-pangea/dnd";
+import { IconTrash } from "@tabler/icons-react";
 import {
   Paper,
   Stack,
@@ -34,13 +35,23 @@ export default function DragNDropColumn({
     open();
   }
 
+  function handleDelete(){
+
+  }
+
   return (
     <>
       <Box mih={"60vh"} miw={"400px"} maw={"400px"} mx={'20px'}>
         <Paper shadow="xs" p="xl" pt={"0"} miw={"300px"} >
-          <Title mb={"md"} order={4}>
+          <Title mb={"md"} order={4} display={'flex'}>
             {" "}
             {column.name.toUpperCase()}
+            <Box ml={'auto'}>
+              <Button variant="outline" color="red"  px={'0'}>
+                <IconTrash  />
+              </Button>
+            </Box>
+
           </Title>
           <Droppable droppableId={index.toString()} type="TASK" >
             {(provided, snapshot) => (

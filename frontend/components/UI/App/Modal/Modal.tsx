@@ -177,13 +177,14 @@ function CommentList({ comments }: { comments: Comment[] }) {
 function Sidebar() {
   return (
     <>
-      <Title order={6}>Add</Title>
+      <Title order={6}>Actions</Title>
       <Stack gap={"8px"} mt={"4px"}>
-        <Button size="xs">Member</Button>
-        <Button size="xs">Deadline</Button>
+        <Button size="xs">Add Member</Button>
+        <Button size="xs"> Add Deadline</Button>
         <Divider/>
         <Button size="xs" color="green">Mark as Done</Button>
-        <Button size="xs" color="red">Flag as important</Button>
+        <Button size="xs" color="yellow">Flag as important</Button>
+        <Button size="xs" color="red">Remove task</Button>
       </Stack>
     </>
   );
