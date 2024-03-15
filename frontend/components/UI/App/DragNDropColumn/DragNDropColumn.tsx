@@ -71,7 +71,7 @@ export default function DragNDropColumn({
               </>
             )}
           </Droppable>
-          <Flex display={"flex"} justify={"center"} pt={"20px"} mt={"40px"}>
+          <Flex justify={"center"} pt={"20px"} mt={"40px"}>
             <Button
               variant="fill"
               onClick={handleClick}

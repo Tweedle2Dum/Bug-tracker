@@ -9,7 +9,9 @@ import { useSession } from "next-auth/react";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Board } from "types";
-
+import { Box, Button, Flex } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import Modals from "components/UI/App/Modal/Modal";
 type Props = { params: { workspaceId: string } };
 
 export default function page({ params }: Props) {
@@ -19,6 +21,14 @@ export default function page({ params }: Props) {
     session as Session,
     params.workspaceId
   );
+
+
+  const [opened, { open, close }] = useDisclosure(false);
+
+
+  function addList() {
+    open();
+  }
 
   const [selectedBoard, setSelectedBoard] = useState<Board | null>(null);
   useEffect(() => {
@@ -33,7 +43,7 @@ export default function page({ params }: Props) {
       {isLoading ? (
         <Loading />
       ) : isSuccess ? (
-        <div>
+        <>
           {data.boards.length === 0 ? (
             <Empty content={"boards"} />
           ) : (
@@ -43,14 +53,35 @@ export default function page({ params }: Props) {
                 setBoard={setSelectedBoard}
                 selectedBoard={selectedBoard}
               />
-              {selectedBoard ? (
-                <DragNDropContainer board={selectedBoard} />
-              ) : (
-                "Select a board to get started"
-              )}
+              <Flex>
+                {selectedBoard ? (
+                  <>
+                  <DragNDropContainer board={selectedBoard} />
+                  <Modals
+                    opened={opened}
+                    open={open}
+                    close={close}
+                    contentType="Column"
+                    boardID={selectedBoard.id}
+                  />
+
+                  </>
+                  
+                ) : (
+                  "Select a board to get started"
+                )}
+
+
+               {/*  <Box>
+                <Button variant="fill" onClick={addList} style={{ margin: "0 10px" }}>
+            Add Column
+          </Button>
+                </Box> */}
+              </Flex>
+
             </>
           )}
-        </div>
+        </>
       ) : isError ? (
         <>Some error occured</>
       ) : (
