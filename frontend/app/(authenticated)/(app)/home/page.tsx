@@ -10,7 +10,7 @@ import {
 import StatsRing from "components/UI/App/StatsRing/StatsRing";
 import { useSession } from "next-auth/react";
 
-const PRIMARY_COL_HEIGHT = rem(500);
+const PRIMARY_COL_HEIGHT = rem(700);
 
 export default function page() {
   const {data:session,status} = useSession()
@@ -19,7 +19,7 @@ export default function page() {
 
   return (
     <>
-      <Container my={"md"} miw={"100%"}>
+      <Container my={"md"} fluid miw={"100%"}>
         <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
           <Skeleton height={PRIMARY_COL_HEIGHT} radius="md" animate={false} />
           <Grid gutter="md">

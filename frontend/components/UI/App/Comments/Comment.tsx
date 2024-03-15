@@ -5,8 +5,11 @@ import {
   Group,
   TypographyStylesProvider,
   Paper,
+  Box,
+  Button,
 } from "@mantine/core";
 import classes from "./Comment.module.css";
+import { IconTrash } from "@tabler/icons-react";
 
 type Props = {
   userName: string;
@@ -27,6 +30,11 @@ export default function Comment({ userName, timestamp, commentText }: Props) {
             {timestamp}
           </Text>
         </div>
+        <Box ml={'auto'}>
+              <Button variant="outline" color="red"  px={'0'}>
+                <IconTrash  />
+              </Button>
+            </Box>
       </Group>
       <TypographyStylesProvider className={classes.body}>
         <div

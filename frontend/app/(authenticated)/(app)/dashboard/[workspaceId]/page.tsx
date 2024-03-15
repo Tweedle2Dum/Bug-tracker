@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Board } from "types";
-import { Box, Button, Flex } from "@mantine/core";
+import { Box, Button, Flex, Paper, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Modals from "components/UI/App/Modal/Modal";
 type Props = { params: { workspaceId: string } };
@@ -22,9 +22,7 @@ export default function page({ params }: Props) {
     params.workspaceId
   );
 
-
   const [opened, { open, close }] = useDisclosure(false);
-
 
   function addList() {
     open();
@@ -56,29 +54,38 @@ export default function page({ params }: Props) {
               <Flex>
                 {selectedBoard ? (
                   <>
-                  <DragNDropContainer board={selectedBoard} />
-                  <Modals
-                    opened={opened}
-                    open={open}
-                    close={close}
-                    contentType="Column"
-                    boardID={selectedBoard.id}
-                  />
-
+                    <DragNDropContainer board={selectedBoard} />
+                    <Modals
+                      opened={opened}
+                      open={open}
+                      close={close}
+                      contentType="Column"
+                      boardID={selectedBoard.id}
+                    />
                   </>
-                  
                 ) : (
                   "Select a board to get started"
                 )}
 
-
-               {/*  <Box>
-                <Button variant="fill" onClick={addList} style={{ margin: "0 10px" }}>
-            Add Column
-          </Button>
-                </Box> */}
+                <Paper shadow="xs" p={"xl"} mih={'100%'}>
+                  <Stack gap={6}>
+                    <Button
+                      variant="fill"
+                      onClick={addList}
+                      style={{ margin: "0 10px" }}
+                    >
+                      Add Column
+                    </Button>
+                    <Button
+                      variant="fill"
+                      onClick={addList}
+                      style={{ margin: "0 10px" }}
+                    >
+                      Add Member to Workspace
+                    </Button>
+                  </Stack>
+                </Paper>
               </Flex>
-
             </>
           )}
         </>

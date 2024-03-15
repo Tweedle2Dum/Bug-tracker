@@ -71,7 +71,7 @@ export default function Sidebar() {
   ));
 
   return (
-    <nav className={classes.navbar}>
+    <nav className={classes.navbar} >
       <Center>
         <MantineLogo type="mark" inverted size={30} />
       </Center>

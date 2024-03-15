@@ -18,11 +18,11 @@ export default async function layout({ children }: Props) {
       <SessionProvider session={session}>
         <QueryProvider>
           <Navbar />
-          <div style={{ display: "flex", minHeight: "100%", maxWidth:'95%' }}>
+          <div style={{ display: "flex",height:'100%', maxWidth:'95%' }}>
             <div>
               <Sidebar />
             </div>
-            <div style={{maxWidth:'100%'}}>{children}</div>
+            <div style={{minWidth:'100%'}}>{children}</div>
           </div>
         </QueryProvider>
       </SessionProvider>

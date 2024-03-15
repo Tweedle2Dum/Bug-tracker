@@ -60,7 +60,7 @@ export default function DragNDropContainer(props: Props) {
           handlers.setState(updatedState);
         }}
       >
-        <ScrollArea scrollbars="x" w={"80%"} style={{ overflowX: "scroll" }}>
+        <ScrollArea scrollbars="xy" w={"80%"} h={'85vh'} style={{ overflowX: "scroll",overflowY:'scroll' }}>
           <Box w={"100%"} display={"flex"}>
             {fetchLoading ? (
               <Loading />

@@ -45,6 +45,7 @@ export default function Task(props: Task & {index:number}) {
                   </Text>
                 </div>
               </Group>
+              
               <TypographyStylesProvider className={classes.body}>
                
               {props.description}
